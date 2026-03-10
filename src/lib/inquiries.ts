@@ -3,6 +3,9 @@ import { apiFetch } from "@/lib/api";
 export interface Inquiry {
   id: string;
   name: string;
+  fatherName?: string;
+  address?: string;
+  panCard?: string;
   phone: string;
   email: string;
   area: string;

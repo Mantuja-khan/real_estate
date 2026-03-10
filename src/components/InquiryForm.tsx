@@ -12,14 +12,17 @@ const areas = ["Palwal"];
 
 const schema = z.object({
   name: z.string().trim().min(2, "Name is required").max(100),
+  fatherName: z.string().trim().min(2, "Father/Husband Name is required").max(100),
   email: z.string().trim().email("Enter a valid email address"),
   phone: z.string().trim().regex(/^[6-9]\d{9}$/, "Enter valid 10-digit phone number"),
+  address: z.string().trim().min(5, "Full Address is required").max(500),
+  panCard: z.string().trim().regex(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, "Enter valid 10-character PAN number"),
   area: z.string().min(1, "Please select an area"),
   aadhaar: z.string().trim().regex(/^\d{12}$/, "Enter valid 12-digit Aadhaar number"),
 });
 
 const InquiryForm = () => {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", area: "", aadhaar: "" });
+  const [form, setForm] = useState({ name: "", fatherName: "", email: "", phone: "", address: "", panCard: "", area: "", aadhaar: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [showBankDetails, setShowBankDetails] = useState(false);
@@ -38,10 +41,10 @@ const InquiryForm = () => {
     setErrors({});
     setSubmitting(true);
     try {
-      await addInquiry(result.data as { name: string; email: string; phone: string; area: string; aadhaar: string });
+      await addInquiry(result.data as { name: string; fatherName: string; email: string; phone: string; address: string; panCard: string; area: string; aadhaar: string });
       toast.success("Inquiry submitted successfully!");
       setShowBankDetails(true);
-      setForm({ name: "", email: "", phone: "", area: "", aadhaar: "" }); // Reset form
+      setForm({ name: "", fatherName: "", email: "", phone: "", address: "", panCard: "", area: "", aadhaar: "" }); // Reset form
     } catch {
       toast.error("Failed to submit inquiry. Please try again.");
     } finally {
@@ -49,22 +52,31 @@ const InquiryForm = () => {
     }
   };
   return (
-    <div className="w-full max-w-lg mx-auto">
-      <h2 className="text-2xl sm:text-3xl font-bold mb-2 text-center">Property Inquiry</h2>
-      <p className="text-muted-foreground text-sm sm:text-base text-center mb-4">
-        Fill in your details and our team will get back to you shortly.
-      </p>
-
-      <div className="bg-primary/10 border border-primary/20 text-primary px-4 py-3 rounded-lg text-sm font-medium text-center mb-8 mx-auto -mt-2">
-        Registration fees fully refundable for non alotee
+    <div className="w-full max-w-4xl mx-auto py-8 px-4">
+      <div className="text-center mb-8">
+        <h2 className="text-3xl sm:text-4xl font-bold uppercase tracking-wide text-gray-800 mb-2">Property Inquiry</h2>
+        <div className="w-16 h-1 bg-[#2c6e3b] mx-auto mb-4"></div>
+        <p className="text-gray-600 text-sm sm:text-base">
+          Fill in your details and our team will get back to you shortly.
+        </p>
+        <p className="text-[#d9a05b] font-bold text-sm mt-2">
+          Registration fees fully refundable for non alotee
+        </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5 sm:bg-card sm:border rounded-xl p-0 sm:p-6 sm:shadow-sm">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <Label htmlFor="name">Full Name</Label>
           <Input id="name" placeholder="Enter your full name" value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })} />
           {errors.name && <p className="text-sm text-destructive mt-1">{errors.name}</p>}
+        </div>
+
+        <div>
+          <Label htmlFor="fatherName">Father/Husband's Name</Label>
+          <Input id="fatherName" placeholder="Enter Father's or Husband's name" value={form.fatherName}
+            onChange={(e) => setForm({ ...form, fatherName: e.target.value })} />
+          {errors.fatherName && <p className="text-sm text-destructive mt-1">{errors.fatherName}</p>}
         </div>
 
         <div>
@@ -79,6 +91,20 @@ const InquiryForm = () => {
           <Input id="phone" placeholder="10-digit mobile number" value={form.phone}
             onChange={(e) => setForm({ ...form, phone: e.target.value })} maxLength={10} />
           {errors.phone && <p className="text-sm text-destructive mt-1">{errors.phone}</p>}
+        </div>
+
+        <div>
+          <Label htmlFor="address">Full Address</Label>
+          <Input id="address" placeholder="Enter your full residential address" value={form.address}
+            onChange={(e) => setForm({ ...form, address: e.target.value })} />
+          {errors.address && <p className="text-sm text-destructive mt-1">{errors.address}</p>}
+        </div>
+
+        <div>
+          <Label htmlFor="panCard">PAN Card Number</Label>
+          <Input id="panCard" placeholder="10-character PAN number" value={form.panCard}
+            onChange={(e) => setForm({ ...form, panCard: e.target.value.toUpperCase() })} maxLength={10} />
+          {errors.panCard && <p className="text-sm text-destructive mt-1">{errors.panCard}</p>}
         </div>
         <div>
           <Label>Choose Area</Label>

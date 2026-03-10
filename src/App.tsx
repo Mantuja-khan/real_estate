@@ -13,6 +13,7 @@ import CheckStatusPage from "./pages/CheckStatusPage";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import RefundPolicyPage from "./pages/RefundPolicyPage";
+import ContactUsPage from "./pages/ContactUsPage";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route path="/refund-policy" element={<RefundPolicyPage />} />
+          <Route path="/contact" element={<ContactUsPage />} />
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/check-status" element={<CheckStatusPage />} />
           <Route path="/admin/login" element={<AdminLoginPage />} />
