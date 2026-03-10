@@ -1,0 +1,1 @@
+ALTER TABLE public.inquiries ADD COLUMN slot_status text NOT NULL DEFAULT 'pending';
