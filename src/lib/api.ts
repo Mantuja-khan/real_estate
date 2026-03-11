@@ -1,6 +1,4 @@
-import { BACKEND_API_URL } from "@/config";
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || BACKEND_API_URL;
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export const getAuthToken = () => localStorage.getItem('admin_token');
 export const setAuthToken = (token: string) => localStorage.setItem('admin_token', token);
