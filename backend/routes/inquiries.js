@@ -17,7 +17,7 @@ router.post('/', async (req, res) => {
         });
         
         // Send email to admin
-        await sendConfirmationEmail(email, name, fatherName, address, area, phone, aadhaar, city, state, pinCode, quota, plotSize);
+        await sendConfirmationEmail(email, name, fatherName, address, phone, aadhaar, city, state, pinCode, quota, plotSize);
         
         res.status(201).json(inquiry);
     } catch (error) {

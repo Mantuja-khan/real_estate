@@ -41,7 +41,7 @@ const Footer = () => (
           </div>
           <div className="text-sm md:text-base text-gray-700 font-medium md:pl-0 leading-relaxed max-w-xs text-center md:text-left">
             <span className="font-bold">SNKV REAL ESTATE PRIVATE LIMITED</span><br />
-            H.NO.- 746 P,SECTOR-38,Gurgaon,Sadar Bazar,<br />
+            H.NO.- 746 P,SECTOR-38,<br />
             Gurgaon-122001,Haryana<br />
             <span className="text-xs italic text-gray-500 mt-1 block">*as issued by Income tax Department</span>
           </div>

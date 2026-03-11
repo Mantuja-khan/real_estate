@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import RefundPolicyPage from "./pages/RefundPolicyPage";
 import ContactUsPage from "./pages/ContactUsPage";
+import LocationBenefitsPage from "./pages/LocationBenefitsPage";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/check-status" element={<CheckStatusPage />} />
           <Route path="/admin/login" element={<AdminLoginPage />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/location-benefits" element={<LocationBenefitsPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

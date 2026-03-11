@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { FileText, Building2, CalendarDays, CircleDot, Hourglass, Info, Factory, MapPin, FileBadge } from "lucide-react";
 import priceListImg from "@/assets/price_list.png"; // Assuming this asset exists
 import sitePlanImg from "@/assets/3d_image.png";
+import brochurePdf from "@/assets/nkv_pdf.pdf";
 
 const InfoGridSection = () => {
   const [showPriceList, setShowPriceList] = useState(false);
@@ -22,7 +24,7 @@ const InfoGridSection = () => {
               support@haryanadeendayalplot.org.in
             </div>
             <div className="bg-[#2c6e3b] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm mt-6">
-              Scheme Information
+              SCHEME INFORMATION
             </div>
             <div className="border border-gray-300 p-4 rounded-xl text-sm space-y-2 text-gray-700 font-medium">
               <ul className="list-disc pl-4 space-y-1">
@@ -129,22 +131,32 @@ const InfoGridSection = () => {
             </div>
 
             {/* Bottom Links */}
-            <div className="flex flex-col space-y-4 font-semibold text-blue-500 underline text-lg pt-4 mx-2">
+            <div className="flex flex-col space-y-4 pt-4 mx-2">
               <button
                 onClick={() => setShowPriceList(true)}
-                className="text-left hover:text-blue-700 underline flex w-fit"
+                className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm uppercase w-full transition-colors"
               >
                 Price List
               </button>
-              <a href="#" className="hover:text-blue-700 underline flex w-fit">
+              <a
+                href={brochurePdf}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm uppercase w-full transition-colors block"
+              >
                 Scheme Brochure
               </a>
-              <a href="https://haryanarera.gov.in/view_project/viewOrderPdf/NTczOQ==" target="_blank" rel="noopener noreferrer" className="hover:text-blue-700 underline flex w-fit">
+              <a
+                href="https://haryanarera.gov.in/view_project/viewOrderPdf/NTczOQ=="
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm uppercase w-full transition-colors block"
+              >
                 RERA Certificate
               </a>
               <button
                 onClick={() => setShowSitePlan(true)}
-                className="text-left hover:text-blue-700 underline flex w-fit"
+                className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm uppercase w-full transition-colors"
               >
                 Scheme Site Plan
               </button>
@@ -169,32 +181,20 @@ const InfoGridSection = () => {
             </div>
 
             <div className="bg-[#2c6e3b] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm mt-2">
-              Location Benefits
+              LOCATION BENIFITS
             </div>
             <div className="border border-gray-300 p-4 rounded-xl text-sm space-y-3 text-gray-700 font-medium">
-              <ul className="list-disc pl-4 space-y-2">
-                <li>Infratructure</li>
-                <li>On Palwal Hathin Highway Road.</li>
-                <li>Connected with Delhi Mathura Highway NH-44 - 04 mins.</li>
-                <li>Connected to IMT Sohna (1600 acres industrial township) - 30 mins</li>
-                <li>60 minutes drive to International Airport.</li>
-                <li>Delhi-Mumbai Expressway - 15 mins.</li>
-                <li>Kundli-Manesar-Palwal (KMP) Expressway - 10 mins.</li>
-                <li>Palwal Bus Station, Railway Station - 5 mins.</li>
-                <li>Palwal District Court, Proposed Metro Station - 05 mins.</li>
-                <li>Gurugram, Faridabad, Mathura, Jawar Airport - 40 mins.</li>
+              <ul className="list-disc pl-4 space-y-2 mb-4">
+                <li>upcoming metro</li>
                 <li>Education and health care</li>
-                <li>Well reputed educational institutions</li>
-                <li>Andvacend Educational Institutions,</li>
-                <li>BR Ambedkar Govt. PG College,</li>
-                <li>Maharani Kishori Devi College of Education,</li>
-                <li>Hindustan ITI College, MVN University.</li>
-                <li>Palwal Civil Hospital, Atlas, Cosmos Hospital,</li>
-                <li>Galaxy, Guru Nanak, Prabha Eye, Tula Hospital</li>
-                3 :- Entertainment
-                <li>Dumdama Lake, Sohna Natural Hot Springs.</li>
-                <li>Malls & Multiplexe</li>
+                <li>Hathin Highway Road</li>
+                <li>Delhi-Mumbai Expressway - 15 mins.</li>
+                <li>60 minutes drive to International Airport.</li>
+                <li>Palwal Bus Station, Railway Station - 5 mins</li>
               </ul>
+              <Link to="/location-benefits" className="w-full inline-block bg-[#2c6e3b] hover:bg-[#1e4d29] text-white text-center font-bold py-2 rounded-sm transition-colors uppercase tracking-wider text-sm mt-4">
+                VIEW MORE
+              </Link>
             </div>
           </div>
 

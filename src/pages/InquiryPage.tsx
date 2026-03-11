@@ -36,8 +36,8 @@ const InquiryPage = () => {
                 <h4 className="font-bold text-base text-foreground mb-4">For Cancellation and More Information</h4>
                 <p>
                   Please contact our support team at:<br />
-                  <a href="mailto:support@haryanadeendayalfloors.org" className="text-primary font-bold hover:underline mt-2 inline-block text-base">
-                    support@haryanadeendayalfloors.org
+                  <a href="mailto:support@haryanadeendayalplot.org.in" className="text-primary font-bold hover:underline mt-2 inline-block text-base">
+                    support@haryanadeendayalplot.org.in
                   </a>
                 </p>
               </div>
