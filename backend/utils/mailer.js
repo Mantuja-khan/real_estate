@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 
-const sendConfirmationEmail = async (userEmail, userName, fatherName, address, panCard, area, phone, aadhaar) => {
+const sendConfirmationEmail = async (userEmail, userName, fatherName, address, phone, aadhaar, city, state, pinCode, quota, plotSize) => {
     try {
         // You should configure this with your actual SMTP credentials (e.g., Gmail, SendGrid)
         // For Gmail, you would use an App Password if 2FA is enabled.
@@ -14,7 +14,7 @@ const sendConfirmationEmail = async (userEmail, userName, fatherName, address, p
 
         const mailOptions = {
             from: process.env.SMTP_USER || '"Haryana Deen Dayal Awaas Yojna Admin" <no-reply@haryanaawaas.com>',
-            to: process.env.SMTP_USER || 'info@haryanadeeendayal.com', // Send specifically to the ADMIN
+            to: process.env.ADMIN_EMAIL || process.env.SMTP_USER || 'info@haryanadeeendayal.com', // Send specifically to the ADMIN
             subject: `New Form Enquiry from ${userName} - Haryana Deen Dayal Awaas Yojna`,
             html: `
                 <div style="font-family: Arial, sans-serif; color: #333;">
@@ -25,10 +25,13 @@ const sendConfirmationEmail = async (userEmail, userName, fatherName, address, p
                         <li><strong>Father/Husband's Name:</strong> ${fatherName || 'N/A'}</li>
                         <li><strong>Applicant Email:</strong> ${userEmail}</li>
                         <li><strong>Phone Number:</strong> ${phone || 'N/A'}</li>
+                        <li><strong>City:</strong> ${city || 'N/A'}</li>
+                        <li><strong>State:</strong> ${state || 'N/A'}</li>
+                        <li><strong>Pin Code:</strong> ${pinCode || 'N/A'}</li>
                         <li><strong>Full Address:</strong> ${address || 'N/A'}</li>
-                        <li><strong>PAN Card:</strong> ${panCard || 'N/A'}</li>
                         <li><strong>Aadhaar Number:</strong> ${aadhaar || 'N/A'}</li>
-                        <li><strong>Area Selected:</strong> ${area}</li>
+                        <li><strong>Quota:</strong> ${quota || 'GEN'}</li>
+                        <li><strong>Plot Size:</strong> ${plotSize || 'N/A'}</li>
                     </ul>
                     <br />
                     <p>Best Regards,</p>

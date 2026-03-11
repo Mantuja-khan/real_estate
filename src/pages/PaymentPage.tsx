@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { apiFetch } from "@/lib/api";
 import { Button } from "@/components/ui/button";
-import { areaPricing, type Inquiry } from "@/lib/inquiries";
+import { type Inquiry } from "@/lib/inquiries";
 import { toast } from "sonner";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -46,7 +46,7 @@ const PaymentPage = () => {
     );
   }
 
-  const amount = areaPricing[inquiry.area] ?? 10000;
+  const amount = 799;
 
   const handlePay = async () => {
     setPaying(true);
@@ -59,7 +59,6 @@ const PaymentPage = () => {
           inquiryId: inquiry.id,
           name: inquiry.name,
           email: inquiry.email,
-          area: inquiry.area,
         }),
       });
 
@@ -74,7 +73,7 @@ const PaymentPage = () => {
         amount: data.amount,
         currency: data.currency,
         name: "Haryana Deen Dayal Awaas Yojna",
-        description: `Booking for ${inquiry.area}`,
+        description: `Booking for Plot Size: ${inquiry.plotSize}`,
         order_id: data.orderId,
         prefill: {
           name: inquiry.name,
@@ -94,7 +93,6 @@ const PaymentPage = () => {
                 inquiryId: inquiry.id,
                 email: inquiry.email,
                 name: inquiry.name,
-                area: inquiry.area,
                 amount,
               }),
             });
@@ -136,7 +134,7 @@ const PaymentPage = () => {
             </div>
             <h1 className="text-3xl font-bold mb-2">Slot Confirmed!</h1>
             <p className="text-muted-foreground mb-2">
-              Your slot for <strong>{inquiry.area}</strong> has been successfully allocated.
+              Your plot size <strong>{inquiry.plotSize}</strong> slot has been successfully booked.
             </p>
             <p className="text-muted-foreground mb-6">
               A confirmation email has been sent to <strong>{inquiry.email}</strong>.
@@ -159,7 +157,7 @@ const PaymentPage = () => {
         <div className="w-full max-w-lg">
           <h1 className="text-3xl font-bold mb-2 text-center">Complete Payment</h1>
           <p className="text-muted-foreground text-center mb-4">
-            Pay securely via Razorpay to confirm your slot for <strong>{inquiry.area}</strong>.
+            Pay securely via Razorpay to confirm your slot for plot size <strong>{inquiry.plotSize}</strong>.
           </p>
           
           <div className="bg-primary/10 border border-primary/20 text-primary px-4 py-3 rounded-lg text-sm font-medium text-center mb-8 mx-auto -mt-2">
@@ -183,8 +181,8 @@ const PaymentPage = () => {
                 <span className="font-medium">{inquiry.name}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Area</span>
-                <span className="font-medium">{inquiry.area}</span>
+                <span className="text-muted-foreground">Plot Size</span>
+                <span className="font-medium">{inquiry.plotSize}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Email</span>

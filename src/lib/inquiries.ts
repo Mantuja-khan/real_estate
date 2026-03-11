@@ -8,18 +8,15 @@ export interface Inquiry {
   panCard?: string;
   phone: string;
   email: string;
-  area: string;
   aadhaar: string;
+  quota: string;
+  plotSize: string;
   payment_status: string;
   slot_status: string;
   created_at: string;
 }
 
-export const areaPricing: Record<string, number> = {
-  "Gurugram": 799,
-  "Faridabad": 799,
-  "Sohna": 799,
-};
+
 
 // Map backend _id to id for the frontend components
 const mapInquiry = (data: any): Inquiry => ({

@@ -19,7 +19,7 @@ const AdminPage = () => {
   const [delivering, setDelivering] = useState(false);
   const [declaring, setDeclaring] = useState(false);
   const [resultsDeclared, setResultsDeclared] = useState(false);
-  const [resultDate, setResultDate] = useState("");
+  const [resultDate, setResultDate] = useState("29 March 2026");
 
   const load = async () => {
     try {

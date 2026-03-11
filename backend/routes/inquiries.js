@@ -10,14 +10,14 @@ const router = express.Router();
 // @access  Public
 router.post('/', async (req, res) => {
     try {
-        const { name, fatherName, address, panCard, phone, email, area, aadhaar } = req.body;
+        const { name, fatherName, address, phone, email, area, aadhaar, city, state, pinCode, quota, plotSize } = req.body;
         
         const inquiry = await Inquiry.create({
-            name, fatherName, address, panCard, phone, email, area, aadhaar
+            name, fatherName, address, phone, email, area, aadhaar, city, state, pinCode, quota, plotSize
         });
         
         // Send email to admin
-        await sendConfirmationEmail(email, name, fatherName, address, panCard, area, phone, aadhaar);
+        await sendConfirmationEmail(email, name, fatherName, address, area, phone, aadhaar, city, state, pinCode, quota, plotSize);
         
         res.status(201).json(inquiry);
     } catch (error) {

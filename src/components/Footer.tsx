@@ -18,7 +18,7 @@ const Footer = () => (
             <h3 className="text-3xl md:text-4xl font-light text-gray-700 uppercase">EMAIL</h3>
           </div>
           <p className="text-base md:text-lg text-gray-600 font-medium pl-1">
-            support@haryanadeendayalplot.org
+            support@haryanadeendayalplot.org.in
           </p>
         </div>
 
@@ -28,7 +28,7 @@ const Footer = () => (
             <Mail className="h-8 w-8 text-gray-700" /> {/* Using mail to match user's screenshot where the icon looked strangely like an envelope */}
             <div className="flex flex-col">
               <span className="text-xs md:text-sm font-medium text-gray-500 tracking-wider">TOLL FREE HELPLINE</span>
-              <span className="text-lg md:text-2xl font-medium text-gray-800">96 43 16 27 69</span>
+              <span className="text-lg md:text-2xl font-medium text-gray-800">98185-13700</span>
             </div>
           </div>
         </div>

@@ -8,7 +8,14 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { addInquiry } from "@/lib/inquiries";
 import { toast } from "sonner";
 import { QrCode, Building2, CreditCard } from "lucide-react";
-const areas = ["Palwal"];
+import qrCodeImg from "@/assets/qrcode.png";
+
+const quotas = ["Govt Employee Quota", "Female Quota", "General Quota", "Management Quota"];
+const plotSizes = [
+  "100.10 sq/yard (83.69 sq/mtr)",
+  "122.55 sq/yard (102.46 sq/mtr)",
+  "125.54 sq/yard (104.96 sq/mtr)"
+];
 
 const schema = z.object({
   name: z.string().trim().min(2, "Name is required").max(100),
@@ -16,13 +23,16 @@ const schema = z.object({
   email: z.string().trim().email("Enter a valid email address"),
   phone: z.string().trim().regex(/^[6-9]\d{9}$/, "Enter valid 10-digit phone number"),
   address: z.string().trim().min(5, "Full Address is required").max(500),
-  panCard: z.string().trim().regex(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, "Enter valid 10-character PAN number"),
-  area: z.string().min(1, "Please select an area"),
   aadhaar: z.string().trim().regex(/^\d{12}$/, "Enter valid 12-digit Aadhaar number"),
+  city: z.string().trim().min(2, "City is required"),
+  state: z.string().trim().min(2, "State is required"),
+  pinCode: z.string().trim().regex(/^\d{6}$/, "Enter valid 6-digit PIN code"),
+  quota: z.string().min(1, "Quota is required"),
+  plotSize: z.string().min(1, "Plot size is required"),
 });
 
 const InquiryForm = () => {
-  const [form, setForm] = useState({ name: "", fatherName: "", email: "", phone: "", address: "", panCard: "", area: "", aadhaar: "" });
+  const [form, setForm] = useState({ name: "", fatherName: "", email: "", phone: "", address: "", aadhaar: "", city: "", state: "", pinCode: "", quota: "", plotSize: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [showBankDetails, setShowBankDetails] = useState(false);
@@ -41,10 +51,10 @@ const InquiryForm = () => {
     setErrors({});
     setSubmitting(true);
     try {
-      await addInquiry(result.data as { name: string; fatherName: string; email: string; phone: string; address: string; panCard: string; area: string; aadhaar: string });
+      await addInquiry(result.data as any);
       toast.success("Inquiry submitted successfully!");
       setShowBankDetails(true);
-      setForm({ name: "", fatherName: "", email: "", phone: "", address: "", panCard: "", area: "", aadhaar: "" }); // Reset form
+      setForm({ name: "", fatherName: "", email: "", phone: "", address: "", aadhaar: "", city: "", state: "", pinCode: "", quota: "", plotSize: "" }); // Reset form
     } catch {
       toast.error("Failed to submit inquiry. Please try again.");
     } finally {
@@ -54,11 +64,9 @@ const InquiryForm = () => {
   return (
     <div className="w-full max-w-4xl mx-auto py-8 px-4">
       <div className="text-center mb-8">
-        <h2 className="text-3xl sm:text-4xl font-bold uppercase tracking-wide text-gray-800 mb-2">Property Inquiry</h2>
+        <h2 className="text-3xl sm:text-4xl font-bold uppercase tracking-wide text-gray-800 mb-2">Registration Form </h2>
         <div className="w-16 h-1 bg-[#2c6e3b] mx-auto mb-4"></div>
-        <p className="text-gray-600 text-sm sm:text-base">
-          Fill in your details and our team will get back to you shortly.
-        </p>
+
         <p className="text-[#d9a05b] font-bold text-sm mt-2">
           Registration fees fully refundable for non alotee
         </p>
@@ -100,29 +108,59 @@ const InquiryForm = () => {
           {errors.address && <p className="text-sm text-destructive mt-1">{errors.address}</p>}
         </div>
 
-        <div>
-          <Label htmlFor="panCard">PAN Card Number</Label>
-          <Input id="panCard" placeholder="10-character PAN number" value={form.panCard}
-            onChange={(e) => setForm({ ...form, panCard: e.target.value.toUpperCase() })} maxLength={10} />
-          {errors.panCard && <p className="text-sm text-destructive mt-1">{errors.panCard}</p>}
-        </div>
-        <div>
-          <Label>Choose Area</Label>
-          <Select value={form.area} onValueChange={(v) => setForm({ ...form, area: v })}>
-            <SelectTrigger><SelectValue placeholder="Select area" /></SelectTrigger>
-            <SelectContent>
-              {areas.map((a) => (
-                <SelectItem key={a} value={a}>{a}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {errors.area && <p className="text-sm text-destructive mt-1">{errors.area}</p>}
-        </div>
+
         <div>
           <Label htmlFor="aadhaar">Aadhaar Number</Label>
           <Input id="aadhaar" placeholder="12-digit Aadhaar number" value={form.aadhaar}
             onChange={(e) => setForm({ ...form, aadhaar: e.target.value })} maxLength={12} />
           {errors.aadhaar && <p className="text-sm text-destructive mt-1">{errors.aadhaar}</p>}
+        </div>
+
+        <div>
+          <Label htmlFor="city">City</Label>
+          <Input id="city" placeholder="Enter your city" value={form.city}
+            onChange={(e) => setForm({ ...form, city: e.target.value })} />
+          {errors.city && <p className="text-sm text-destructive mt-1">{errors.city}</p>}
+        </div>
+
+        <div>
+          <Label htmlFor="state">State</Label>
+          <Input id="state" placeholder="Enter your state" value={form.state}
+            onChange={(e) => setForm({ ...form, state: e.target.value })} />
+          {errors.state && <p className="text-sm text-destructive mt-1">{errors.state}</p>}
+        </div>
+
+        <div>
+          <Label htmlFor="pinCode">PIN Code</Label>
+          <Input id="pinCode" placeholder="6-digit PIN code" value={form.pinCode}
+            onChange={(e) => setForm({ ...form, pinCode: e.target.value })} maxLength={6} />
+          {errors.pinCode && <p className="text-sm text-destructive mt-1">{errors.pinCode}</p>}
+        </div>
+
+        <div>
+          <Label>Quota</Label>
+          <Select value={form.quota} onValueChange={(v) => setForm({ ...form, quota: v })}>
+            <SelectTrigger><SelectValue placeholder="Select quota" /></SelectTrigger>
+            <SelectContent>
+              {quotas.map((q) => (
+                <SelectItem key={q} value={q}>{q}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {errors.quota && <p className="text-sm text-destructive mt-1">{errors.quota}</p>}
+        </div>
+
+        <div>
+          <Label>Plot Size</Label>
+          <Select value={form.plotSize} onValueChange={(v) => setForm({ ...form, plotSize: v })}>
+            <SelectTrigger><SelectValue placeholder="Select plot size" /></SelectTrigger>
+            <SelectContent>
+              {plotSizes.map((p) => (
+                <SelectItem key={p} value={p}>{p}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {errors.plotSize && <p className="text-sm text-destructive mt-1">{errors.plotSize}</p>}
         </div>
 
         <Button type="submit" className="w-full" size="lg" disabled={submitting}>
@@ -143,18 +181,19 @@ const InquiryForm = () => {
               <Building2 className="h-6 w-6 text-primary mt-1 shrink-0" />
               <div>
                 <p className="font-semibold text-sm">Bank Transfer</p>
-                <p className="text-sm text-muted-foreground mt-1">Bank: <strong>HDFC Bank</strong></p>
-                <p className="text-sm text-muted-foreground">Account Name: <strong>Haryana Deendayal Floors</strong></p>
-                <p className="text-sm text-muted-foreground">Account Number: <strong>50200021345678</strong></p>
-                <p className="text-sm text-muted-foreground">IFSC Code: <strong>HDFC0001234</strong></p>
+                <p className="text-sm text-muted-foreground mt-1">Bank: <strong>ICICI Bank</strong></p>
+                <p className="text-sm text-muted-foreground">Account Name: <strong>SNKV REAL ESTATE PRIVATE LIMITED</strong></p>
+                <p className="text-sm text-muted-foreground">Account Number: <strong>165105500680</strong></p>
+                <p className="text-sm text-muted-foreground">IFSC Code: <strong>ICIC0001651</strong></p>
+                <p className="text-sm text-muted-foreground">Mob: <strong>9015634665</strong></p>
+                <p className="text-sm text-muted-foreground">Branch: <strong>UTT Sector 49, Gurgaon</strong></p>
               </div>
             </div>
-            
+
             <div className="bg-accent/50 p-4 rounded-lg flex flex-col items-center justify-center gap-2">
               <p className="font-semibold text-sm mb-2 w-full flex items-center justify-start gap-3"><QrCode className="h-5 w-5 text-primary" /> Scan QR to Pay</p>
-              {/* Replace the src with your actual QR code image URL if available */}
               <div className="w-48 h-48 bg-white p-2 rounded-lg border shadow-sm flex items-center justify-center">
-                <QrCode className="w-32 h-32 text-slate-800" />
+                <img src={qrCodeImg} alt="QR Code for Payment" className="w-full h-full object-contain" />
               </div>
               <p className="text-xs text-muted-foreground text-center mt-2">BHIM / UPI / PhonePe / GPay</p>
             </div>

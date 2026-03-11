@@ -16,7 +16,7 @@ const razorpay = new Razorpay({
 // @access  Public
 router.post('/create-order', async (req, res) => {
     try {
-        const { amount, inquiryId, name, email, area } = req.body;
+        const { amount, inquiryId, name, email } = req.body;
         
         const options = {
             amount: amount * 100, // amount in smallest currency unit
@@ -51,7 +51,6 @@ router.post('/verify', async (req, res) => {
             inquiryId,
             email,
             name,
-            area,
             amount
         } = req.body;
         
@@ -63,10 +62,24 @@ router.post('/verify', async (req, res) => {
             
         if (razorpay_signature === expectedSign) {
             // Update inquiry payment status
-            await Inquiry.findByIdAndUpdate(inquiryId, { payment_status: 'completed' });
+            const inquiry = await Inquiry.findByIdAndUpdate(inquiryId, { payment_status: 'completed' }, { new: true });
             
-            // Send confirmation email to Admin
-            await sendConfirmationEmail(email, name, area);
+            if (inquiry) {
+                // Send confirmation email to Admin
+                await sendConfirmationEmail(
+                    inquiry.email, 
+                    inquiry.name, 
+                    inquiry.fatherName, 
+                    inquiry.address, 
+                    inquiry.phone, 
+                    inquiry.aadhaar, 
+                    inquiry.city, 
+                    inquiry.state, 
+                    inquiry.pinCode, 
+                    inquiry.quota, 
+                    inquiry.plotSize
+                );
+            }
             
             return res.json({ message: 'Payment verified successfully' });
         } else {

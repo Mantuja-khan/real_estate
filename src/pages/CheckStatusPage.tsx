@@ -22,6 +22,7 @@ const CheckStatusPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [resultsDeclared, setResultsDeclared] = useState(false);
+  const [resultDate, setResultDate] = useState("29 March 2026");
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -126,7 +127,7 @@ const CheckStatusPage = () => {
                 <div className="text-center p-6 bg-accent/20 border rounded-xl mb-6 shadow-sm">
                   <p className="font-bold text-lg text-foreground mb-2">Results Not Declared Yet</p>
                   <p className="text-muted-foreground text-sm">
-                    Please visit again on <strong className="text-foreground">30 March 2026</strong>.
+                    Please visit again on <strong className="text-foreground">{resultDate}</strong>.
                   </p>
                 </div>
               ) : (

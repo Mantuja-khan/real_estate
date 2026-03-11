@@ -9,7 +9,7 @@ const HowToApply = () => {
         </h2>
         
         <div className="w-full text-sm md:text-base text-gray-900 font-bold space-y-3 px-4">
-          <p>1. <span className="text-black">On the Main Screen of haryanadeendayalplot.org</span></p>
+          <p>1. <span className="text-black">On the Main Screen of haryanadeendayalplot.org.in</span></p>
           <p>2. <span className="text-black">Choose the project from the 'current' on the home page</span></p>
           <p>3. <span className="text-black">Check all the approvals, licenses, layouts, floor plans, location and other specifications of the</span></p>
           <div className="w-48 h-1 bg-gray-400 mx-auto mt-8 rounded-full"></div>

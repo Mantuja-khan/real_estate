@@ -9,8 +9,8 @@ const seedAdmin = async () => {
         await mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/real_estate');
         console.log('MongoDB Connected for Seeding');
 
-        const email = 'mantujak82@gmail.com';
-        const password = 'mantuja@2002';
+        const email = 'nkvemeraldavenue76@gmail.com';
+        const password = 'emeraldavenue@789';
 
         const adminExists = await Admin.findOne({ email });
 
