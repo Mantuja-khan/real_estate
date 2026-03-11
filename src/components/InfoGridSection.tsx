@@ -69,6 +69,20 @@ const InfoGridSection = () => {
               </div>
             </div>
 
+            {/* Apply Now Highlight Button */}
+            <div className="mx-1 mb-4">
+              <Link
+                to="/inquiry"
+                className="block w-full bg-[#2c6e3b] text-white text-center font-black text-lg py-3 rounded-lg shadow-lg border-2 border-[#1e4d29] transform transition-all hover:scale-[1.02] hover:bg-[#1e4d29] hover:shadow-xl relative overflow-hidden group"
+              >
+                <span className="relative z-10 flex items-center justify-center gap-2 tracking-widest uppercase">
+                  Apply Now
+                </span>
+                {/* Shine effect animation */}
+                <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-shine" />
+              </Link>
+            </div>
+
             {/* Important Dates Box */}
             <div className="bg-[#fcf8ef] border-l-4 border-[#e5a03e] p-5 rounded-r-lg shadow-sm mx-1">
               <div className="flex items-center gap-2 text-[#e5a03e] font-bold text-base sm:text-lg mb-4">

@@ -22,7 +22,10 @@ const CheckStatusPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [resultsDeclared, setResultsDeclared] = useState(false);
-  const [resultDate, setResultDate] = useState("29 March 2026");
+  const [resultDate, setResultDate] = useState("30 March 2026");
+  
+  // Date protection for March 30, 2026
+  const isBeforeResultDate = new Date() < new Date("2026-03-30T00:00:00+05:30");
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -81,32 +84,42 @@ const CheckStatusPage = () => {
             Enter your Aadhaar number to check if your slot has been confirmed.
           </p>
 
-          <form onSubmit={handleCheck} className="space-y-4 bg-card border rounded-xl p-6 shadow-sm">
-            <div>
-              <Label htmlFor="aadhaar">Aadhaar Number</Label>
-              <Input
-                id="aadhaar"
-                placeholder="Enter 12-digit Aadhaar number"
-                value={aadhaar}
-                onChange={(e) => setAadhaar(e.target.value)}
-                maxLength={12}
-              />
-              {error && <p className="text-sm text-destructive mt-1">{error}</p>}
+          {isBeforeResultDate ? (
+            <div className="border border-red-600 bg-[#fff5f5] p-6 text-center shadow-md w-full max-w-2xl mx-auto">
+              <h2 className="text-lg md:text-xl font-bold text-red-700 uppercase tracking-wider mb-2">Important Notice</h2>
+              <div className="h-0.5 w-full bg-red-200 mb-4 mx-auto max-w-[200px]"></div>
+              <p className="text-red-800 text-base md:text-lg font-semibold leading-relaxed">
+                Result will declare on 30 March 2026 , please come at 30 March 2026.
+              </p>
             </div>
-            <Button type="submit" className="w-full" size="lg" disabled={loading}>
-              {loading ? (
-                <>
-                  <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-background border-t-transparent" />
-                  Checking…
-                </>
-              ) : (
-                <>
-                  <Search className="h-4 w-4 mr-2" />
-                  Check Status
-                </>
-              )}
-            </Button>
-          </form>
+          ) : (
+            <form onSubmit={handleCheck} className="space-y-4 bg-card border rounded-xl p-6 shadow-sm">
+              <div>
+                <Label htmlFor="aadhaar">Aadhaar Number</Label>
+                <Input
+                  id="aadhaar"
+                  placeholder="Enter 12-digit Aadhaar number"
+                  value={aadhaar}
+                  onChange={(e) => setAadhaar(e.target.value)}
+                  maxLength={12}
+                />
+                {error && <p className="text-sm text-destructive mt-1">{error}</p>}
+              </div>
+              <Button type="submit" className="w-full" size="lg" disabled={loading}>
+                {loading ? (
+                  <>
+                    <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-background border-t-transparent" />
+                    Checking…
+                  </>
+                ) : (
+                  <>
+                    <Search className="h-4 w-4 mr-2" />
+                    Check Status
+                  </>
+                )}
+              </Button>
+            </form>
+          )}
 
 
 

@@ -103,4 +103,14 @@
     0% { transform: translateX(100vw); }
     100% { transform: translateX(-100%); }
   }
+
+  /* Shine animation for buttons */
+  .animate-shine {
+    animation: shine 2s cubic-bezier(0.19, 1, 0.22, 1) infinite;
+  }
+  @keyframes shine {
+    100% {
+      left: 125%;
+    }
+  }
 }

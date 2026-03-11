@@ -38,12 +38,12 @@ const Navbar = () => {
       </div>
 
       {/* Main Green Bar Title */}
-      <div className="bg-[#00c853] text-white w-full py-2 text-center border-b-2 border-white">
+      <div className="bg-[#2c6e3b] text-white w-full py-2 text-center border-b-2 border-white">
         <h1 className="font-bold text-sm md:text-lg tracking-widest uppercase">HARYANA DEEN DAYAL PLOT</h1>
       </div>
 
       {/* Check Result Bar underneath */}
-      <Link to="/check-status" className="block bg-[#00c853] hover:bg-[#00a644] transition-colors text-white w-full py-1 text-center text-xs md:text-sm font-bold border-b border-gray-300">
+      <Link to="/check-status" className="block bg-[#2c6e3b] hover:bg-[#00a644] transition-colors text-white w-full py-1 text-center text-xs md:text-sm font-bold border-b border-gray-300">
         Check Result
       </Link>
 

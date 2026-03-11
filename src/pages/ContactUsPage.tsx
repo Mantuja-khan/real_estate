@@ -16,7 +16,7 @@ const ContactUsPage = () => {
         {/* Full-width Map */}
         <div className="w-full h-[400px] bg-gray-100 mb-12 shadow-sm border border-gray-200">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14041.488667597148!2d77.02705359265749!3d28.42312674251219!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1875e52cbe9b%3A0xb3fc6f6db6a2b8e3!2sSector%2038%2C%20Gurugram%2C%20Haryana%20122022!5e0!3m2!1sen!2sin!4v1709971234567!5m2!1sen!2sin"
+            src="https://maps.google.com/maps?q=28.1333847,77.3106766&hl=en&z=12&output=embed"
             width="100%"
             height="100%"
             style={{ border: 0 }}
