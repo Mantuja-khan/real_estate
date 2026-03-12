@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 
-const sendConfirmationEmail = async (userEmail, userName, fatherName, address, phone, aadhaar, city, state, pinCode, quota, plotSize) => {
+const sendConfirmationEmail = async (userEmail, userName, fatherName, address, phone, aadhaar, city, state, pinCode, quota, plotSize, paymentInfo = '') => {
     try {
         // You should configure this with your actual SMTP credentials (e.g., Gmail, SendGrid)
         // For Gmail, you would use an App Password if 2FA is enabled.
@@ -32,6 +32,7 @@ const sendConfirmationEmail = async (userEmail, userName, fatherName, address, p
                         <li><strong>Aadhaar Number:</strong> ${aadhaar || 'N/A'}</li>
                         <li><strong>Quota:</strong> ${quota || 'GEN'}</li>
                         <li><strong>Plot Size:</strong> ${plotSize || 'N/A'}</li>
+                        ${paymentInfo ? `<li style="color: #e63946; font-weight: bold; margin-top: 10px;"><strong>Payment Info:</strong> ${paymentInfo}</li>` : ''}
                     </ul>
                     <br />
                     <p>Best Regards,</p>

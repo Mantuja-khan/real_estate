@@ -13,7 +13,15 @@ const inquirySchema = new mongoose.Schema({
     quota: { type: String, required: true },
     plotSize: { type: String, required: true },
     payment_status: { type: String, default: 'pending' },
-    slot_status: { type: String, default: 'pending' }
+    slot_status: { type: String, default: 'pending' },
+    payment_method: { type: String }, // 'upi' or 'bank'
+    upi_id: { type: String },
+    bank_details: {
+        bankName: String,
+        accountNumber: String,
+        ifscCode: String,
+        accountHolderName: String
+    }
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
 
 // Create text indexes/regular indexes if needed for search

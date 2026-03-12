@@ -90,4 +90,49 @@ router.post('/verify', async (req, res) => {
     }
 });
 
+// @route   POST /api/payments/manual-confirm
+// @desc    Confirm Payment manually (UPI/Bank)
+// @access  Public
+router.post('/manual-confirm', async (req, res) => {
+    try {
+        const { inquiryId, paymentMethod, upiId, bankDetails, amount } = req.body;
+        
+        const updateData = {
+            payment_status: 'pending_verification',
+            payment_method: paymentMethod,
+        };
+
+        if (paymentMethod === 'upi') {
+            updateData.upi_id = upiId;
+        } else if (paymentMethod === 'bank') {
+            updateData.bank_details = bankDetails;
+        }
+
+        const inquiry = await Inquiry.findByIdAndUpdate(inquiryId, updateData, { new: true });
+        
+        if (inquiry) {
+            // Send notification email to Admin about manual payment
+            // You might want a different email template for this
+            await sendConfirmationEmail(
+                inquiry.email, 
+                inquiry.name, 
+                inquiry.fatherName, 
+                inquiry.address, 
+                inquiry.phone, 
+                inquiry.aadhaar, 
+                inquiry.city, 
+                inquiry.state, 
+                inquiry.pinCode, 
+                inquiry.quota, 
+                inquiry.plotSize,
+                `Manual Payment (${paymentMethod}) - Amount: ₹${amount}`
+            );
+        }
+        
+        res.json({ message: 'Payment confirmation received. Waiting for admin verification.', inquiry });
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to confirm payment', error: error.message });
+    }
+});
+
 module.exports = router;

@@ -48,7 +48,7 @@ const AdminLoginPage = () => {
       <div className="w-full max-w-md">
         <Link to="/" className="flex items-center justify-center gap-2 font-display text-2xl font-bold mb-8">
           <Home className="h-6 w-6 text-primary" />
-          Haryana Deen Dayal Awaas Yojna
+          Haryana Deen Dayal Jan Awaas Yojna
         </Link>
 
         <form onSubmit={handleSubmit} className="bg-card border rounded-xl p-8 shadow-sm space-y-5">

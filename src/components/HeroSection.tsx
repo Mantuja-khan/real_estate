@@ -21,15 +21,16 @@ const HeroSection = () => {
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
         {images.map((imgSrc, idx) => (
-          <img
-            key={idx}
-            src={imgSrc}
-            alt={`Haryana Deen Dayal Awaas Yojna View ${idx + 1}`}
-            className="w-full h-auto object-contain max-h-[500px] md:max-h-[600px] bg-gray-100 flex-shrink-0"
-            onError={(e) => {
-              (e.target as HTMLImageElement).src = 'https://i.pinimg.com/736x/1d/af/f8/1daff8a998584f1cd7910d01c0cf42c8.jpg';
-            }}
-          />
+          <div key={idx} className="w-full h-[180px] md:h-[400px] lg:h-[500px] bg-white flex-shrink-0 flex items-center justify-center overflow-hidden">
+            <img
+              src={imgSrc}
+              alt={`Haryana Deen Dayal Jan awas Yojna View ${idx + 1}`}
+              className="w-full h-full object-cover object-top transition-all duration-500"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = 'https://i.pinimg.com/736x/1d/af/f8/1daff8a998584f1cd7910d01c0cf42c8.jpg';
+              }}
+            />
+          </div>
         ))}
       </div>
 

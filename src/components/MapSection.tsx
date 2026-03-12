@@ -16,7 +16,7 @@ const MapSection = () => {
 
         <div className="w-[100vw] relative left-1/2 -translate-x-1/2 sm:w-full h-[250px] sm:h-[500px] rounded-none sm:rounded-xl overflow-hidden shadow-md border-y sm:border bg-gray-200">
           <iframe
-            src="https://maps.google.com/maps?q=28.1333847,77.3106766&hl=en&z=12&output=embed"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.9103!2d77.308488!3d28.133389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDA4JzAwLjIiTiA3N8KwMTgnMzguNCJF!5e0!3m2!1sen!2sin!4v1710250000000!5m2!1sen!2sin"
             width="100%"
             height="100%"
             style={{ border: 0 }}
@@ -29,7 +29,7 @@ const MapSection = () => {
 
         <div className="mt-8 text-center flex justify-center">
           <a
-            href="https://maps.app.goo.gl/wS78zHnQYQzqPxb27"
+            href="https://www.google.com/maps/place/28%C2%B008'00.2%22N+77%C2%B018'38.4%22E/@28.1356769,77.3008991,14.23z/data=!4m4!3m3!8m2!3d28.1333847!4d77.3106766?hl=en&entry=ttu&g_ep=EgoyMDI2MDMwOS4wIKXMDSoASAFQAw%3D%3D"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block w-full sm:w-auto"

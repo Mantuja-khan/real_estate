@@ -10,12 +10,12 @@ const TermsPage = () => (
       <div className="prose prose-sm max-w-none space-y-6 text-muted-foreground">
         <section>
           <h2 className="text-lg font-semibold text-foreground">1. Acceptance of Terms</h2>
-          <p>By accessing and using the Haryana Deen Dayal Awaas Yojna website and services, you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, please do not use our services.</p>
+          <p>By accessing and using the Haryana deen dayal awas yojna website and services, you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, please do not use our services.</p>
         </section>
 
         <section>
           <h2 className="text-lg font-semibold text-foreground">2. Services</h2>
-          <p>Haryana Deen Dayal Awaas Yojna provides real estate listing and inquiry services. We act as an intermediary between property buyers and sellers. We do not guarantee the accuracy of property listings and recommend independent verification before making any purchase decisions.</p>
+          <p>Haryana deen dayal awas yojna provides real estate listing and inquiry services. We act as an intermediary between property buyers and sellers. We do not guarantee the accuracy of property listings and recommend independent verification before making any purchase decisions.</p>
         </section>
 
         <section>
@@ -30,12 +30,12 @@ const TermsPage = () => (
 
         <section>
           <h2 className="text-lg font-semibold text-foreground">5. Property Listings</h2>
-          <p>All property listings are provided for informational purposes only. Prices, availability, and property details are subject to change without notice. Haryana Deen Dayal Awaas Yojna does not guarantee the accuracy or completeness of any listing information.</p>
+          <p>All property listings are provided for informational purposes only. Prices, availability, and property details are subject to change without notice. Haryana deen dayal awas yojna does not guarantee the accuracy or completeness of any listing information.</p>
         </section>
 
         <section>
           <h2 className="text-lg font-semibold text-foreground">6. Limitation of Liability</h2>
-          <p>Haryana Deen Dayal Awaas Yojna shall not be liable for any direct, indirect, incidental, or consequential damages arising from the use of our services or reliance on information provided on our website.</p>
+          <p>Haryana deen dayal awas yojna shall not be liable for any direct, indirect, incidental, or consequential damages arising from the use of our services or reliance on information provided on our website.</p>
         </section>
 
         <section>

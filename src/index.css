@@ -113,4 +113,54 @@
       left: 125%;
     }
   }
+
+  /* Blink animation for highlight buttons */
+  .animate-blink {
+    animation: blink 1s step-start infinite;
+  }
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  /* Premium Pulse for Highlight Buttons (Fixed Size) */
+  .animate-premium-pulse {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Shimmer effect overlay (No Layout Shift) */
+  .animate-premium-pulse::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      to bottom right,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    transform: rotate(45deg);
+    animation: shimmer 2s infinite;
+    pointer-events: none;
+  }
+
+  /* Text Blink for Button Content */
+  .animate-text-blink {
+    animation: text-blink 1s ease-in-out infinite;
+  }
+
+  @keyframes text-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  @keyframes shimmer {
+    0% { transform: translateX(-150%) rotate(45deg); }
+    100% { transform: translateX(150%) rotate(45deg); }
+  }
 }

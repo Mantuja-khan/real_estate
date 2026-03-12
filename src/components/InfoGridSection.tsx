@@ -17,19 +17,16 @@ const InfoGridSection = () => {
 
           {/* LEFT COLUMN */}
           <div className="md:col-span-3 space-y-6">
-            <div className="bg-[#2c6e3b] text-white p-2 text-center font-bold uppercase tracking-widest rounded-sm text-sm">
-              SUPPORT
-            </div>
-            <div className="bg-[#2c6e3b] text-white p-2 text-center font-bold text-xs rounded-sm break-all">
+            <a href="mailto:support@haryanadeendayalplot.org.in" className="bg-[#2c6e3b] text-white p-2 text-center font-bold text-xs rounded-sm break-all hover:bg-[#1e4d29] transition-colors block">
               support@haryanadeendayalplot.org.in
-            </div>
+            </a>
             <div className="bg-[#2c6e3b] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm mt-6">
               SCHEME INFORMATION
             </div>
             <div className="border border-gray-300 p-4 rounded-xl text-sm space-y-2 text-gray-700 font-medium">
               <ul className="list-disc pl-4 space-y-1">
                 <li>RERA-PKL-1587-2024</li>
-                <li>Colonizer: NKV A=EMERALD AVENUE</li>
+                <li>Colonizer: NKV EMERALD AVENUE</li>
                 <li>Location: Sec-09-PALWAL</li>
                 <li>Last Date of Apply: 29/03/2026</li>
                 <li>Allocation Date: 31/03/2026</li>
@@ -41,7 +38,7 @@ const InfoGridSection = () => {
                 <li>Gated Township</li>
                 <li>Society internal road - 9-METER</li>
                 <li>Internal Developments : STP, UGT, Drainage, commercial.</li>
-                <li>Green area - 7.5%</li>
+                <li>Green area</li>
                 <li>CCTV Service line Available</li>
                 <li>24*7 Security</li>
                 <li>Play School</li>
@@ -69,22 +66,10 @@ const InfoGridSection = () => {
               </div>
             </div>
 
-            {/* Apply Now Highlight Button */}
-            <div className="mx-1 mb-4">
-              <Link
-                to="/inquiry"
-                className="block w-full bg-[#2c6e3b] text-white text-center font-black text-lg py-3 rounded-lg shadow-lg border-2 border-[#1e4d29] transform transition-all hover:scale-[1.02] hover:bg-[#1e4d29] hover:shadow-xl relative overflow-hidden group"
-              >
-                <span className="relative z-10 flex items-center justify-center gap-2 tracking-widest uppercase">
-                  Apply Now
-                </span>
-                {/* Shine effect animation */}
-                <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-shine" />
-              </Link>
-            </div>
+
 
             {/* Important Dates Box */}
-            <div className="bg-[#fcf8ef] border-l-4 border-[#e5a03e] p-5 rounded-r-lg shadow-sm mx-1">
+            <div className="bg-[#fcf8ef] border-l-4 border-[#e5a03e] p-5 rounded-r-lg shadow-sm mx-2">
               <div className="flex items-center gap-2 text-[#e5a03e] font-bold text-base sm:text-lg mb-4">
                 <CalendarDays className="h-5 w-5" />
                 <p>Important Dates</p>
@@ -110,12 +95,11 @@ const InfoGridSection = () => {
             </div>
 
             {/* Project Details Box */}
-            <div className="mx-1 mt-2">
+            <div className="mx-2 mt-2">
               <div className="flex items-center gap-2 text-[#30485a] font-bold text-base sm:text-lg mb-2">
                 <Info className="h-5 w-5 fill-current text-white bg-[#30485a] rounded-full p-0.5" />
                 <p>Project Details</p>
               </div>
-              <hr className="border-gray-800 mb-6 border-[1.5px]" />
 
               <div className="space-y-5 text-xs sm:text-sm">
                 <div className="grid grid-cols-[auto_1fr] gap-4 items-start">
@@ -182,9 +166,9 @@ const InfoGridSection = () => {
             <div className="bg-[#2c6e3b] text-white p-2 text-center font-bold uppercase tracking-widest rounded-sm text-sm">
               SUPPORT
             </div>
-            <div className="bg-[#2c6e3b] text-white p-2 text-center font-bold text-sm rounded-sm">
+            <a href="tel:9818513700" className="bg-[#2c6e3b] text-white p-2 text-center font-bold text-sm rounded-sm hover:bg-[#1e4d29] transition-colors block">
               98185-13700
-            </div>
+            </a>
 
             <div className="bg-[#2c6e3b] text-white p-2 text-center font-bold text-xs tracking-wider rounded-sm mt-6">
               REGISTRATION SECTION

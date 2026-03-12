@@ -1,14 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { addInquiry } from "@/lib/inquiries";
 import { toast } from "sonner";
-import { QrCode, Building2, CreditCard } from "lucide-react";
-import qrCodeImg from "@/assets/qrcode.png";
 
 const quotas = ["Govt Employee Quota", "Female Quota", "General Quota", "Management Quota"];
 const plotSizes = [
@@ -32,10 +30,10 @@ const schema = z.object({
 });
 
 const InquiryForm = () => {
+  const navigate = useNavigate();
   const [form, setForm] = useState({ name: "", fatherName: "", email: "", phone: "", address: "", aadhaar: "", city: "", state: "", pinCode: "", quota: "", plotSize: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
-  const [showBankDetails, setShowBankDetails] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,16 +49,17 @@ const InquiryForm = () => {
     setErrors({});
     setSubmitting(true);
     try {
-      await addInquiry(result.data as any);
+      const newInquiry = await addInquiry(result.data as any);
       toast.success("Inquiry submitted successfully!");
-      setShowBankDetails(true);
-      setForm({ name: "", fatherName: "", email: "", phone: "", address: "", aadhaar: "", city: "", state: "", pinCode: "", quota: "", plotSize: "" }); // Reset form
+      // Redirect to Payment Page with the new inquiry details
+      navigate("/payment", { state: { inquiry: newInquiry } });
     } catch {
       toast.error("Failed to submit inquiry. Please try again.");
     } finally {
       setSubmitting(false);
     }
   };
+
   return (
     <div className="w-full max-w-4xl mx-auto py-8 px-4">
       <div className="text-center mb-8">
@@ -107,7 +106,6 @@ const InquiryForm = () => {
             onChange={(e) => setForm({ ...form, address: e.target.value })} />
           {errors.address && <p className="text-sm text-destructive mt-1">{errors.address}</p>}
         </div>
-
 
         <div>
           <Label htmlFor="aadhaar">Aadhaar Number</Label>
@@ -163,48 +161,10 @@ const InquiryForm = () => {
           {errors.plotSize && <p className="text-sm text-destructive mt-1">{errors.plotSize}</p>}
         </div>
 
-        <Button type="submit" className="w-full" size="lg" disabled={submitting}>
+        <Button type="submit" className="w-full bg-[#2c6e3b] hover:bg-[#1e4d29]" size="lg" disabled={submitting}>
           {submitting ? "Submitting…" : "Submit Inquiry"}
         </Button>
       </form>
-
-      <Dialog open={showBankDetails} onOpenChange={setShowBankDetails}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Registration Fee Payment</DialogTitle>
-            <DialogDescription>
-              Your form has been successfully submitted! Please pay the registration fee using the bank details or QR code below.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex flex-col gap-4 py-4">
-            <div className="bg-accent/50 p-4 rounded-lg flex items-start gap-4">
-              <Building2 className="h-6 w-6 text-primary mt-1 shrink-0" />
-              <div>
-                <p className="font-semibold text-sm">Bank Transfer</p>
-                <p className="text-sm text-muted-foreground mt-1">Bank: <strong>ICICI Bank</strong></p>
-                <p className="text-sm text-muted-foreground">Account Name: <strong>SNKV REAL ESTATE PRIVATE LIMITED</strong></p>
-                <p className="text-sm text-muted-foreground">Account Number: <strong>165105500680</strong></p>
-                <p className="text-sm text-muted-foreground">IFSC Code: <strong>ICIC0001651</strong></p>
-                <p className="text-sm text-muted-foreground">Mob: <strong>9015634665</strong></p>
-                <p className="text-sm text-muted-foreground">Branch: <strong>UTT Sector 49, Gurgaon</strong></p>
-              </div>
-            </div>
-
-            <div className="bg-accent/50 p-4 rounded-lg flex flex-col items-center justify-center gap-2">
-              <p className="font-semibold text-sm mb-2 w-full flex items-center justify-start gap-3"><QrCode className="h-5 w-5 text-primary" /> Scan QR to Pay</p>
-              <div className="w-48 h-48 bg-white p-2 rounded-lg border shadow-sm flex items-center justify-center">
-                <img src={qrCodeImg} alt="QR Code for Payment" className="w-full h-full object-contain" />
-              </div>
-              <p className="text-xs text-muted-foreground text-center mt-2">BHIM / UPI / PhonePe / GPay</p>
-            </div>
-          </div>
-          <DialogFooter className="sm:justify-end">
-            <Button type="button" variant="default" onClick={() => setShowBankDetails(false)}>
-              Close
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };
