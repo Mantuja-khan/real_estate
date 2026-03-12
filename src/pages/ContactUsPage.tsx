@@ -29,13 +29,13 @@ const ContactUsPage = () => {
 
         {/* Reach Us Through Details */}
         <div className="max-w-2xl px-4">
-          <h2 className="text-sm font-bold text-gray-500 tracking-widest uppercase mb-6">REACH US THROUGH</h2>
+          <h2 className="text-xs sm:text-sm text-gray-500 tracking-widest uppercase mb-6 font-bold">REACH US THROUGH</h2>
 
           <div className="space-y-6">
             <div className="flex items-start gap-4">
               <MapPin className="h-5 w-5 text-[#d9a05b] mt-0.5 shrink-0 fill-current" />
               <div>
-                <p className="text-gray-800 font-medium leading-relaxed">
+                <p className="text-gray-800 font-medium leading-relaxed text-xs sm:text-sm">
                   <span className="font-bold">SNKV REAL ESTATE PRIVATE LIMITED</span><br />
                   H.NO.- 746 P,SECTOR-38<br />Gurgaon-122001,Haryana<br />
                 </p>
@@ -45,14 +45,14 @@ const ContactUsPage = () => {
             <div className="flex items-center gap-4">
               <PhoneCall className="h-5 w-5 text-[#d9a05b] shrink-0 fill-current" />
               <div>
-                <p className="text-gray-800 font-medium">98185-13700</p>
+                <p className="text-gray-800 font-medium text-xs sm:text-sm">98185-13700</p>
               </div>
             </div>
 
             <div className="flex items-center gap-4">
               <Mail className="h-5 w-5 text-[#d9a05b] shrink-0 fill-current" />
               <div>
-                <p className="text-gray-800 font-medium">support@haryanadeendayalplot.org.in</p>
+                <p className="text-gray-800 font-medium text-xs sm:text-sm">support@haryanadeendayalplot.org.in</p>
               </div>
             </div>
           </div>

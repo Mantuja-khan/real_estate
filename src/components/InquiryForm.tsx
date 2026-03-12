@@ -7,6 +7,19 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { addInquiry } from "@/lib/inquiries";
 import { toast } from "sonner";
+import {
+  User,
+  UserPlus,
+  Mail,
+  Phone,
+  MapPin,
+  CreditCard,
+  Building,
+  Globe,
+  Hash,
+  Layers,
+  Maximize
+} from "lucide-react";
 
 const quotas = ["Govt Employee Quota", "Female Quota", "General Quota", "Management Quota"];
 const plotSizes = [
@@ -67,78 +80,107 @@ const InquiryForm = () => {
         <div className="w-16 h-1 bg-[#2c6e3b] mx-auto mb-4"></div>
 
         <p className="text-[#d9a05b] font-bold text-sm mt-2">
-          Registration fees fully refundable for non alotee
+          Registration fees fully refundable for Non-Allottee
         </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <Label htmlFor="name">Full Name</Label>
+        <div className="space-y-2">
+          <Label htmlFor="name" className="text-black font-bold flex items-center gap-2">
+            <User className="h-4 w-4 stroke-[3px]" /> Your name
+          </Label>
           <Input id="name" placeholder="Enter your full name" value={form.name}
+            className="text-black placeholder:text-gray-400 backdrop-blur-sm bg-white/50 border-gray-300"
             onChange={(e) => setForm({ ...form, name: e.target.value })} />
           {errors.name && <p className="text-sm text-destructive mt-1">{errors.name}</p>}
         </div>
 
-        <div>
-          <Label htmlFor="fatherName">Father/Husband's Name</Label>
+        <div className="space-y-2">
+          <Label htmlFor="fatherName" className="text-black font-bold flex items-center gap-2">
+            <UserPlus className="h-4 w-4 stroke-[3px]" /> Father's Name
+          </Label>
           <Input id="fatherName" placeholder="Enter Father's or Husband's name" value={form.fatherName}
+            className="text-black placeholder:text-gray-400 backdrop-blur-sm bg-white/50 border-gray-300"
             onChange={(e) => setForm({ ...form, fatherName: e.target.value })} />
           {errors.fatherName && <p className="text-sm text-destructive mt-1">{errors.fatherName}</p>}
         </div>
 
-        <div>
-          <Label htmlFor="email">Email Address</Label>
+        <div className="space-y-2">
+          <Label htmlFor="email" className="text-black font-bold flex items-center gap-2">
+            <Mail className="h-4 w-4 stroke-[3px]" /> Email Address
+          </Label>
           <Input id="email" type="email" placeholder="your@email.com" value={form.email}
+            className="text-black placeholder:text-gray-400 backdrop-blur-sm bg-white/50 border-gray-300"
             onChange={(e) => setForm({ ...form, email: e.target.value })} />
           {errors.email && <p className="text-sm text-destructive mt-1">{errors.email}</p>}
         </div>
 
-        <div>
-          <Label htmlFor="phone">Phone Number</Label>
+        <div className="space-y-2">
+          <Label htmlFor="phone" className="text-black font-bold flex items-center gap-2">
+            <Phone className="h-4 w-4 stroke-[3px]" /> Phone Number
+          </Label>
           <Input id="phone" placeholder="10-digit mobile number" value={form.phone}
+            className="text-black placeholder:text-gray-400 backdrop-blur-sm bg-white/50 border-gray-300"
             onChange={(e) => setForm({ ...form, phone: e.target.value })} maxLength={10} />
           {errors.phone && <p className="text-sm text-destructive mt-1">{errors.phone}</p>}
         </div>
 
-        <div>
-          <Label htmlFor="address">Full Address</Label>
+        <div className="space-y-2">
+          <Label htmlFor="address" className="text-black font-bold flex items-center gap-2">
+            <MapPin className="h-4 w-4 stroke-[3px]" /> Full Address
+          </Label>
           <Input id="address" placeholder="Enter your full residential address" value={form.address}
+            className="text-black placeholder:text-gray-400 backdrop-blur-sm bg-white/50 border-gray-300"
             onChange={(e) => setForm({ ...form, address: e.target.value })} />
           {errors.address && <p className="text-sm text-destructive mt-1">{errors.address}</p>}
         </div>
 
-        <div>
-          <Label htmlFor="aadhaar">Aadhaar Number</Label>
+        <div className="space-y-2">
+          <Label htmlFor="aadhaar" className="text-black font-bold flex items-center gap-2">
+            <CreditCard className="h-4 w-4 stroke-[3px]" /> Aadhaar Number
+          </Label>
           <Input id="aadhaar" placeholder="12-digit Aadhaar number" value={form.aadhaar}
+            className="text-black placeholder:text-gray-400 backdrop-blur-sm bg-white/50 border-gray-300"
             onChange={(e) => setForm({ ...form, aadhaar: e.target.value })} maxLength={12} />
           {errors.aadhaar && <p className="text-sm text-destructive mt-1">{errors.aadhaar}</p>}
         </div>
 
-        <div>
-          <Label htmlFor="city">City</Label>
+        <div className="space-y-2">
+          <Label htmlFor="city" className="text-black font-bold flex items-center gap-2">
+            <Building className="h-4 w-4 stroke-[3px]" /> City
+          </Label>
           <Input id="city" placeholder="Enter your city" value={form.city}
+            className="text-black placeholder:text-gray-400 backdrop-blur-sm bg-white/50 border-gray-300"
             onChange={(e) => setForm({ ...form, city: e.target.value })} />
           {errors.city && <p className="text-sm text-destructive mt-1">{errors.city}</p>}
         </div>
 
-        <div>
-          <Label htmlFor="state">State</Label>
+        <div className="space-y-2">
+          <Label htmlFor="state" className="text-black font-bold flex items-center gap-2">
+            <Globe className="h-4 w-4 stroke-[3px]" /> State
+          </Label>
           <Input id="state" placeholder="Enter your state" value={form.state}
+            className="text-black placeholder:text-gray-400 backdrop-blur-sm bg-white/50 border-gray-300"
             onChange={(e) => setForm({ ...form, state: e.target.value })} />
           {errors.state && <p className="text-sm text-destructive mt-1">{errors.state}</p>}
         </div>
 
-        <div>
-          <Label htmlFor="pinCode">PIN Code</Label>
+        <div className="space-y-2">
+          <Label htmlFor="pinCode" className="text-black font-bold flex items-center gap-2">
+            <Hash className="h-4 w-4 stroke-[3px]" /> PIN Code
+          </Label>
           <Input id="pinCode" placeholder="6-digit PIN code" value={form.pinCode}
+            className="text-black placeholder:text-gray-400 backdrop-blur-sm bg-white/50 border-gray-300"
             onChange={(e) => setForm({ ...form, pinCode: e.target.value })} maxLength={6} />
           {errors.pinCode && <p className="text-sm text-destructive mt-1">{errors.pinCode}</p>}
         </div>
 
-        <div>
-          <Label>Quota</Label>
+        <div className="space-y-2">
+          <Label className="text-black font-bold flex items-center gap-2">
+            <Layers className="h-4 w-4 stroke-[3px]" /> Quota
+          </Label>
           <Select value={form.quota} onValueChange={(v) => setForm({ ...form, quota: v })}>
-            <SelectTrigger><SelectValue placeholder="Select quota" /></SelectTrigger>
+            <SelectTrigger className="text-black backdrop-blur-sm bg-white/50 border-gray-300"><SelectValue placeholder="Select quota" /></SelectTrigger>
             <SelectContent>
               {quotas.map((q) => (
                 <SelectItem key={q} value={q}>{q}</SelectItem>
@@ -148,10 +190,12 @@ const InquiryForm = () => {
           {errors.quota && <p className="text-sm text-destructive mt-1">{errors.quota}</p>}
         </div>
 
-        <div>
-          <Label>Plot Size</Label>
+        <div className="space-y-2">
+          <Label className="text-black font-bold flex items-center gap-2">
+            <Maximize className="h-4 w-4 stroke-[3px]" /> Plot Size
+          </Label>
           <Select value={form.plotSize} onValueChange={(v) => setForm({ ...form, plotSize: v })}>
-            <SelectTrigger><SelectValue placeholder="Select plot size" /></SelectTrigger>
+            <SelectTrigger className="text-black backdrop-blur-sm bg-white/50 border-gray-300"><SelectValue placeholder="Select plot size" /></SelectTrigger>
             <SelectContent>
               {plotSizes.map((p) => (
                 <SelectItem key={p} value={p}>{p}</SelectItem>
@@ -161,8 +205,8 @@ const InquiryForm = () => {
           {errors.plotSize && <p className="text-sm text-destructive mt-1">{errors.plotSize}</p>}
         </div>
 
-        <Button type="submit" className="w-full bg-[#2c6e3b] hover:bg-[#1e4d29]" size="lg" disabled={submitting}>
-          {submitting ? "Submitting…" : "Submit Inquiry"}
+        <Button type="submit" className="w-full bg-[#0ea5e9] hover:bg-[#0284c7] text-white font-black uppercase tracking-[0.2em] shadow-lg" size="lg" disabled={submitting}>
+          {submitting ? "Submitting…" : "Submit"}
         </Button>
       </form>
     </div>

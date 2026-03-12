@@ -5,7 +5,9 @@ const sendConfirmationEmail = async (userEmail, userName, fatherName, address, p
         // You should configure this with your actual SMTP credentials (e.g., Gmail, SendGrid)
         // For Gmail, you would use an App Password if 2FA is enabled.
         const transporter = nodemailer.createTransport({
-            service: 'gmail', // or another service like 'smtp.sendgrid.net'
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true, // use SSL
             auth: {
                 user: process.env.SMTP_USER,
                 pass: process.env.SMTP_PASS

@@ -9,7 +9,7 @@ const MapSection = () => {
         <div className="text-center mb-10 sm:mb-16">
           <p className="text-sm font-semibold tracking-widest text-[#2c6e3b] mb-2 uppercase">— Location</p>
           <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">Find Us Here</h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-xs sm:text-sm max-w-2xl mx-auto">
             Visit our prime location and explore the neighborhood of your future dream home.
           </p>
         </div>
@@ -32,9 +32,8 @@ const MapSection = () => {
             href="https://www.google.com/maps/place/28%C2%B008'00.2%22N+77%C2%B018'38.4%22E/@28.1356769,77.3008991,14.23z/data=!4m4!3m3!8m2!3d28.1333847!4d77.3106766?hl=en&entry=ttu&g_ep=EgoyMDI2MDMwOS4wIKXMDSoASAFQAw%3D%3D"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block w-full sm:w-auto"
-          >
-            <Button size="lg" className="w-full sm:w-auto bg-[#2c6e3b] hover:bg-[#1e4d29] text-white py-6 px-10 text-lg font-bold shadow-md hover:shadow-lg transition-all ">
+            className="inline-block w-full sm:w-auto">
+            <Button size="lg" className="w-full sm:w-auto bg-[#2c6e3b] hover:bg-[#1e4d29] text-white py-6 px-10 text-lg shadow-md hover:shadow-lg transition-all ">
               <MapPin className="mr-2 h-5 w-5" />
               Get Directions
             </Button>

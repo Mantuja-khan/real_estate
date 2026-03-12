@@ -4,7 +4,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { FileText, Building2, CalendarDays, CircleDot, Hourglass, Info, Factory, MapPin, FileBadge } from "lucide-react";
 import priceListImg from "@/assets/price_list.png"; // Assuming this asset exists
 import sitePlanImg from "@/assets/3d_image.png";
-import brochurePdf from "@/assets/nkv_pdf.pdf";
+// Brochure is now linked externally to Google Drive
 
 const InfoGridSection = () => {
   const [showPriceList, setShowPriceList] = useState(false);
@@ -23,41 +23,38 @@ const InfoGridSection = () => {
             <div className="bg-[#2c6e3b] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm mt-6">
               SCHEME INFORMATION
             </div>
-            <div className="border border-gray-300 p-4 rounded-xl text-sm space-y-2 text-gray-700 font-medium">
+            <div className="sm:border border-gray-300 p-4 sm:rounded-xl rounded-none text-sm space-y-2 text-gray-700 font-medium border-0">
               <ul className="list-disc pl-4 space-y-1">
                 <li>RERA-PKL-1587-2024</li>
-                <li>Colonizer: NKV EMERALD AVENUE</li>
-                <li>Location: Sec-09-PALWAL</li>
+                <li>Colonizer: NKV Emerald Avenue</li>
+                <li>Location : Sector - 9 Palwal</li>
                 <li>Last Date of Apply: 29/03/2026</li>
                 <li>Allocation Date: 31/03/2026</li>
               </ul>
             </div>
 
-            <div className="border border-gray-300 p-4 rounded-xl text-sm space-y-2 text-gray-700 font-medium pb-8 mt-4">
+            <div className="sm:border border-gray-300 p-4 sm:rounded-xl rounded-none text-sm space-y-2 text-gray-700 font-medium pb-8 mt-4 border-0">
               <ul className="list-disc pl-4 space-y-1">
                 <li>Gated Township</li>
-                <li>Society internal road - 9-METER</li>
+                <li>Society Internal Road - 9 Meter</li>
                 <li>Internal Developments : STP, UGT, Drainage, commercial.</li>
                 <li>Green area</li>
-                <li>CCTV Service line Available</li>
+                <li>24x7 CCTV Surveillance</li>
                 <li>24*7 Security</li>
                 <li>Play School</li>
-
               </ul>
             </div>
 
-            <div className="bg-[#2c6e3b] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm mt-4">
-              Allotment Results -Plots
-            </div>
+
           </div>
 
           {/* CENTER COLUMN */}
-          <div className="md:col-span-6 flex flex-col gap-6 border-l border-r border-gray-200 px-2 sm:px-6">
+          <div className="md:col-span-6 flex flex-col gap-6 sm:border-l sm:border-r border-gray-200 px-0 sm:px-6 border-0">
 
             {/* Header Titles */}
-            <div className="space-y-3 bg-[#2c6e3b] text-white p-4 rounded-t-lg rounded-b-sm shadow-sm">
-              <div className="flex items-start gap-2 text-xs sm:text-sm text-gray-200 font-medium">
-                <FileText className="h-4 w-4 mt-0.5" />
+            <div className="space-y-3 bg-[#2c6e3b] text-white p-4 sm:rounded-t-lg sm:rounded-b-sm sm:shadow-sm rounded-none shadow-none">
+              <div className="flex items-start gap-2 text-base sm:text-lg font-bold uppercase">
+                <FileText className="h-5 w-5 mt-0.5" />
                 <p>Scheme RERA : RERA-PKL-1587-2024</p>
               </div>
               <div className="flex items-start gap-2 text-base sm:text-lg font-bold uppercase">
@@ -68,68 +65,66 @@ const InfoGridSection = () => {
 
 
 
-            {/* Important Dates Box */}
-            <div className="bg-[#fcf8ef] border-l-4 border-[#e5a03e] p-5 rounded-r-lg shadow-sm mx-2">
-              <div className="flex items-center gap-2 text-[#e5a03e] font-bold text-base sm:text-lg mb-4">
-                <CalendarDays className="h-5 w-5" />
-                <p>Important Dates</p>
-              </div>
-              <div className="space-y-4 text-gray-700 font-medium text-xs sm:text-sm">
-                <div className="flex items-center gap-3">
-                  <CircleDot className="h-4 w-4 text-[#30485a] shrink-0 fill-current" />
-                  <p><span className="text-[#e5a03e] font-bold uppercase">Application Live Now</span></p>
+            {/* Merged Info Box */}
+            <div className="sm:border border-gray-300 p-5 sm:rounded-xl rounded-none sm:shadow-sm mx-0 sm:mx-2 space-y-8 border-0 shadow-none">
+              {/* Important Dates Segment */}
+              <div>
+                <div className="flex items-center gap-2 text-[#30485a] font-bold text-base sm:text-lg mb-4">
+                  <Info className="h-5 w-5 fill-current text-white bg-[#30485a] rounded-full p-0.5" />
+                  <p>Important Dates</p>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Hourglass className="h-4 w-4 text-[#30485a] shrink-0 fill-current" />
-                  <p><span className="text-[#e5a03e] font-bold">Last Date of Registration:</span> 29-03-2026</p>
+                <div className="space-y-4 text-gray-700 font-medium text-xs sm:text-sm">
+                  <div className="flex items-center gap-3">
+                    <p>
+                      <span className="text-green-600 font-bold uppercase animate-blink">
+                        Application Live Now
+                      </span>
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <p><span className="text-gray-900 ">Last Date of Registration:</span> 29-03-2026</p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <p><span className="text-gray-900 ">Result Date:</span> 30-03-2026</p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <p><span className="text-gray-900 ">Allotment Date:</span> 31-03-2026</p>
+                  </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <CircleDot className="h-4 w-4 text-[#30485a] shrink-0 fill-current" />
-                  <p><span className="text-[#e5a03e] font-bold">Result Date:</span> 30-03-2026</p>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="h-4 w-4 rounded-full bg-[#30485a] flex-shrink-0" />
-                  <p><span className="text-[#e5a03e] font-bold">Allotment Date:</span> 31-03-2026</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Project Details Box */}
-            <div className="mx-2 mt-2">
-              <div className="flex items-center gap-2 text-[#30485a] font-bold text-base sm:text-lg mb-2">
-                <Info className="h-5 w-5 fill-current text-white bg-[#30485a] rounded-full p-0.5" />
-                <p>Project Details</p>
               </div>
 
-              <div className="space-y-5 text-xs sm:text-sm">
-                <div className="grid grid-cols-[auto_1fr] gap-4 items-start">
-                  <div className="flex items-center gap-2 min-w-[120px] sm:min-w-[140px] text-[#e5a03e] font-bold">
-                    <div className="bg-[#30485a] p-1.5 rounded-full"><Factory className="h-3 w-3 text-white" /></div>
-                    Colonizer:
-                  </div>
-                  <p className="text-gray-700 font-bold mt-1 max-w-[200px] leading-tight break-words">SNKV REAL ESTATE PRIVATE LIMITED</p>
+              {/* Project Details Segment */}
+              <div>
+                <div className="flex items-center gap-2 text-[#30485a] font-bold text-base sm:text-lg mb-4">
+                  <Info className="h-5 w-5 fill-current text-white bg-[#30485a] rounded-full p-0.5" />
+                  <p>Project Details</p>
                 </div>
 
-                <div className="grid grid-cols-[auto_1fr] gap-4 items-start">
-                  <div className="flex items-center gap-2 min-w-[120px] sm:min-w-[140px] text-[#e5a03e] font-bold">
-                    <div className="bg-[#30485a] p-1.5 rounded-full"><MapPin className="h-3 w-3 text-white" /></div>
-                    Location:
+                <div className="space-y-4 text-gray-700 font-medium text-xs sm:text-sm">
+                  <div className="flex items-start gap-3">
+                    <p>
+                      <span className="text-gray-900">Colonizer:</span> SNKV REAL ESTATE PRIVATE LIMITED
+                    </p>
                   </div>
-                  <p className="text-gray-700 font-bold mt-1">Sector 09, palwal, Haryana</p>
-                </div>
 
-                <div className="grid grid-cols-[auto_1fr] gap-4 items-start">
-                  <div className="flex items-center gap-2 min-w-[120px] sm:min-w-[140px] text-[#e5a03e] font-bold">
-                    <div className="bg-[#30485a] p-1.5 rounded-full"><FileBadge className="h-3 w-3 text-white" /></div>
-                    RERA Status:
+                  <div className="flex items-start gap-3">
+                    <p>
+                      <span className="text-gray-900">Location:</span> Sector 09, Palwal, Haryana
+                    </p>
                   </div>
-                  <p className="text-gray-700 font-bold mt-1">Registered & Approved</p>
+
+                  <div className="flex items-start gap-3">
+                    <p>
+                      <span className="text-gray-900">RERA Status:</span> Registered & Approved
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Bottom Links */}
-            <div className="flex flex-col space-y-4 pt-4 mx-2">
+            <div className="flex flex-col space-y-4 pt-4 mx-0 sm:mx-2">
+
               <button
                 onClick={() => setShowPriceList(true)}
                 className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm uppercase w-full transition-colors"
@@ -137,7 +132,7 @@ const InfoGridSection = () => {
                 Price List
               </button>
               <a
-                href={brochurePdf}
+                href="https://drive.google.com/file/d/1eZ9tBGDzoCrr2biF7xeHL45mQ0DFFJy1/view?usp=drive_link"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm uppercase w-full transition-colors block"
@@ -179,13 +174,13 @@ const InfoGridSection = () => {
             </div>
 
             <div className="bg-[#2c6e3b] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm mt-2">
-              LOCATION BENIFITS
+              LOCATION BENEFITS
             </div>
-            <div className="border border-gray-300 p-4 rounded-xl text-sm space-y-3 text-gray-700 font-medium">
+            <div className="sm:border border-gray-300 p-4 sm:rounded-xl rounded-none text-sm space-y-3 text-gray-700 font-medium border-0">
               <ul className="list-disc pl-4 space-y-2 mb-4">
-                <li>upcoming metro</li>
+                <li>Proposed Metro Station - 5 Min</li>
                 <li>Education and health care</li>
-                <li>Hathin Highway Road</li>
+                <li>Bang on Palwal Hathin Highway</li>
                 <li>Delhi-Mumbai Expressway - 15 mins.</li>
                 <li>60 minutes drive to International Airport.</li>
                 <li>Palwal Bus Station, Railway Station - 5 mins</li>

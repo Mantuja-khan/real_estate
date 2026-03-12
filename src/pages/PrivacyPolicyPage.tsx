@@ -92,9 +92,7 @@ const PrivacyPolicyPage = () => (
             <li><strong>Right to Opt-Out:</strong> You can unsubscribe from marketing communications</li>
             <li><strong>Right to Object:</strong> You can object to certain data processing</li>
           </ul>
-          <p className="mt-2">To exercise these rights, please contact us at <a href="mailto:yourgmail@gmail.com" className="text-primary underline">yourgmail@gmail.com</a></p>
         </section>
-
         <section>
           <h2 className="text-lg font-semibold text-foreground mb-2">7. Data Retention</h2>
           <p>We will only keep your personal information for as long as it is necessary for the purposes set out in this privacy policy, unless a longer retention period is required or permitted by law.</p>
@@ -105,14 +103,7 @@ const PrivacyPolicyPage = () => (
           <p>We may update this privacy policy from time to time. The updated version will be indicated by an updated "Revised" date and the updated version will be effective as soon as it is accessible. We encourage you to review this privacy policy frequently to be informed of how we are protecting your information.</p>
         </section>
 
-        <section>
-          <h2 className="text-lg font-semibold text-foreground mb-2">9. Contact Us</h2>
-          <p>If you have questions or comments about this policy, you may contact us at:</p>
-          <ul className="list-none mt-2 space-y-1">
-            <li><strong>Email:</strong> <a href="mailto:yourgmail@gmail.com" className="text-primary underline">yourgmail@gmail.com</a></li>
-            <li><strong>Website:</strong> <a href="https://yourdomain.com" className="text-primary underline" target="_blank" rel="noopener noreferrer">yourdomain.com</a></li>
-          </ul>
-        </section>
+
 
         <section>
           <h2 className="text-lg font-semibold text-foreground mb-2">10. Governing Law</h2>

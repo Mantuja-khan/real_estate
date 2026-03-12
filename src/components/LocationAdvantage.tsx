@@ -60,7 +60,7 @@ const LocationAdvantage = () => {
           </div>
 
           {/* Education & Healthcare */}
-          <div className="p-6 sm:bg-card sm:rounded-2xl shadow-none sm:shadow-sm border-b sm:border border-border/50 hover:shadow-none sm:hover:shadow-md transition-shadow">
+          <div className="p-6 sm:bg-card sm:rounded-2xl shadow-none sm:shadow-sm border-0 sm:border border-border/50 hover:shadow-none sm:hover:shadow-md transition-shadow">
             <div className="flex gap-4 mb-6">
               <div className="bg-primary/10 w-12 h-12 rounded-full flex items-center justify-center text-primary">
                 <GraduationCap className="h-6 w-6" />
@@ -97,7 +97,7 @@ const LocationAdvantage = () => {
           </div>
 
           {/* Entertainment */}
-          <div className="p-6 sm:bg-card sm:rounded-2xl shadow-none sm:shadow-sm sm:border border-border/50 hover:shadow-none sm:hover:shadow-md transition-shadow">
+          <div className="p-6 sm:bg-card sm:rounded-2xl shadow-none sm:shadow-sm border-0 sm:border border-border/50 hover:shadow-none sm:hover:shadow-md transition-shadow">
             <div className="bg-primary/10 w-12 h-12 rounded-full flex items-center justify-center mb-6 text-primary">
               <ShoppingBag className="h-6 w-6" />
             </div>

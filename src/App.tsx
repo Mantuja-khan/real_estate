@@ -15,6 +15,9 @@ import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import RefundPolicyPage from "./pages/RefundPolicyPage";
 import ContactUsPage from "./pages/ContactUsPage";
 import LocationBenefitsPage from "./pages/LocationBenefitsPage";
+import AboutDDJAYPage from "./pages/AboutDDJAYPage";
+import StickyActions from "./components/StickyActions";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +27,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/inquiry" element={<InquiryPage />} />
@@ -36,8 +40,10 @@ const App = () => (
           <Route path="/admin/login" element={<AdminLoginPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/location-benefits" element={<LocationBenefitsPage />} />
+          <Route path="/about-ddjay" element={<AboutDDJAYPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <StickyActions />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
