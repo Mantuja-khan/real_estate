@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { FileText, Building2, CalendarDays, CircleDot, Hourglass, Info, Factory, MapPin, FileBadge } from "lucide-react";
-import priceListImg from "@/assets/price_list.png"; // Assuming this asset exists
+import priceListPdf from "@/assets/pricelist.pdf";
 import sitePlanImg from "@/assets/3d_image.png";
 // Brochure is now linked externally to Google Drive
 
 const InfoGridSection = () => {
-  const [showPriceList, setShowPriceList] = useState(false);
   const [showSitePlan, setShowSitePlan] = useState(false);
 
   return (
@@ -29,8 +28,22 @@ const InfoGridSection = () => {
                 <li>Colonizer: NKV Emerald Avenue</li>
                 <li>Location : Sector - 9 Palwal</li>
                 <li>Last Date of Apply: 29/03/2026</li>
-                <li>Allocation Date: 31/03/2026</li>
+                <li>Allotment Date: 31/03/2026</li>
               </ul>
+            </div>
+
+            <div className="bg-[#2c6e3b] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm mt-6 uppercase">
+              Important Details
+            </div>
+            <div className="sm:border border-gray-300 p-4 sm:rounded-xl rounded-none text-sm space-y-4 text-gray-700 font-medium border-0">
+              <div className="flex items-center justify-between gap-2 border-b border-gray-100 pb-2">
+                <span>Payment Plan</span>
+                <span className="text-[#2c6e3b] font-bold text-sm">40 : 60</span>
+              </div>
+              <div className="flex items-center justify-between gap-2">
+                <span>Bank Loan</span>
+                <span className="text-[#2c6e3b] font-bold text-sm">AVAILABLE</span>
+              </div>
             </div>
 
             <div className="sm:border border-gray-300 p-4 sm:rounded-xl rounded-none text-sm space-y-2 text-gray-700 font-medium pb-8 mt-4 border-0">
@@ -76,7 +89,7 @@ const InfoGridSection = () => {
                 <div className="space-y-4 text-gray-700 font-medium text-xs sm:text-sm">
                   <div className="flex items-center gap-3">
                     <p>
-                      <span className="text-green-600 font-bold uppercase animate-blink">
+                      <span className="text-green-600 font-bold uppercase">
                         Application Live Now
                       </span>
                     </p>
@@ -125,14 +138,16 @@ const InfoGridSection = () => {
             {/* Bottom Links */}
             <div className="flex flex-col space-y-4 pt-4 mx-0 sm:mx-2">
 
-              <button
-                onClick={() => setShowPriceList(true)}
-                className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm uppercase w-full transition-colors"
+              <a
+                href={priceListPdf}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm uppercase w-full transition-colors block"
               >
                 Price List
-              </button>
+              </a>
               <a
-                href="https://drive.google.com/file/d/1eZ9tBGDzoCrr2biF7xeHL45mQ0DFFJy1/view?usp=drive_link"
+                href="https://drive.google.com/file/d/1rgfJKDNzWz8PuCdugdRy59kG4KbPPTUX/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm uppercase w-full transition-colors block"
@@ -176,8 +191,8 @@ const InfoGridSection = () => {
             <div className="bg-[#2c6e3b] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm mt-2">
               LOCATION BENEFITS
             </div>
-            <div className="sm:border border-gray-300 p-4 sm:rounded-xl rounded-none text-sm space-y-3 text-gray-700 font-medium border-0">
-              <ul className="list-disc pl-4 space-y-2 mb-4">
+            <div className="sm:border border-gray-300 p-4 sm:rounded-xl rounded-none text-sm space-y-4 text-gray-700 font-medium border-0">
+              <ul className="list-disc pl-4 space-y-1">
                 <li>Proposed Metro Station - 5 Min</li>
                 <li>Education and health care</li>
                 <li>Bang on Palwal Hathin Highway</li>
@@ -185,8 +200,11 @@ const InfoGridSection = () => {
                 <li>60 minutes drive to International Airport.</li>
                 <li>Palwal Bus Station, Railway Station - 5 mins</li>
               </ul>
-              <Link to="/location-benefits" className="w-full inline-block bg-[#2c6e3b] hover:bg-[#1e4d29] text-white text-center font-bold py-2 rounded-sm transition-colors uppercase tracking-wider text-sm mt-4">
-                VIEW MORE
+              <Link
+                to="/location-benefits"
+                className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm uppercase w-full transition-colors block"
+              >
+                View More
               </Link>
             </div>
           </div>
@@ -194,19 +212,6 @@ const InfoGridSection = () => {
         </div>
       </div>
 
-      <Dialog open={showPriceList} onOpenChange={setShowPriceList}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-auto p-1 bg-transparent border-none shadow-none">
-          <img
-            src={priceListImg}
-            alt="Price List"
-            className="w-full h-auto rounded-lg"
-            onError={(e) => {
-              // Fallback if the image doesn't load because we're using a generic name
-              (e.target as HTMLImageElement).src = '';
-            }}
-          />
-        </DialogContent>
-      </Dialog>
       <Dialog open={showSitePlan} onOpenChange={setShowSitePlan}>
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-auto p-1 bg-transparent border-none shadow-none">
           <img

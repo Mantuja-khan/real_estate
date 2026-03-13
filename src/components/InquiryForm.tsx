@@ -30,7 +30,7 @@ const plotSizes = [
 
 const schema = z.object({
   name: z.string().trim().min(2, "Name is required").max(100),
-  fatherName: z.string().trim().min(2, "Father/Husband Name is required").max(100),
+  fatherName: z.string().trim().min(2, "Father is required").max(100),
   email: z.string().trim().email("Enter a valid email address"),
   phone: z.string().trim().regex(/^[6-9]\d{9}$/, "Enter valid 10-digit phone number"),
   address: z.string().trim().min(5, "Full Address is required").max(500),
@@ -192,10 +192,10 @@ const InquiryForm = () => {
 
         <div className="space-y-2">
           <Label className="text-black font-bold flex items-center gap-2">
-            <Maximize className="h-4 w-4 stroke-[3px]" /> Plot Size
+            <Maximize className="h-4 w-4 stroke-[3px]" /> Plot Sizes
           </Label>
           <Select value={form.plotSize} onValueChange={(v) => setForm({ ...form, plotSize: v })}>
-            <SelectTrigger className="text-black backdrop-blur-sm bg-white/50 border-gray-300"><SelectValue placeholder="Select plot size" /></SelectTrigger>
+            <SelectTrigger className="text-black backdrop-blur-sm bg-white/50 border-gray-300"><SelectValue placeholder=" Select Plot size" /></SelectTrigger>
             <SelectContent>
               {plotSizes.map((p) => (
                 <SelectItem key={p} value={p}>{p}</SelectItem>

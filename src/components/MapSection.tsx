@@ -1,8 +1,13 @@
+import React, { useState } from "react";
 import { MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
 import mapImg from "@/assets/deendaya;.jpg";
+import project3dImg from "@/assets/3d_image.png";
 
 const MapSection = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <section className="py-12 sm:py-24 bg-gray-50 px-4" id="location">
       <div className="container mx-auto max-w-6xl">
@@ -38,6 +43,22 @@ const MapSection = () => {
               Get Directions
             </Button>
           </a>
+        </div>
+
+        {/* 3D Project Image */}
+        <div className="mt-16 w-full flex flex-col items-center">
+          <h3 className="text-xl md:text-3xl font-bold text-[#2c6e3b] mb-8 uppercase tracking-widest">— Project View</h3>
+          
+          <div className="w-full bg-white shadow-2xl rounded-xl overflow-hidden border border-gray-100 p-1 sm:p-2">
+            <img 
+              src={project3dImg} 
+              alt="Project 3D View" 
+              className="w-full h-auto object-contain rounded-lg"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = 'https://i.pinimg.com/736x/1d/af/f8/1daff8a998584f1cd7910d01c0cf42c8.jpg';
+              }}
+            />
+          </div>
         </div>
       </div>
     </section>

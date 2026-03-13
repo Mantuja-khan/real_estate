@@ -1,10 +1,15 @@
+import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Home, ArrowLeft } from "lucide-react";
 
 const TermsPage = () => (
   <div className="min-h-screen flex flex-col">
     <Navbar />
-    <main className="flex-1 container py-16 max-w-3xl">
+    <main className="flex-1 container py-8">
+      <Link to="/" className="inline-flex items-center gap-1 text-[#2c6e3b] hover:underline font-bold text-sm mb-8 group">
+        <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" /> Back to Home
+      </Link>
       <h1 className="text-3xl font-bold font-display mb-8">Terms & Conditions</h1>
 
       <div className="prose prose-sm max-w-none space-y-6 text-muted-foreground">

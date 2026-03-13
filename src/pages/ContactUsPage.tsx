@@ -1,13 +1,17 @@
+import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { MapPin, PhoneCall, Mail } from "lucide-react";
+import { MapPin, PhoneCall, Mail, Home, ArrowLeft } from "lucide-react";
 
 const ContactUsPage = () => {
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Navbar />
 
-      <main className="flex-grow container mx-auto px-4 py-12 max-w-5xl">
+      <main className="flex-grow container mx-auto px-4 py-8 max-w-5xl">
+        <Link to="/" className="inline-flex items-center gap-1 text-[#2c6e3b] hover:underline font-bold text-sm mb-8 group">
+          <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" /> Back to Home
+        </Link>
         <div className="flex flex-col items-center mb-10">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">CONTACT US</h1>
           <div className="w-16 h-1 bg-red-600"></div>

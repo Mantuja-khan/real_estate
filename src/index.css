@@ -92,6 +92,25 @@
   h1, h2, h3 {
     font-family: inherit;
   }
+
+  /* Disable default mobile/browser highlights and prevent any visual shift on click */
+  * {
+    -webkit-tap-highlight-color: transparent !important;
+    outline: none !important;
+  }
+
+  /* Prevent any visual response on click/active states across the site */
+  *:active, *:focus {
+    transform: none !important;
+    opacity: inherit !important;
+    transition: none !important;
+  }
+
+  /* Ensure specific green elements maintain their appearance if needed, but WITHOUT any click effect */
+  .bg-\[\#2c6e3b\] {
+    background-color: #2c6e3b;
+    color: white;
+  }
 }
 
 @layer utilities {
@@ -111,16 +130,6 @@
   @keyframes shine {
     100% {
       left: 125%;
-    }
-  }
-
-  /* Blink animation for highlight buttons */
-  .animate-blink {
-    animation: blink 1s step-start infinite;
-  }
-  @keyframes blink {
-    50% {
-      opacity: 0;
     }
   }
 
@@ -156,11 +165,27 @@
 
   @keyframes text-blink {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+    50% { opacity: 1; }
   }
 
   @keyframes shimmer {
     0% { transform: translateX(-150%) rotate(45deg); }
     100% { transform: translateX(150%) rotate(45deg); }
+  }
+
+  /* Flip animation for countdown digits */
+  .animate-flip-digit {
+    animation: flip-up 0.5s ease-out;
+  }
+
+  @keyframes flip-up {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
 }

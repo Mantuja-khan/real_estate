@@ -42,16 +42,27 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate, onExpire, c
   if (!timeLeft) return null;
 
   return (
-    <div className={`flex items-center gap-1 font-bold animate-blink uppercase tracking-wider ${className}`}>
-      <span>Registration Ends In:</span>
-      <div className="flex gap-0.5">
-        <span>{timeLeft.days}d</span>
-        <span>{timeLeft.hours}h</span>
-        <span>{timeLeft.minutes}m</span>
-        <span>{timeLeft.seconds}s</span>
+    <div className={`flex items-center justify-center gap-2 py-1 ${className}`}>
+      <span className="text-sm font-black uppercase tracking-[0.1em]">Registration Closes In:</span>
+      <div className="flex gap-1.5 text-center">
+        <TimeUnit value={timeLeft.days} label="Days" />
+        <TimeUnit value={timeLeft.hours} label="Hours" />
+        <TimeUnit value={timeLeft.minutes} label="Mins" />
+        <TimeUnit value={timeLeft.seconds} label="Secs" />
       </div>
     </div>
   );
 };
+
+const TimeUnit = ({ value, label }: { value: number; label: string }) => (
+  <div className="flex flex-col items-center">
+    <div className="bg-white text-red-600 px-1 py-0 rounded-sm min-w-[28px] sm:min-w-[36px] text-sm sm:text-base font-black shadow-sm overflow-hidden flex items-center justify-center">
+      <span key={value} className="animate-flip-digit inline-block">
+        {value.toString().padStart(2, '0')}
+      </span>
+    </div>
+    <span className="text-[7px] sm:text-[8px] mt-0.5 font-extrabold uppercase tracking-tighter opacity-90 leading-none">{label}</span>
+  </div>
+);
 
 export default CountdownTimer;

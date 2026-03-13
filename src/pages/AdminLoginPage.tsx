@@ -46,7 +46,7 @@ const AdminLoginPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-secondary/50 px-4">
       <div className="w-full max-w-md">
-        <Link to="/" className="flex items-center justify-center gap-2 font-display text-2xl font-bold mb-8">
+        <Link to="/" className="flex items-center justify-center gap-2 font-display text-2xl font-bold mb-8 active:opacity-100">
           <Home className="h-6 w-6 text-primary" />
           Haryana Deen Dayal Jan Awaas Yojna
         </Link>

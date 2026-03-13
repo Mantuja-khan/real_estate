@@ -52,28 +52,33 @@ const Footer = () => (
     </div>
 
     {/* Bottom Green Banner */}
-    <div className="bg-[#2c6e3b] w-full py-8 px-4">
+    <div className="bg-[#2c6e3b] w-full pt-8 pb-24 md:pb-8 px-4">
       <div className="container mx-auto max-w-5xl text-left sm:text-center text-white text-xs sm:text-sm">
         <div className="mb-6 space-y-4">
           <p className="flex flex-wrap items-center justify-start sm:justify-center gap-x-3 gap-y-2 font-medium tracking-wide mb-6">
-            Disclaimer: This website is an informational platform for residential plotted projects offered under the Haryana Deen Dayal Jan Awas Yojna (DDJAY) policy of the Haryana Government. Marketing and customer facilitation services are provided by a privately operated real estate promotion entity. This is not an official government website.
+            Disclaimer: This website is an informational platform for residential plotted projects offered under the Deen Dayal Jan Awas Yojana (DDJAY) policy of the Haryana Government. Marketing and customer facilitation services are provided by a privately operated real estate promotion entity. This is not an official government website.
           </p>
-
+          <p className="flex flex-wrap items-center justify-start sm:justify-center gap-x-3 gap-y-2 font-medium tracking-wide mb-6">
+            Your privacy is important to us. We collect information only to serve you better.
+          </p>
         </div>
 
-        <div className="flex flex-wrap items-center justify-start sm:justify-center gap-x-3 gap-y-2 font-medium tracking-wide mb-6">
-          <Link to="/about-ddjay" className="hover:text-gray-200 transition-colors uppercase">About DDJAY</Link>
-          <span className="opacity-30">|</span>
-          <Link to="/terms" className="hover:text-gray-200 transition-colors uppercase">Terms & Conditions</Link>
-          <span className="opacity-30">|</span>
-          <Link to="/contact" className="hover:text-gray-200 transition-colors uppercase">Contact Us</Link>
-          <span className="opacity-30">|</span>
-          <Link to="/refund-policy" className="hover:text-gray-200 transition-colors uppercase">Refunds & Cancellation</Link>
-          <span className="opacity-30">|</span>
-          <Link to="/privacy-policy" className="hover:text-gray-200 transition-colors uppercase">Privacy Policy</Link>
+        <div className="mb-6">
+          <p className="tracking-wide mb-4 opacity-90">
+            © Copyright 2025. All Rights Reserved
+          </p>
+          <div className="flex flex-wrap items-center justify-start sm:justify-center gap-x-3 gap-y-2 tracking-wide">
+            <Link to="/about-ddjay" className="hover:text-gray-200 transition-colors uppercase">About us</Link>
+            <span className="opacity-30">|</span>
+            <Link to="/contact" className="hover:text-gray-200 transition-colors uppercase">Contact Us</Link>
+            <span className="opacity-30">|</span>
+            <Link to="/privacy-policy" className="hover:text-gray-200 transition-colors uppercase">Privacy Policy</Link>
+            <span className="opacity-30">|</span>
+            <Link to="/terms" className="hover:text-gray-200 transition-colors uppercase">Terms & Conditions</Link>
+            <span className="opacity-30">|</span>
+            <Link to="/refund-policy" className="hover:text-gray-200 transition-colors uppercase">Refund & Cancellation </Link>
+          </div>
         </div>
-
-
       </div>
     </div>
   </footer>

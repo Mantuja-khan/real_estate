@@ -1,7 +1,7 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Landmark, QrCode, Shield, Info, CreditCard, ArrowLeft, Phone } from "lucide-react";
+import { Landmark, QrCode, Shield, Info, CreditCard, ArrowLeft, Phone, Home } from "lucide-react";
 import qrCodeImg from "@/assets/qrcode.png";
 import { Button } from "@/components/ui/button";
 
@@ -120,13 +120,13 @@ const PaymentPage = () => {
 
           {/* Navigation/Back Link */}
           <div className="mt-10 flex flex-col md:flex-row items-center justify-between gap-6 px-2">
-            <button 
-              onClick={() => navigate("/")}
-              className="flex items-center gap-2 text-xs font-bold text-gray-400 hover:text-[#2c6e3b] transition-colors uppercase tracking-widest group"
+            <Link 
+              to="/"
+              className="inline-flex items-center gap-1 text-[#2c6e3b] hover:underline font-bold text-sm group"
             >
               <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-              Back to registration home
-            </button>
+              Back to Home
+            </Link>
             
             <div className="flex items-center gap-4">
                <Shield className="h-8 w-8 text-gray-200" />

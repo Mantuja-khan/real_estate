@@ -21,11 +21,11 @@ const HeroSection = () => {
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
         {images.map((imgSrc, idx) => (
-          <div key={idx} className="w-full h-[180px] sm:h-[300px] md:h-[400px] lg:h-[500px] bg-white flex-shrink-0 flex items-center justify-center overflow-hidden">
+          <div key={idx} className="w-full h-[120px] sm:h-[250px] md:h-[350px] lg:h-[450px] bg-white flex-shrink-0 relative overflow-hidden">
             <img
               src={imgSrc}
               alt={`Haryana Deen Dayal Jan awas Yojna View ${idx + 1}`}
-              className="w-full h-full object-contain sm:object-cover sm:object-top transition-all duration-500"
+              className="absolute inset-0 w-full h-full object-cover object-top transition-all duration-500"
               onError={(e) => {
                 (e.target as HTMLImageElement).src = 'https://i.pinimg.com/736x/1d/af/f8/1daff8a998584f1cd7910d01c0cf42c8.jpg';
               }}

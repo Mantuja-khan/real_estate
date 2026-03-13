@@ -9,7 +9,7 @@ const StickyActions = () => {
       {/* Call Now Button (Bottom Left) - Sky Blue */}
       <a
         href={`tel:${phoneNumber}`}
-        className="fixed bottom-4 left-4 z-[60] bg-sky-500 text-white p-3 rounded-full shadow-xl hover:scale-110 active:scale-95 transition-all duration-300 group flex items-center gap-1.5"
+        className="fixed bottom-4 left-4 z-[60] bg-sky-500 text-white p-3 rounded-full shadow-xl hover:scale-110 transition-all duration-300 group flex items-center gap-1.5"
         title="Call Now"
       >
         <div className="p-1.5 rounded-full">
@@ -25,7 +25,7 @@ const StickyActions = () => {
         href={`https://wa.me/91${phoneNumber}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-4 right-4 z-[60] bg-[#25D366] text-white p-3 rounded-full shadow-xl hover:scale-110 active:scale-95 transition-all duration-300 group flex items-center gap-1.5"
+        className="fixed bottom-4 right-4 z-[60] bg-[#25D366] text-white p-3 rounded-full shadow-xl hover:scale-110 transition-all duration-300 group flex items-center gap-1.5"
         title="WhatsApp Us"
       >
         <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-500 font-bold text-xs px-0 group-hover:px-1.5">

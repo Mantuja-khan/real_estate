@@ -1,13 +1,18 @@
+import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import InquiryForm from "@/components/InquiryForm";
+import { Home, ArrowLeft } from "lucide-react";
 
 const InquiryPage = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-1 py-16 px-4">
+      <main className="flex-1 py-12 px-4">
         <div className="max-w-5xl mx-auto">
+          <Link to="/" className="inline-flex items-center gap-1 text-[#2c6e3b] hover:underline font-bold text-sm mb-12 group">
+            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" /> Back to Home
+          </Link>
           {/* Form Section */}
           <div className="mb-16">
             <InquiryForm />

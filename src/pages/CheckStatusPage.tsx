@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { apiFetch } from "@/lib/api";
 import { Button } from "@/components/ui/button";
@@ -5,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Search, CheckCircle2, Clock, AlertCircle } from "lucide-react";
+import { Search, CheckCircle2, Clock, AlertCircle, Home, ArrowLeft } from "lucide-react";
 
 interface SlotResult {
   name: string;
@@ -77,7 +78,12 @@ const CheckStatusPage = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-1 flex items-center justify-center py-16 px-4">
+      <main className="flex-1 flex flex-col items-center justify-center py-12 px-4">
+        <div className="w-full max-w-md mb-8 text-center sm:text-left">
+          <Link to="/" className="inline-flex items-center gap-1 text-[#2c6e3b] hover:underline font-bold text-sm group">
+            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" /> Back to Home
+          </Link>
+        </div>
         <div className="w-full max-w-md">
           <h1 className="text-3xl font-bold mb-2 text-center">Check Your Slot Status</h1>
           <p className="text-muted-foreground text-center mb-8">
