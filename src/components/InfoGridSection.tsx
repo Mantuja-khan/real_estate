@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { FileText, Building2, CalendarDays, CircleDot, Hourglass, Info, Factory, MapPin, FileBadge } from "lucide-react";
 import priceListPdf from "@/assets/pricelist.pdf";
+import brochurePdf from "@/assets/brochure.pdf";
 import sitePlanImg from "@/assets/3d_image.png";
-// Brochure is now linked externally to Google Drive
 
 const InfoGridSection = () => {
   const [showSitePlan, setShowSitePlan] = useState(false);
@@ -147,7 +147,7 @@ const InfoGridSection = () => {
                 Price List
               </a>
               <a
-                href="https://drive.google.com/file/d/1rgfJKDNzWz8PuCdugdRy59kG4KbPPTUX/view?usp=sharing"
+                href={brochurePdf}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm uppercase w-full transition-colors block"
