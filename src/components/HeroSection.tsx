@@ -10,24 +10,28 @@ const HeroSection = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 4000); // changes every 4 seconds
+    }, 4000);
     return () => clearInterval(timer);
   }, []);
 
   return (
-    <section className="bg-white w-full overflow-hidden relative">
+    <section className="w-full overflow-hidden relative">
       <div
-        className="w-full h-auto flex transition-transform duration-1000 ease-in-out"
+        className="w-full flex transition-transform duration-1000 ease-in-out"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
         {images.map((imgSrc, idx) => (
-          <div key={idx} className="w-full h-[120px] sm:h-[250px] md:h-[350px] lg:h-[450px] bg-white flex-shrink-0 relative overflow-hidden">
+          <div
+            key={idx}
+            className="w-full flex-shrink-0"
+          >
             <img
               src={imgSrc}
-              alt={`Haryana Deen Dayal Jan awas Yojna View ${idx + 1}`}
-              className="absolute inset-0 w-full h-full object-cover object-top transition-all duration-500"
+              alt={`Haryana Deen Dayal Jan Awas Yojna View ${idx + 1}`}
+              className="w-full h-auto block"
               onError={(e) => {
-                (e.target as HTMLImageElement).src = 'https://i.pinimg.com/736x/1d/af/f8/1daff8a998584f1cd7910d01c0cf42c8.jpg';
+                (e.target as HTMLImageElement).src =
+                  "https://i.pinimg.com/736x/1d/af/f8/1daff8a998584f1cd7910d01c0cf42c8.jpg";
               }}
             />
           </div>
@@ -35,11 +39,14 @@ const HeroSection = () => {
       </div>
 
       {/* Navigation Dots */}
-      <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+      <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2">
         {images.map((_, idx) => (
           <button
             key={idx}
-            className={`w-3 h-3 rounded-full transition-colors ${idx === currentIndex ? 'bg-white' : 'bg-white/50 hover:bg-white/80'}`}
+            className={`w-3 h-3 rounded-full transition-colors ${idx === currentIndex
+                ? "bg-white"
+                : "bg-white/50 hover:bg-white/80"
+              }`}
             onClick={() => setCurrentIndex(idx)}
             aria-label={`Go to slide ${idx + 1}`}
           />

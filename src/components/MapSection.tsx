@@ -38,7 +38,7 @@ const MapSection = () => {
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
             title="Project Location"
-            className="grayscale-[20%] group-hover/map:grayscale-0 transition-all duration-500 scale-[1.2]"
+            className="grayscale-[20%] group-hover/map:grayscale-0 transition-all duration-500 scale-[1.4] -translate-y-[8%] -translate-x-[2%]"
           ></iframe>
         </div>
 

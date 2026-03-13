@@ -4,58 +4,51 @@ import { Link } from "react-router-dom";
 
 const StickyActions = () => {
   const phoneNumber = "9818513700";
-  const displayPhone = "98185-13700";
 
   return (
-    <>
-      {/* Call Now Button (Bottom Left) */}
+    <div className="fixed md:relative bottom-0 left-0 right-0 z-[60] bg-[#2c6e3b] px-4 py-3 flex items-center justify-around shadow-[0_-4px_10px_rgba(0,0,0,0.2)] border-t border-white/10 md:justify-center md:gap-12 lg:gap-24">
+      {/* Call Now Button */}
       <a
         href={`tel:${phoneNumber}`}
-        className="fixed bottom-4 left-4 z-[60] flex items-center justify-center hover:scale-110 transition-all duration-300 group"
+        className="flex items-center gap-2 text-white hover:scale-110 transition-all duration-300 group"
         title="Call Now"
       >
-        <div className="flex items-center gap-1.5 p-2">
-          <div className="flex items-center justify-center h-12 w-12 rounded-full border border-sky-500/30 bg-white/10 backdrop-blur-sm shadow-sm">
-            <Phone className="h-6 w-6 text-sky-500" />
-          </div>
-          <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-500 font-bold text-xs text-sky-600 px-0 group-hover:px-2">
-            Call: {displayPhone}
-          </span>
+        <div className="flex items-center justify-center h-12 w-12 rounded-full bg-white/15 border border-white/20 shadow-inner group-hover:bg-white/25">
+          <Phone className="h-6 w-6 fill-current" />
+        </div>
+        <div className="hidden md:flex flex-col h-10 justify-center">
+            <span className="text-[10px] uppercase font-bold text-white/70 leading-none">Call Now</span>
+            <span className="text-sm font-black tracking-tight leading-normal">9818513700</span>
         </div>
       </a>
 
-      {/* Enquire Now Button (Bottom Center) */}
+      {/* Enquire Now Button */}
       <Link
-        to="/inquiry"
-        className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[60] flex items-center justify-center hover:scale-110 transition-all duration-300 group"
+        to="/enquire-now"
+        className="bg-white text-[#2c6e3b] px-6 py-2.5 rounded-full shadow-xl flex items-center gap-2 hover:scale-110 transition-all duration-300 active:scale-95 group border-2 border-[#2c6e3b]"
         title="Enquire Now"
       >
-        <div className="flex flex-col items-center">
-          <div className="animate-pulse bg-[#2c6e3b] text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-2 border-2 border-white/20">
-            <MessageSquare className="h-5 w-5 fill-current" />
-            <span className="font-black text-xs uppercase tracking-tighter">ENQUIRE NOW</span>
-          </div>
-        </div>
+        <MessageSquare className="h-5 w-5 fill-current" />
+        <span className="font-black text-xs uppercase tracking-tighter">ENQUIRE NOW</span>
       </Link>
 
-      {/* WhatsApp Button (Bottom Right) */}
+      {/* WhatsApp Button */}
       <a
         href={`https://wa.me/91${phoneNumber}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-4 right-4 z-[60] flex items-center justify-center hover:scale-110 transition-all duration-300 group"
+        className="flex items-center gap-2 text-white hover:scale-110 transition-all duration-300 group"
         title="WhatsApp Us"
       >
-        <div className="flex items-center gap-1.5 p-2">
-          <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-500 font-bold text-xs text-green-600 px-0 group-hover:px-2 order-first">
-            WhatsApp Us
-          </span>
-          <div className="flex items-center justify-center h-12 w-12 rounded-full border border-green-500/30 bg-white/10 backdrop-blur-sm shadow-sm">
-            <img src={whatsappIcon} alt="WhatsApp" className="h-8 w-8 object-contain filter drop-shadow-sm" />
-          </div>
+        <div className="flex items-center justify-center h-12 w-12 rounded-full bg-white/15 border border-white/20 shadow-inner group-hover:bg-white/25">
+          <img src={whatsappIcon} alt="WhatsApp" className="h-7 w-7 object-contain" />
+        </div>
+        <div className="hidden md:flex flex-col h-10 justify-center">
+            <span className="text-[10px] uppercase font-bold text-white/70 leading-none">WhatsApp</span>
+            <span className="text-sm font-black tracking-tight leading-normal">Online</span>
         </div>
       </a>
-    </>
+    </div>
   );
 };
 

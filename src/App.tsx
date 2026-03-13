@@ -16,6 +16,7 @@ import RefundPolicyPage from "./pages/RefundPolicyPage";
 import ContactUsPage from "./pages/ContactUsPage";
 import LocationBenefitsPage from "./pages/LocationBenefitsPage";
 import AboutDDJAYPage from "./pages/AboutDDJAYPage";
+import EnquiryPage from "./pages/EnquiryPage";
 import StickyActions from "./components/StickyActions";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -31,6 +32,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/inquiry" element={<InquiryPage />} />
+          <Route path="/enquire-now" element={<EnquiryPage />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route path="/refund-policy" element={<RefundPolicyPage />} />

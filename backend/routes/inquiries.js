@@ -1,9 +1,28 @@
 const express = require('express');
 const Inquiry = require('../models/Inquiry');
+const GeneralInquiry = require('../models/GeneralInquiry');
 const { protect } = require('../middleware/authMiddleware');
-const { sendConfirmationEmail } = require('../utils/mailer');
+const { sendConfirmationEmail, sendGeneralEnquiryEmail } = require('../utils/mailer');
 
 const router = express.Router();
+
+// @route   POST /api/inquiries/enquire
+// @desc    Create a new general enquiry
+// @access  Public
+router.post('/enquire', async (req, res) => {
+    try {
+        const { name, phone, message } = req.body;
+        
+        const enquiry = await GeneralInquiry.create({ name, phone, message });
+        
+        // Send email to admin
+        await sendGeneralEnquiryEmail(name, phone, message);
+        
+        res.status(201).json(enquiry);
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to create enquiry', error: error.message });
+    }
+});
 
 // @route   POST /api/inquiries
 // @desc    Create a new inquiry

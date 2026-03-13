@@ -51,3 +51,10 @@ export async function deleteInquiry(id: string) {
     requireAuth: true
   });
 }
+
+export async function addGeneralEnquiry(enquiry: { name: string; phone: string; message: string }): Promise<any> {
+  return await apiFetch('/inquiries/enquire', {
+    method: 'POST',
+    body: JSON.stringify(enquiry)
+  });
+}

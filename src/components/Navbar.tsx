@@ -41,7 +41,7 @@ const Navbar = () => {
       </div>
 
       {/* PERMANENTLY STICKY CONTAINER: ONLY Logo Navbar + Apply Bar */}
-      <header className="sticky top-0 z-[100] w-full bg-white shadow-md">
+      <header className="sticky md:relative top-0 z-[100] w-full bg-white shadow-md">
         <div className="relative bg-white border-b border-gray-100">
           <div className="container py-2 md:py-4 flex items-center justify-between w-full">
             {/* Left Side: Logos (Visible on both) */}
@@ -53,7 +53,7 @@ const Navbar = () => {
             </div>
 
             {/* Desktop Middle: Links */}
-            <div className="hidden md:flex items-center gap-4 lg:gap-6 text-[10px] md:text-xs text-gray-500 font-bold uppercase tracking-wider">
+            <div className="hidden md:flex items-center gap-4 lg:gap-6 text-[10px] md:text-xs text-gray-500 font-bold tracking-wider">
               <Link to="/about-ddjay" className="hover:text-black transition-colors">About Us</Link>
               <Link to="/terms" className="hover:text-black transition-colors">Terms & Conditions</Link>
               <Link to="/contact" className="hover:text-black transition-colors">Contact Us</Link>

@@ -10,14 +10,14 @@ const InfoGridSection = () => {
   const [showSitePlan, setShowSitePlan] = useState(false);
 
   return (
-    <section className="bg-white py-8 w-full">
+    <section className="bg-white pb-8 w-full">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
 
           {/* LEFT COLUMN */}
           <div className="md:col-span-3 space-y-6">
             <div className="bg-[#2c6e3b] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm mt-6">
-              SCHEME INFORMATION
+              Scheme Information
             </div>
             <div className="sm:border border-gray-300 p-4 sm:rounded-xl rounded-none text-sm space-y-2 text-gray-700 font-medium border-0">
               <ul className="list-disc pl-4 space-y-1">
@@ -29,7 +29,7 @@ const InfoGridSection = () => {
               </ul>
             </div>
 
-            <div className="bg-[#2c6e3b] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm mt-6 uppercase">
+            <div className="bg-[#2c6e3b] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm mt-6 ">
               Important Details
             </div>
             <div className="sm:border border-gray-300 p-4 sm:rounded-xl rounded-none text-sm space-y-4 text-gray-700 font-medium border-0">
@@ -39,7 +39,7 @@ const InfoGridSection = () => {
               </div>
               <div className="flex items-center justify-between gap-2">
                 <span>Bank Loan</span>
-                <span className="text-[#2c6e3b] font-bold text-sm">AVAILABLE</span>
+                <span className="text-[#2c6e3b] font-bold text-sm">Available</span>
               </div>
             </div>
 
@@ -60,13 +60,13 @@ const InfoGridSection = () => {
 
             {/* Header Titles */}
             <div className="space-y-3 bg-[#2c6e3b] text-white p-4 sm:rounded-t-lg sm:rounded-b-sm sm:shadow-sm rounded-none shadow-none">
-              <div className="flex items-start gap-2 text-base sm:text-lg font-bold uppercase">
+              <div className="flex items-start gap-2 text-base sm:text-lg font-bold ">
                 <FileText className="h-5 w-5 mt-0.5" />
-                <p>Scheme RERA : RERA-PKL-1587-2024</p>
+                <p>Scheme Rera : RERA-PKL-1587-2024</p>
               </div>
-              <div className="flex items-start gap-2 text-base sm:text-lg font-bold uppercase">
+              <div className="flex items-start gap-2 text-base sm:text-lg font-bold ">
                 <Building2 className="h-5 w-5 mt-0.5 shrink-0" />
-                <p>PROJECT NAME : NKV EMERALD AVENUE </p>
+                <p>Project Name : NKV Emerald Avenue </p>
               </div>
             </div>
             {/* Merged Info Box */}
@@ -79,7 +79,7 @@ const InfoGridSection = () => {
                 <div className="space-y-4 text-gray-700 font-medium text-xs sm:text-sm">
                   <div className="flex items-center gap-3">
                     <p>
-                      <span className="text-green-600 font-bold uppercase">
+                      <span className="text-green-600 font-bold ">
                         Application Live Now
                       </span>
                     </p>
@@ -105,7 +105,7 @@ const InfoGridSection = () => {
                 <div className="space-y-4 text-gray-700 font-medium text-xs sm:text-sm">
                   <div className="flex items-start gap-3">
                     <p>
-                      <span className="text-gray-900">Colonizer:</span> SNKV REAL ESTATE PRIVATE LIMITED
+                      <span className="text-gray-900">Colonizer:</span> Snkv Real Estate Private Limited
                     </p>
                   </div>
 
@@ -131,7 +131,7 @@ const InfoGridSection = () => {
                 href={priceListPdf}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm uppercase w-full transition-colors block"
+                className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm w-full transition-colors block"
               >
                 Price List
               </a>
@@ -139,7 +139,7 @@ const InfoGridSection = () => {
                 href={brochurePdf}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm uppercase w-full transition-colors block"
+                className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm w-full transition-colors block"
               >
                 Scheme Brochure
               </a>
@@ -147,13 +147,13 @@ const InfoGridSection = () => {
                 href="https://haryanarera.gov.in/view_project/viewOrderPdf/NTczOQ=="
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm uppercase w-full transition-colors block"
+                className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm w-full transition-colors block"
               >
-                RERA Certificate
+                Rera Certificate
               </a>
               <button
                 onClick={() => setShowSitePlan(true)}
-                className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm uppercase w-full transition-colors"
+                className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm w-full transition-colors"
               >
                 Scheme Site Plan
               </button>
@@ -168,7 +168,7 @@ const InfoGridSection = () => {
             </a>
 
             <div className="bg-[#2c6e3b] text-white p-2 text-center font-bold text-xs tracking-wider rounded-sm mt-6">
-              REGISTRATION SECTION
+              Registration Section
             </div>
             <div className="text-center font-bold text-gray-800 py-2">
               <p className="text-sm">Registration Amount -</p>
@@ -176,7 +176,7 @@ const InfoGridSection = () => {
             </div>
 
             <div className="bg-[#2c6e3b] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm mt-2">
-              LOCATION BENEFITS
+              Location Benefits
             </div>
             <div className="sm:border border-gray-300 p-4 sm:rounded-xl rounded-none text-sm space-y-4 text-gray-700 font-medium border-0">
               <ul className="list-disc pl-4 space-y-1">
@@ -189,7 +189,7 @@ const InfoGridSection = () => {
               </ul>
               <Link
                 to="/location-benefits"
-                className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm uppercase w-full transition-colors block"
+                className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm  w-full transition-colors block"
               >
                 View More
               </Link>

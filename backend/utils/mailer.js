@@ -48,4 +48,41 @@ const sendConfirmationEmail = async (userEmail, userName, fatherName, address, p
     }
 };
 
-module.exports = { sendConfirmationEmail };
+const sendGeneralEnquiryEmail = async (name, phone, message) => {
+    try {
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.SMTP_USER,
+                pass: process.env.SMTP_PASS
+            }
+        });
+
+        const mailOptions = {
+            from: process.env.SMTP_USER || '"Haryana Deen Dayal Jan Awaas Yojna Admin" <no-reply@haryanaawaas.com>',
+            to: process.env.ADMIN_EMAIL || 'vlogwithdialogue@gmail.com',
+            subject: `New Enquire Now Request from ${name}`,
+            html: `
+                <div style="font-family: Arial, sans-serif; color: #333;">
+                    <h3>New General Enquiry</h3>
+                    <p>Details from the "Enquire Now" form:</p>
+                    <ul style="list-style-type: none; padding-left: 0; background: #f9f9f9; padding: 15px; border-radius: 8px;">
+                        <li><strong>Name:</strong> ${name}</li>
+                        <li><strong>Phone:</strong> ${phone}</li>
+                        <li><strong>Message:</strong> ${message}</li>
+                    </ul>
+                    <br />
+                    <p>Best Regards,</p>
+                    <p><strong>Haryana Deen Dayal Jan Awaas Yojna System</strong></p>
+                </div>
+            `
+        };
+
+        const info = await transporter.sendMail(mailOptions);
+        console.log('General enquiry email sent: %s', info.messageId);
+    } catch (error) {
+        console.error('Error sending general enquiry email:', error);
+    }
+};
+
+module.exports = { sendConfirmationEmail, sendGeneralEnquiryEmail };

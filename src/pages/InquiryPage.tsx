@@ -21,12 +21,10 @@ const InquiryPage = () => {
           {/* Full-width Refunds & Cancellation Policy */}
           <div className="text-sm text-muted-foreground bg-accent/20 p-8 rounded-2xl border shadow-sm">
             <h3 className="text-2xl font-bold text-foreground mb-2">Refunds & Cancellation Policy</h3>
-            <p className="mb-6 text-xs font-medium uppercase tracking-wider text-primary">Last Updated: March 10, 2026</p>
-            
             <p className="mb-6 text-base">
               This Refunds & Cancellation Policy outlines the terms and conditions regarding refunds and cancellations for applications submitted through our platform.
             </p>
-            
+
             <div className="grid md:grid-cols-2 gap-8 mb-8">
               <div>
                 <h4 className="font-bold text-base text-foreground mb-4">Key Policy Points:</h4>
@@ -36,7 +34,7 @@ const InquiryPage = () => {
                   <li><strong>100% Refund Policy:</strong> There is 100% Refund policy with no charges if Allotment is not confirmed.</li>
                 </ul>
               </div>
-              
+
               <div className="md:pl-8 md:border-l">
                 <h4 className="font-bold text-base text-foreground mb-4">For Cancellation and More Information</h4>
                 <p>
