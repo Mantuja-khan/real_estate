@@ -13,8 +13,15 @@ const PaymentPage = () => {
     <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900">
       <Navbar />
       <main className="flex-1 py-10 px-4">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-1 text-[#2c6e3b] hover:underline font-bold text-sm group"
+        >
+          <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+          Back to Home
+        </Link>
         <div className="max-w-4xl mx-auto">
-          
+
           {/* Government Style Header */}
           <div className="bg-white border-b-4 border-[#2c6e3b] p-4 md:p-6 rounded-t-lg shadow-md mb-8">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -32,7 +39,6 @@ const PaymentPage = () => {
               <div className="bg-[#fcf8ef] px-4 py-2 md:px-5 md:py-3 rounded border border-[#e5a03e]/30 shadow-sm relative overflow-hidden text-right">
                 <span className="text-[9px] md:text-[10px] font-black text-[#e5a03e] uppercase block tracking-widest relative z-10">Pay Amount</span>
                 <span className="text-xl md:text-2xl font-black text-gray-800 relative z-10">₹{amount.toLocaleString("en-IN")}</span>
-                <p className="text-[8px] md:text-[9px] font-bold text-[#e5a03e] uppercase mt-0.5 relative z-10">Effective: March 12, 2026</p>
                 <CreditCard className="absolute -right-2 -bottom-2 h-10 w-10 md:h-12 md:w-12 opacity-5 -rotate-12" />
               </div>
             </div>
@@ -76,12 +82,7 @@ const PaymentPage = () => {
                       <td className="py-3 md:py-4 text-gray-400 font-bold uppercase text-[9px] md:text-[10px] tracking-widest">Branch</td>
                       <td className="py-3 md:py-4 font-black text-gray-700 text-xs md:text-sm uppercase tracking-tight">UTT Sector 49, Gurgaon</td>
                     </tr>
-                    <tr>
-                      <td className="py-3 md:py-4 text-gray-400 font-bold uppercase text-[9px] md:text-[10px] tracking-widest">Mobile</td>
-                      <td className="py-3 md:py-4 font-black text-[#2c6e3b] text-sm md:text-base flex items-center gap-2">
-                        <Phone className="h-3 md:h-3.5 w-3 md:w-3.5" /> 9015634665
-                      </td>
-                    </tr>
+
                   </tbody>
                 </table>
               </div>
@@ -94,7 +95,7 @@ const PaymentPage = () => {
                     <img src={qrCodeImg} alt="Official QR Code" className="h-40 w-40 md:h-56 md:w-56 object-contain" />
                   </div>
                 </div>
-                
+
                 <div className="mt-5 md:mt-6 space-y-1 md:space-y-2">
                   <div className="flex items-center justify-center gap-2">
                     <QrCode className="h-4 w-4 md:h-5 md:w-5 text-[#2c6e3b]" />
@@ -120,20 +121,14 @@ const PaymentPage = () => {
 
           {/* Navigation/Back Link */}
           <div className="mt-10 flex flex-col md:flex-row items-center justify-between gap-6 px-2">
-            <Link 
-              to="/"
-              className="inline-flex items-center gap-1 text-[#2c6e3b] hover:underline font-bold text-sm group"
-            >
-              <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-              Back to Home
-            </Link>
-            
+
+
             <div className="flex items-center gap-4">
-               <Shield className="h-8 w-8 text-gray-200" />
-               <div className="text-left">
-                 <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Security Protocol</p>
-                 <p className="text-xs font-bold text-gray-500">256-bit SSL encrypted verification portal</p>
-               </div>
+              <Shield className="h-8 w-8 text-gray-200" />
+              <div className="text-left">
+                <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Security Protocol</p>
+                <p className="text-xs font-bold text-gray-500">256-bit SSL encrypted verification portal</p>
+              </div>
             </div>
           </div>
 

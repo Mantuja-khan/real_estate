@@ -6,7 +6,7 @@ const StickyActions = () => {
   const phoneNumber = "9818513700";
 
   return (
-    <div className="fixed md:relative bottom-0 left-0 right-0 z-[60] bg-[#2c6e3b] px-4 py-3 flex items-center justify-around shadow-[0_-4px_10px_rgba(0,0,0,0.2)] border-t border-white/10 md:justify-center md:gap-12 lg:gap-24">
+    <div className="fixed bottom-0 left-0 right-0 z-[60] bg-[#2c6e3b] px-4 py-3 flex items-center justify-around shadow-[0_-4px_10px_rgba(0,0,0,0.2)] border-t border-white/10 md:justify-center md:gap-12 lg:gap-24">
       {/* Call Now Button */}
       <a
         href={`tel:${phoneNumber}`}
