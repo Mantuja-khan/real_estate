@@ -13,7 +13,7 @@ const LocationBenefitsPage = () => {
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" /> Back to Home
           </Link>
         </div>
-        
+
         <div className="flex flex-col items-center mb-10 text-center">
           <h1 className="text-3xl md:text-5xl font-bold text-gray-800 mb-4 uppercase tracking-wide">LOCATION BENEFITS</h1>
           <div className="w-16 h-1 bg-[#2c6e3b]"></div>
@@ -26,25 +26,26 @@ const LocationBenefitsPage = () => {
             </li>
             <li>On Palwal Hathin Highway Road.</li>
             <li>Connected with Delhi Mathura Highway NH-44 - 04 mins.</li>
-            <li>Connected to IMT Sohna (1600 acres industrial township) - 30 mins</li>
-            <li>60 minutes drive to International Airport.</li>
-            <li>Delhi-Mumbai Expressway - 15 mins.</li>
-            <li>Kundli-Manesar-Palwal (KMP) Expressway - 10 mins.</li>
-            <li>Palwal Bus Station, Railway Station - 5 mins.</li>
+            <li>Palwal Bus Station, Railway Station - 05 mins.</li>
             <li>Palwal District Court, Proposed Metro Station - 05 mins.</li>
+            <li>Kundli-Manesar-Palwal (KMP) Expressway - 10 mins.</li>
+            <li>Delhi-Mumbai Expressway - 15 mins.</li>
+            <li>Delhi-Mumbai Expressway - 15 mins.</li>
+            <li>Connected to IMT Sohna (1600 acres industrial township) - 30 mins</li>
             <li>Gurugram, Faridabad, Mathura, Jawar Airport - 40 mins.</li>
-            
+            <li>60 minutes drive to International Airport.</li>
+
             <li className="list-none pt-6 -ml-6 pb-2 border-b border-gray-100 mb-2">
               <span className="font-bold text-[#2c6e3b] text-base sm:text-xl uppercase tracking-wider">Education and health care</span>
             </li>
             <li>Well reputed educational institutions</li>
-            <li>Andvacend Educational Institutions,</li>
-            <li>BR Ambedkar Govt. PG College,</li>
-            <li>Maharani Kishori Devi College of Education,</li>
-            <li>Hindustan ITI College, MVN University.</li>
-            <li>Palwal Civil Hospital, Atlas, Cosmos Hospital,</li>
+            <li>Andvacend Educational Institutions</li>
+            <li>BR Ambedkar Govt. PG College</li>
+            <li>Maharani Kishori Devi College of Education</li>
+            <li>Hindustan ITI College, MVN University</li>
+            <li>Palwal Civil Hospital, Atlas, Cosmos Hospital</li>
             <li>Galaxy, Guru Nanak, Prabha Eye, Tula Hospital</li>
-            
+
             <li className="list-none pt-6 -ml-6 pb-2 border-b border-gray-100 mb-2">
               <span className="font-bold text-[#2c6e3b] text-base sm:text-xl uppercase tracking-wider">Entertainment</span>
             </li>

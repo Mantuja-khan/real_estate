@@ -11,8 +11,6 @@ const PrivacyPolicyPage = () => (
         <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" /> Back to Home
       </Link>
       <h1 className="text-3xl font-bold text-foreground mb-2">Privacy Policy</h1>
-      <p className="text-sm text-muted-foreground mb-8">Last Updated: March 9, 2026</p>
-
       <div className="space-y-8 text-muted-foreground leading-relaxed">
         <section>
           <h2 className="text-lg font-semibold text-foreground mb-2">Our Commitment to Your Privacy</h2>

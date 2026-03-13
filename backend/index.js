@@ -11,6 +11,7 @@ const app = express();
 const corsOptions = {
     origin: [
         "http://localhost:8080",
+        "http://localhost:8081",
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -35,6 +36,6 @@ app.get('/', (req, res) => {
     res.send('API is running...');
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 7002;
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

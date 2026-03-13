@@ -16,9 +16,6 @@ const InfoGridSection = () => {
 
           {/* LEFT COLUMN */}
           <div className="md:col-span-3 space-y-6">
-            <a href="mailto:support@haryanadeendayalplot.org.in" className="bg-[#2c6e3b] text-white p-2 text-center font-bold text-xs rounded-sm break-all hover:bg-[#1e4d29] transition-colors block">
-              support@haryanadeendayalplot.org.in
-            </a>
             <div className="bg-[#2c6e3b] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm mt-6">
               SCHEME INFORMATION
             </div>
@@ -26,7 +23,7 @@ const InfoGridSection = () => {
               <ul className="list-disc pl-4 space-y-1">
                 <li>RERA-PKL-1587-2024</li>
                 <li>Colonizer: NKV Emerald Avenue</li>
-                <li>Location : Sector - 9 Palwal</li>
+                <li>Location : Sector-9, Palwal</li>
                 <li>Last Date of Apply: 29/03/2026</li>
                 <li>Allotment Date: 31/03/2026</li>
               </ul>
@@ -57,10 +54,7 @@ const InfoGridSection = () => {
                 <li>Play School</li>
               </ul>
             </div>
-
-
           </div>
-
           {/* CENTER COLUMN */}
           <div className="md:col-span-6 flex flex-col gap-6 sm:border-l sm:border-r border-gray-200 px-0 sm:px-6 border-0">
 
@@ -75,15 +69,11 @@ const InfoGridSection = () => {
                 <p>PROJECT NAME : NKV EMERALD AVENUE </p>
               </div>
             </div>
-
-
-
             {/* Merged Info Box */}
             <div className="sm:border border-gray-300 p-5 sm:rounded-xl rounded-none sm:shadow-sm mx-0 sm:mx-2 space-y-8 border-0 shadow-none">
               {/* Important Dates Segment */}
               <div>
                 <div className="flex items-center gap-2 text-[#30485a] font-bold text-base sm:text-lg mb-4">
-                  <Info className="h-5 w-5 fill-current text-white bg-[#30485a] rounded-full p-0.5" />
                   <p>Important Dates</p>
                 </div>
                 <div className="space-y-4 text-gray-700 font-medium text-xs sm:text-sm">
@@ -109,7 +99,6 @@ const InfoGridSection = () => {
               {/* Project Details Segment */}
               <div>
                 <div className="flex items-center gap-2 text-[#30485a] font-bold text-base sm:text-lg mb-4">
-                  <Info className="h-5 w-5 fill-current text-white bg-[#30485a] rounded-full p-0.5" />
                   <p>Project Details</p>
                 </div>
 
@@ -173,11 +162,9 @@ const InfoGridSection = () => {
 
           {/* RIGHT COLUMN */}
           <div className="md:col-span-3 space-y-6">
-            <div className="bg-[#2c6e3b] text-white p-2 text-center font-bold uppercase tracking-widest rounded-sm text-sm">
-              SUPPORT
-            </div>
+
             <a href="tel:9818513700" className="bg-[#2c6e3b] text-white p-2 text-center font-bold text-sm rounded-sm hover:bg-[#1e4d29] transition-colors block">
-              98185-13700
+              9818513700
             </a>
 
             <div className="bg-[#2c6e3b] text-white p-2 text-center font-bold text-xs tracking-wider rounded-sm mt-6">

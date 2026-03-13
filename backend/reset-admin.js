@@ -10,7 +10,7 @@ const resetAdmin = async () => {
         await mongoose.connect(process.env.MONGODB_URI);
         console.log('MongoDB Connected for Password Reset');
 
-        const email = 'nkvemeraldavenue76@gmail.com';
+        const email = 'vlogwithdialogue@gmail.com';
         const password = 'emeraldavenue@789';
 
         const admin = await Admin.findOne({ email });

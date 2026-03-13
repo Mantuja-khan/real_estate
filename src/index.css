@@ -99,12 +99,6 @@
     outline: none !important;
   }
 
-  /* Prevent any visual response on click/active states across the site */
-  *:active, *:focus {
-    transform: none !important;
-    opacity: inherit !important;
-    transition: none !important;
-  }
 
   /* Ensure specific green elements maintain their appearance if needed, but WITHOUT any click effect */
   .bg-\[\#2c6e3b\] {
@@ -165,7 +159,7 @@
 
   @keyframes text-blink {
     0%, 100% { opacity: 1; }
-    50% { opacity: 1; }
+    50% { opacity: 0; }
   }
 
   @keyframes shimmer {

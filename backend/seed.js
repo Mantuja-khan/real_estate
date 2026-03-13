@@ -9,11 +9,9 @@ const seedAdmin = async () => {
         await mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/real_estate');
         console.log('MongoDB Connected for Seeding');
 
-        const email = 'nkvemeraldavenue76@gmail.com';
-        const password = 'emeraldavenue@789';
-
+        const email = 'kunaldoos15@gmail.com';
+        const password = 'nkvemeraldavanue@789';
         const adminExists = await Admin.findOne({ email });
-
         if (adminExists) {
             console.log('Admin user already exists!');
             process.exit(0);

@@ -59,8 +59,7 @@ const Footer = () => (
             Disclaimer: This website is an informational platform for residential plotted projects offered under the Deen Dayal Jan Awas Yojana (DDJAY) policy of the Haryana Government. Marketing and customer facilitation services are provided by a privately operated real estate promotion entity. This is not an official government website.
           </p>
           <p className="flex flex-wrap items-center justify-start sm:justify-center gap-x-3 gap-y-2 font-medium tracking-wide mb-6">
-            Your privacy is important to us. We collect information only to serve you better.
-          </p>
+            Your privacy is important to us. Any information you share with us is kept secure and use only to provide you with better services and support  </p>
         </div>
 
         <div className="mb-6">
@@ -77,6 +76,13 @@ const Footer = () => (
             <Link to="/terms" className="hover:text-gray-200 transition-colors uppercase">Terms & Conditions</Link>
             <span className="opacity-30">|</span>
             <Link to="/refund-policy" className="hover:text-gray-200 transition-colors uppercase">Refund & Cancellation </Link>
+          </div>
+          <p className="flex flex-wrap items-center justify-start sm:justify-center gap-x-3 gap-y-2 font-medium tracking-wide mb-6">
+          </p>
+          <div className="pt-6 border-t border-white/10 mt-6">
+            <p className="text-[10px] sm:text-xs text-gray-600 font-normal leading-relaxed text-center max-w-4xl mx-auto">
+              By continuing to use this website, you consent to the use of cookies and agree to abide by our terms and conditions. Users agree not to initiate unnecessary legal disputes related to the use of this website.
+            </p>
           </div>
         </div>
       </div>

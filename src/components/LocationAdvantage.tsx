@@ -30,6 +30,22 @@ const LocationAdvantage = () => {
               </li>
               <li className="flex items-start gap-2">
                 <MapPin className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+                <span>Palwal Bus Station Railway Station - <strong>05 mins</strong></span>
+              </li>
+              <li className="flex items-start gap-2">
+                <MapPin className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+                <span>Palwal District Court Proposed Metro Station - <strong>05 mins</strong></span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Navigation className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+                <span>Kundli-Manesar-Palwal (KMP) Expressway - <strong>10 mins</strong></span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Navigation className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+                <span>Delhi-Mumbai Expressway - <strong>15 mins</strong></span>
+              </li>
+              <li className="flex items-start gap-2">
+                <MapPin className="h-5 w-5 text-primary shrink-0 mt-0.5" />
                 <span>Connected to IMT Sohna (1600 acres industrial township) - <strong>30 mins</strong></span>
               </li>
               <li className="flex items-start gap-2">
@@ -37,24 +53,8 @@ const LocationAdvantage = () => {
                 <span><strong>60 minutes</strong> drive to International Airport</span>
               </li>
               <li className="flex items-start gap-2">
-                <Navigation className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                <span>Delhi-Mumbai Expressway - <strong>15 mins</strong></span>
-              </li>
-              <li className="flex items-start gap-2">
-                <Navigation className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                <span>Kundli-Manesar-Palwal (KMP) Expressway - <strong>10 mins</strong></span>
-              </li>
-              <li className="flex items-start gap-2">
                 <MapPin className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                <span>Palwal Bus Station, Railway Station - <strong>5 mins</strong></span>
-              </li>
-              <li className="flex items-start gap-2">
-                <MapPin className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                <span>Palwal District Court, Proposed Metro Station - <strong>05 mins</strong></span>
-              </li>
-              <li className="flex items-start gap-2">
-                <MapPin className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                <span>Gurugram, Faridabad, Mathura, Jawar Airport - <strong>40 mins</strong></span>
+                <span>Gurugram Faridabad Mathura Jawar Airport - <strong>40 mins</strong></span>
               </li>
             </ul>
           </div>

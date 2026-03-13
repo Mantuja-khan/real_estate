@@ -90,7 +90,7 @@ const InquiryForm = () => {
             <User className="h-4 w-4 stroke-[3px]" /> Your name
           </Label>
           <Input id="name" placeholder="Enter your full name" value={form.name}
-            className="text-black placeholder:text-gray-400 backdrop-blur-sm bg-white/50 border-gray-300"
+            className="text-black placeholder:text-gray-400 bg-white border-gray-300"
             onChange={(e) => setForm({ ...form, name: e.target.value })} />
           {errors.name && <p className="text-sm text-destructive mt-1">{errors.name}</p>}
         </div>
@@ -100,7 +100,7 @@ const InquiryForm = () => {
             <UserPlus className="h-4 w-4 stroke-[3px]" /> Father's Name
           </Label>
           <Input id="fatherName" placeholder="Enter Father's or Husband's name" value={form.fatherName}
-            className="text-black placeholder:text-gray-400 backdrop-blur-sm bg-white/50 border-gray-300"
+            className="text-black placeholder:text-gray-400 bg-white border-gray-300"
             onChange={(e) => setForm({ ...form, fatherName: e.target.value })} />
           {errors.fatherName && <p className="text-sm text-destructive mt-1">{errors.fatherName}</p>}
         </div>
@@ -110,7 +110,7 @@ const InquiryForm = () => {
             <Mail className="h-4 w-4 stroke-[3px]" /> Email Address
           </Label>
           <Input id="email" type="email" placeholder="your@email.com" value={form.email}
-            className="text-black placeholder:text-gray-400 backdrop-blur-sm bg-white/50 border-gray-300"
+            className="text-black placeholder:text-gray-400 bg-white border-gray-300"
             onChange={(e) => setForm({ ...form, email: e.target.value })} />
           {errors.email && <p className="text-sm text-destructive mt-1">{errors.email}</p>}
         </div>
@@ -120,7 +120,7 @@ const InquiryForm = () => {
             <Phone className="h-4 w-4 stroke-[3px]" /> Phone Number
           </Label>
           <Input id="phone" placeholder="10-digit mobile number" value={form.phone}
-            className="text-black placeholder:text-gray-400 backdrop-blur-sm bg-white/50 border-gray-300"
+            className="text-black placeholder:text-gray-400 bg-white border-gray-300"
             onChange={(e) => setForm({ ...form, phone: e.target.value })} maxLength={10} />
           {errors.phone && <p className="text-sm text-destructive mt-1">{errors.phone}</p>}
         </div>
@@ -130,7 +130,7 @@ const InquiryForm = () => {
             <MapPin className="h-4 w-4 stroke-[3px]" /> Full Address
           </Label>
           <Input id="address" placeholder="Enter your full residential address" value={form.address}
-            className="text-black placeholder:text-gray-400 backdrop-blur-sm bg-white/50 border-gray-300"
+            className="text-black placeholder:text-gray-400 bg-white border-gray-300"
             onChange={(e) => setForm({ ...form, address: e.target.value })} />
           {errors.address && <p className="text-sm text-destructive mt-1">{errors.address}</p>}
         </div>
@@ -140,7 +140,7 @@ const InquiryForm = () => {
             <CreditCard className="h-4 w-4 stroke-[3px]" /> Aadhaar Number
           </Label>
           <Input id="aadhaar" placeholder="12-digit Aadhaar number" value={form.aadhaar}
-            className="text-black placeholder:text-gray-400 backdrop-blur-sm bg-white/50 border-gray-300"
+            className="text-black placeholder:text-gray-400 bg-white border-gray-300"
             onChange={(e) => setForm({ ...form, aadhaar: e.target.value })} maxLength={12} />
           {errors.aadhaar && <p className="text-sm text-destructive mt-1">{errors.aadhaar}</p>}
         </div>
@@ -150,7 +150,7 @@ const InquiryForm = () => {
             <Building className="h-4 w-4 stroke-[3px]" /> City
           </Label>
           <Input id="city" placeholder="Enter your city" value={form.city}
-            className="text-black placeholder:text-gray-400 backdrop-blur-sm bg-white/50 border-gray-300"
+            className="text-black placeholder:text-gray-400 bg-white border-gray-300"
             onChange={(e) => setForm({ ...form, city: e.target.value })} />
           {errors.city && <p className="text-sm text-destructive mt-1">{errors.city}</p>}
         </div>
@@ -160,7 +160,7 @@ const InquiryForm = () => {
             <Globe className="h-4 w-4 stroke-[3px]" /> State
           </Label>
           <Input id="state" placeholder="Enter your state" value={form.state}
-            className="text-black placeholder:text-gray-400 backdrop-blur-sm bg-white/50 border-gray-300"
+            className="text-black placeholder:text-gray-400 bg-white border-gray-300"
             onChange={(e) => setForm({ ...form, state: e.target.value })} />
           {errors.state && <p className="text-sm text-destructive mt-1">{errors.state}</p>}
         </div>
@@ -170,7 +170,7 @@ const InquiryForm = () => {
             <Hash className="h-4 w-4 stroke-[3px]" /> PIN Code
           </Label>
           <Input id="pinCode" placeholder="6-digit PIN code" value={form.pinCode}
-            className="text-black placeholder:text-gray-400 backdrop-blur-sm bg-white/50 border-gray-300"
+            className="text-black placeholder:text-gray-400 bg-white border-gray-300"
             onChange={(e) => setForm({ ...form, pinCode: e.target.value })} maxLength={6} />
           {errors.pinCode && <p className="text-sm text-destructive mt-1">{errors.pinCode}</p>}
         </div>
@@ -180,7 +180,7 @@ const InquiryForm = () => {
             <Layers className="h-4 w-4 stroke-[3px]" /> Quota
           </Label>
           <Select value={form.quota} onValueChange={(v) => setForm({ ...form, quota: v })}>
-            <SelectTrigger className="text-black backdrop-blur-sm bg-white/50 border-gray-300"><SelectValue placeholder="Select quota" /></SelectTrigger>
+            <SelectTrigger className="text-black bg-white border-gray-300"><SelectValue placeholder="Select quota" /></SelectTrigger>
             <SelectContent>
               {quotas.map((q) => (
                 <SelectItem key={q} value={q}>{q}</SelectItem>
@@ -195,7 +195,7 @@ const InquiryForm = () => {
             <Maximize className="h-4 w-4 stroke-[3px]" /> Plot Sizes
           </Label>
           <Select value={form.plotSize} onValueChange={(v) => setForm({ ...form, plotSize: v })}>
-            <SelectTrigger className="text-black backdrop-blur-sm bg-white/50 border-gray-300"><SelectValue placeholder=" Select Plot size" /></SelectTrigger>
+            <SelectTrigger className="text-black bg-white border-gray-300"><SelectValue placeholder="Select plot size" /></SelectTrigger>
             <SelectContent>
               {plotSizes.map((p) => (
                 <SelectItem key={p} value={p}>{p}</SelectItem>
