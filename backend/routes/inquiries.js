@@ -28,11 +28,20 @@ router.post('/enquire', async (req, res) => {
 // @desc    Create a new inquiry
 // @access  Public
 router.post('/', async (req, res) => {
+    // Deadline: 29 March 2026 23:59:59 IST (UTC+5:30 = 18:29:59 UTC)
+    const deadline = new Date('2026-03-29T18:29:59Z');
+    if (new Date() > deadline) {
+        return res.status(403).json({
+            message: 'Registration is closed. The deadline was 29 March 2026 at 11:59 PM IST. Results will be declared on 30 March 2026.'
+        });
+    }
+
     try {
         const { name, fatherName, address, phone, email, area, aadhaar, city, state, pinCode, quota, plotSize } = req.body;
         
         const inquiry = await Inquiry.create({
-            name, fatherName, address, phone, email, area, aadhaar, city, state, pinCode, quota, plotSize
+            name, fatherName, address, phone, email, area, aadhaar, city, state, pinCode, quota, plotSize,
+            payment_status: 'pending'
         });
         
         // Send email to admin

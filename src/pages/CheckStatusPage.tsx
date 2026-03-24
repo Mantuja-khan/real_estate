@@ -23,10 +23,10 @@ const CheckStatusPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [resultsDeclared, setResultsDeclared] = useState(false);
-  const [resultDate, setResultDate] = useState("30 March 2026");
-  
-  // Date protection for March 30, 2026
-  const isBeforeResultDate = new Date() < new Date("2026-03-30T00:00:00+05:30");
+
+  const targetDate = "2026-03-29T23:59:59";
+  const isTimeUp = new Date() > new Date(targetDate);
+  const showResults = resultsDeclared || isTimeUp;
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -35,7 +35,6 @@ const CheckStatusPage = () => {
         if (data && Array.isArray(data)) {
           for (const row of data) {
             if (row.key === "results_declared") setResultsDeclared(row.value === "true");
-            if (row.key === "result_date") setResultDate(row.value);
           }
         }
       } catch (err) {
@@ -66,8 +65,7 @@ const CheckStatusPage = () => {
       if (!data || data.length === 0) {
         setNotFound(true);
       } else {
-        setResult(data[0] as SlotResult);
-      }
+        setResult(data[0] as SlotResult);}
     } catch {
       setError("Something went wrong. Please try again.");
     } finally {
@@ -90,12 +88,12 @@ const CheckStatusPage = () => {
             Enter your Aadhaar number to check if your slot has been confirmed.
           </p>
 
-          {isBeforeResultDate ? (
-            <div className="border border-red-600 bg-[#fff5f5] p-6 text-center shadow-md w-full max-w-2xl mx-auto">
+          {!showResults ? (
+            <div className="border border-red-600 bg-[#fff5f5] p-6 text-center shadow-md w-full max-w-2xl mx-auto rounded-2xl">
               <h2 className="text-lg md:text-xl font-bold text-red-700 uppercase tracking-wider mb-2">Important Notice</h2>
-              <div className="h-0.5 w-full bg-red-200 mb-4 mx-auto max-w-[200px]"></div>
+              <div className="h-0.5 w-full bg-red-200 mb-4 mx-auto max-w-[200px] rounded-full"></div>
               <p className="text-red-800 text-base md:text-lg font-semibold leading-relaxed">
-                Result will declare on 30 March 2026 , please come at 30 March 2026.
+                Results have not been declared yet. Please check back later.
               </p>
             </div>
           ) : (
@@ -142,35 +140,25 @@ const CheckStatusPage = () => {
 
           {result && (
             <div className="mt-8">
-              {!resultsDeclared ? (
-                <div className="text-center p-6 bg-accent/20 border rounded-xl mb-6 shadow-sm">
-                  <p className="font-bold text-lg text-foreground mb-2">Results Not Declared Yet</p>
-                  <p className="text-muted-foreground text-sm">
-                    Please visit again on <strong className="text-foreground">{resultDate}</strong>.
+              <div className="flex items-center gap-4 mb-6 p-4 rounded-xl border bg-card shadow-sm">
+                {result.slot_status === "completed" ? (
+                  <CheckCircle2 className="h-10 w-10 text-green-600" />
+                ) : (
+                  <Clock className="h-10 w-10 text-amber-500" />
+                )}
+                <div>
+                  <p className="font-bold text-lg">
+                    {result.slot_status === "completed"
+                      ? "Slot Confirmed! 🎉"
+                      : "Slot Pending"}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {result.slot_status === "completed"
+                      ? "Your slot has been successfully delivered."
+                      : "Your application is being processed."}
                   </p>
                 </div>
-              ) : (
-                <div className="flex items-center gap-4 mb-6 p-4 rounded-xl border bg-card shadow-sm">
-                  {result.slot_status === "completed" ? (
-                    <CheckCircle2 className="h-10 w-10 text-green-600" />
-                  ) : (
-                    <Clock className="h-10 w-10 text-amber-500" />
-                  )}
-                  <div>
-                    <p className="font-bold text-lg">
-                      {result.slot_status === "completed"
-                        ? "Slot Confirmed! 🎉"
-                        : "Slot Pending"}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {result.slot_status === "completed"
-                        ? "Your slot has been successfully delivered."
-                        : "Your application is being processed."}
-                    </p>
-                  </div>
-                </div>
-              )}
-
+              </div>
               <div className="bg-card border rounded-xl p-5 shadow-sm">
                 <h3 className="font-bold mb-4 border-b pb-2">Customer Details</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
@@ -179,15 +167,6 @@ const CheckStatusPage = () => {
                     <p className="font-semibold text-base">{result.name}</p>
                   </div>
                   <div>
-                    <p className="text-muted-foreground mb-1">Selected Area</p>
-                    <p className="font-semibold text-base">{result.area}</p>
-                  </div>
-                  <div>
-                    <p className="text-muted-foreground mb-1">Payment Status</p>
-                    <p className="font-semibold text-base capitalize flex items-center gap-1.5">
-                      <span className={`h-2 w-2 rounded-full ${result.payment_status === 'paid' ? 'bg-green-500' : 'bg-amber-500'}`}></span>
-                      {result.payment_status}
-                    </p>
                   </div>
                 </div>
               </div>

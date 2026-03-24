@@ -13,7 +13,6 @@ const PriceListSection = () => {
             Explore our transparent pricing plans, tailored to offer the best value for your dream home.
           </p>
         </div>
-
         <div className="bg-card w-full sm:rounded-xl overflow-hidden shadow-none sm:shadow-sm sm:border p-0 sm:p-4">
           <Dialog>
             <DialogTrigger asChild>

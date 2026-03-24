@@ -4,9 +4,10 @@ interface CountdownTimerProps {
   targetDate: string;
   onExpire?: () => void;
   className?: string;
+  isClosed?: boolean;
 }
 
-const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate, onExpire, className = "" }) => {
+const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate, onExpire, className = "", isClosed = false }) => {
   const [timeLeft, setTimeLeft] = useState<{
     days: number;
     hours: number;
@@ -38,6 +39,20 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate, onExpire, c
 
     return () => clearInterval(timer);
   }, [targetDate, onExpire]);
+
+  if (isClosed) {
+    return (
+      <div className={`flex items-center justify-center gap-2 py-1 ${className}`}>
+        <span className="text-sm font-black uppercase tracking-[0.1em]">Registration Closed:</span>
+        <div className="flex gap-1.5 text-center">
+          <TimeUnit value={0} label="Days" />
+          <TimeUnit value={0} label="Hours" />
+          <TimeUnit value={0} label="Mins" />
+          <TimeUnit value={0} label="Secs" />
+        </div>
+      </div>
+    );
+  }
 
   if (!timeLeft) return null;
 

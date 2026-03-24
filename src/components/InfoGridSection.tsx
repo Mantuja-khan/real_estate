@@ -5,6 +5,7 @@ import { FileText, Building2, CalendarDays, CircleDot, Hourglass, Info, Factory,
 import priceListPdf from "@/assets/pricelist.pdf";
 import brochurePdf from "@/assets/brochure.pdf";
 import sitePlanImg from "@/assets/3d_image.png";
+import licenceCertificatePdf from "@/assets/licence_certificate.pdf";
 
 const InfoGridSection = () => {
   const [showSitePlan, setShowSitePlan] = useState(false);
@@ -142,6 +143,14 @@ const InfoGridSection = () => {
                 className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm w-full transition-colors block"
               >
                 Scheme Brochure
+              </a>
+              <a
+                href={licenceCertificatePdf}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm w-full transition-colors block"
+              >
+                License Certificate
               </a>
               <a
                 href="https://haryanarera.gov.in/view_project/viewOrderPdf/NTczOQ=="

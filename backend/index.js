@@ -20,7 +20,7 @@ const corsOptions = {
         "https://haryanadeendayalplot.org.in",
         "https://www.haryanadeendayalplot.org.in"
     ],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
 };

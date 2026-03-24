@@ -32,25 +32,29 @@ const TermsPage = () => (
           <h2 className="text-lg font-semibold text-foreground">4. Privacy & Data Protection</h2>
           <p>We are committed to protecting your personal information. Your Aadhaar number and other personal details are stored securely and will not be shared with third parties without your explicit consent, except as required by law.</p>
         </section>
-
         <section>
           <h2 className="text-lg font-semibold text-foreground">5. Property Listings</h2>
           <p>All property listings are provided for informational purposes only. Prices, availability, and property details are subject to change without notice. Haryana deen dayal awas yojna does not guarantee the accuracy or completeness of any listing information.</p>
         </section>
-
         <section>
           <h2 className="text-lg font-semibold text-foreground">6. Limitation of Liability</h2>
           <p>Haryana deen dayal awas yojna shall not be liable for any direct, indirect, incidental, or consequential damages arising from the use of our services or reliance on information provided on our website.</p>
         </section>
-
         <section>
           <h2 className="text-lg font-semibold text-foreground">7. Modifications</h2>
           <p>We reserve the right to modify these terms at any time. Changes will be effective immediately upon posting on the website. Your continued use of the services constitutes acceptance of the modified terms.</p>
         </section>
-
         <section>
           <h2 className="text-lg font-semibold text-foreground">8. Contact</h2>
           <p>For any questions regarding these Terms & Conditions, please reach out to us through our inquiry form or contact our support team.</p>
+        </section>
+        <section>
+          <h2 className="text-lg font-semibold text-foreground">9. Governing Law</h2>
+          <p>These Terms and any disputes arising out of or related to these Terms will be governed under the law of Jurisdiction at the Court of Arbitration of Gurgaon, without regard to its conflict of law principles.</p>
+        </section>
+        <section>
+          <h2 className="text-lg font-semibold text-foreground">10. Dispute Resolution:</h2>
+          <p>In the event of a dispute, we encourage you to first contact our customer service team to resolve the issue. If a resolution cannot be reached, any legal action or proceeding related to these Terms shall be brought exclusively in the courtship located in Jurisdiction of New Delhi. The arbitration shall take place at Gurgaon according to the rules and proceedings of the "Court of Arbitration" of Gurgaon.</p>
         </section>
       </div>
     </main>

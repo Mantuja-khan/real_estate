@@ -19,7 +19,6 @@ const AdminPage = () => {
   const [delivering, setDelivering] = useState(false);
   const [declaring, setDeclaring] = useState(false);
   const [resultsDeclared, setResultsDeclared] = useState(false);
-  const [resultDate, setResultDate] = useState("29 March 2026");
 
   const load = async () => {
     try {
@@ -39,7 +38,6 @@ const AdminPage = () => {
       if (data && Array.isArray(data)) {
         for (const row of data) {
           if (row.key === "results_declared") setResultsDeclared(row.value === "true");
-          if (row.key === "result_date") setResultDate(row.value);
         }
       }
     } catch (error) {
@@ -134,35 +132,34 @@ const AdminPage = () => {
 
   const handleHideResults = async () => {
     try {
+      if (inquiries.length > 0) {
+        const allIds = inquiries.map((i) => i.id);
+        await apiFetch("/inquiries/update-batch", {
+          method: "PATCH",
+          body: JSON.stringify({ ids: allIds, slot_status: "pending" }),
+          requireAuth: true
+        });
+        setInquiries((prev) => prev.map((i) => ({ ...i, slot_status: "pending" })));
+      }
+
       await apiFetch("/settings", {
         method: "PATCH",
         body: JSON.stringify({ key: "results_declared", value: "false" }),
         requireAuth: true
       });
       setResultsDeclared(false);
-      toast.success("Results hidden from users");
+      toast.success("Results hidden and all slots reset to pending");
     } catch {
-      toast.error("Failed to hide results");
-    }
-  };
-
-  const handleSaveResultDate = async () => {
-    try {
-      await apiFetch("/settings", {
-        method: "PATCH",
-        body: JSON.stringify({ key: "result_date", value: resultDate }),
-        requireAuth: true
-      });
-      toast.success("Result date saved");
-    } catch {
-      toast.error("Failed to save result date");
+      toast.error("Failed to hide results or reset slots");
     }
   };
 
   const completedCount = inquiries.filter(i => i.slot_status === "completed").length;
+  const pendingPaymentCount = inquiries.filter(i => !i.payment_status || i.payment_status === "pending").length;
+  const completedPaymentCount = inquiries.filter(i => i.payment_status === "completed" || i.payment_status === "success").length;
 
   return (
-    <div className="min-h-screen flex flex-col bg-secondary/50">
+    <div className="min-h-screen flex flex-col bg-secondary/50 pb-20 md:pb-24">
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b">
         <div className="container flex items-center justify-between h-16">
           <h1 className="font-display text-xl font-bold">Admin Dashboard</h1>
@@ -185,23 +182,21 @@ const AdminPage = () => {
             </div>
           </div>
           <div className="bg-card border rounded-xl p-5 flex items-center gap-4">
-            <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
-              <Users className="h-5 w-5 text-primary" />
+            <div className="h-10 w-10 rounded-lg bg-green-100 flex items-center justify-center">
+              <Users className="h-5 w-5 text-green-600" />
             </div>
             <div>
-              <p className="text-2xl font-bold">{completedCount}</p>
-              <p className="text-sm text-muted-foreground">Slots Confirmed</p>
+              <p className="text-2xl font-bold text-green-600">{completedPaymentCount}</p>
+              <p className="text-sm text-muted-foreground">Payments Completed</p>
             </div>
           </div>
           <div className="bg-card border rounded-xl p-5 flex items-center gap-4">
-            <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
-              <FileText className="h-5 w-5 text-primary" />
+            <div className="h-10 w-10 rounded-lg bg-yellow-100 flex items-center justify-center">
+              <FileText className="h-5 w-5 text-yellow-600" />
             </div>
             <div>
-              <p className="text-2xl font-bold">
-                {inquiries.filter(i => i.payment_status === "completed").length}
-              </p>
-              <p className="text-sm text-muted-foreground">Payments Completed</p>
+              <p className="text-2xl font-bold text-yellow-600">{pendingPaymentCount}</p>
+              <p className="text-sm text-muted-foreground">Payments Pending</p>
             </div>
           </div>
         </div>
@@ -214,20 +209,6 @@ const AdminPage = () => {
           </div>
 
           <div className="flex flex-wrap items-end gap-6">
-            <div className="flex items-end gap-2">
-              <div>
-                <Label htmlFor="resultDate" className="text-sm">Expected Result Date</Label>
-                <Input
-                  id="resultDate"
-                  placeholder="e.g. 15 April 2026"
-                  value={resultDate}
-                  onChange={(e) => setResultDate(e.target.value)}
-                  className="w-48"
-                />
-              </div>
-              <Button size="sm" variant="outline" onClick={handleSaveResultDate}>Save Date</Button>
-            </div>
-
             <div className="flex items-center gap-3">
               {resultsDeclared ? (
                 <Button variant="outline" size="sm" onClick={handleHideResults}>
@@ -279,7 +260,8 @@ const AdminPage = () => {
               <p className="text-sm">Customer submissions will appear here.</p>
             </div>
           ) : (
-            <Table>
+            <div className="overflow-x-auto pb-24">
+              <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead className="w-[40px]">
@@ -291,9 +273,8 @@ const AdminPage = () => {
                   <TableHead>Name</TableHead>
                   <TableHead>Email</TableHead>
                   <TableHead>Phone</TableHead>
-                  <TableHead>Area</TableHead>
                   <TableHead>Aadhaar</TableHead>
-                  <TableHead>Payment</TableHead>
+                  <TableHead>Payment Status</TableHead>
                   <TableHead>Slot Status</TableHead>
                   <TableHead>Date</TableHead>
                   <TableHead className="w-[60px]"></TableHead>
@@ -311,17 +292,22 @@ const AdminPage = () => {
                     <TableCell className="font-medium">{inq.name}</TableCell>
                     <TableCell>{inq.email || "—"}</TableCell>
                     <TableCell>{inq.phone}</TableCell>
-                    <TableCell>{inq.area}</TableCell>
                     <TableCell className="font-mono text-sm">
                       {inq.aadhaar.replace(/(\d{4})(\d{4})(\d{4})/, "$1 $2 $3")}
                     </TableCell>
                     <TableCell>
                       <span className={`text-xs font-medium px-2 py-1 rounded-full ${
-                        inq.payment_status === "completed"
+                        (inq.payment_status === "success" || inq.payment_status === "completed")
                           ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
-                          : "bg-muted text-muted-foreground"
+                          : inq.payment_status === "failed"
+                          ? "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
+                          : "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-500"
                       }`}>
-                        {inq.payment_status || "pending"}
+                        {inq.payment_status === "completed" || inq.payment_status === "success"
+                          ? "✓ Paid"
+                          : inq.payment_status === "failed"
+                          ? "✗ Failed"
+                          : "⏳ Pending"}
                       </span>
                     </TableCell>
                     <TableCell>
@@ -345,6 +331,7 @@ const AdminPage = () => {
                 ))}
               </TableBody>
             </Table>
+            </div>
           )}
         </div>
       </main>

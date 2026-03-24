@@ -14,7 +14,7 @@ const HowToApply = () => {
         </h2>
         <div className="w-full text-sm md:text-base text-gray-900  space-y-3 px-4 mb-12">
           <p>1. <span className="text-black">Fill out your details in the form.</span></p>
-          <p>2. <span className="text-black">Click on the 'Submit Enquiry' button.</span></p>
+          <p>2. <span className="text-black">Click on the 'Submit' button.</span></p>
           <p>3. <span className="text-black">After that, complete the payment process.</span></p>
         </div>
         <div className="w-full mt-8 flex flex-col items-center">

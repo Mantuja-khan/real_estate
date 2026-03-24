@@ -1,20 +1,21 @@
 const nodemailer = require('nodemailer');
 
-const sendConfirmationEmail = async (userEmail, userName, fatherName, address, phone, aadhaar, city, state, pinCode, quota, plotSize, paymentInfo = '') => {
+const createTransporter = () => nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS
+    }
+});
+
+// ─── 1. Initial Form Submission Email (sent to admin when form is submitted) ──
+const sendConfirmationEmail = async (userEmail, userName, fatherName, address, phone, aadhaar, city, state, pinCode, quota, plotSize) => {
     try {
-        // You should configure this with your actual SMTP credentials (e.g., Gmail, SendGrid)
-        // For Gmail, you would use an App Password if 2FA is enabled.
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.SMTP_USER,
-                pass: process.env.SMTP_PASS
-            }
-        });
+        const transporter = createTransporter();
 
         const mailOptions = {
-            from: process.env.SMTP_USER || '"Haryana Deen Dayal Jan Awaas Yojna Admin" <no-reply@haryanaawaas.com>',
-            to: process.env.ADMIN_EMAIL || 'vlogwithdialogue@gmail.com', // Send specifically to the ADMIN
+            from: process.env.SMTP_USER,
+            to: process.env.ADMIN_EMAIL,
             subject: `New Form Enquiry from ${userName} - Haryana Deen Dayal Jan Awaas Yojna`,
             html: `
                 <div style="font-family: Arial, sans-serif; color: #333;">
@@ -32,7 +33,7 @@ const sendConfirmationEmail = async (userEmail, userName, fatherName, address, p
                         <li><strong>Aadhaar Number:</strong> ${aadhaar || 'N/A'}</li>
                         <li><strong>Quota:</strong> ${quota || 'GEN'}</li>
                         <li><strong>Plot Size:</strong> ${plotSize || 'N/A'}</li>
-                        ${paymentInfo ? `<li style="color: #e63946; font-weight: bold; margin-top: 10px;"><strong>Payment Info:</strong> ${paymentInfo}</li>` : ''}
+                        <li style="color: #e63946; font-weight: bold; margin-top: 10px;"><strong>Payment Status:</strong> Pending</li>
                     </ul>
                     <br />
                     <p>Best Regards,</p>
@@ -48,19 +49,91 @@ const sendConfirmationEmail = async (userEmail, userName, fatherName, address, p
     }
 };
 
-const sendGeneralEnquiryEmail = async (name, phone, message) => {
+// ─── 2. Payment Status Email (sent to admin + user after Easebuzz callback) ───
+const sendPaymentStatusEmail = async (userEmail, userName, fatherName, address, phone, aadhaar, city, state, pinCode, quota, plotSize, paymentStatus, transactionId) => {
     try {
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.SMTP_USER,
-                pass: process.env.SMTP_PASS
-            }
+        const transporter = createTransporter();
+        const isSuccess = paymentStatus === 'completed';
+        const statusLabel = isSuccess ? 'Payment Successful ✅' : 'Payment Failed ❌';
+
+        // Admin email
+        await transporter.sendMail({
+            from: process.env.SMTP_USER,
+            to: process.env.ADMIN_EMAIL,
+            subject: `Payment ${isSuccess ? 'Received' : 'Failed'} — ${userName} - Haryana Deen Dayal Jan Awaas Yojna`,
+            html: `
+                <div style="font-family: Arial, sans-serif; color: #333;">
+                    <h3>${statusLabel}</h3>
+                    <p>Payment update for the following customer:</p>
+                    <ul style="list-style-type: none; padding-left: 0; background: #f9f9f9; padding: 15px; border-radius: 8px;">
+                        <li><strong>Applicant Name:</strong> ${userName}</li>
+                        <li><strong>Father's Name:</strong> ${fatherName || 'N/A'}</li>
+                        <li><strong>Applicant Email:</strong> ${userEmail}</li>
+                        <li><strong>Phone Number:</strong> ${phone || 'N/A'}</li>
+                        <li><strong>City:</strong> ${city || 'N/A'}</li>
+                        <li><strong>State:</strong> ${state || 'N/A'}</li>
+                        <li><strong>Pin Code:</strong> ${pinCode || 'N/A'}</li>
+                        <li><strong>Full Address:</strong> ${address || 'N/A'}</li>
+                        <li><strong>Aadhaar Number:</strong> ${aadhaar || 'N/A'}</li>
+                        <li><strong>Quota:</strong> ${quota || 'GEN'}</li>
+                        <li><strong>Plot Size:</strong> ${plotSize || 'N/A'}</li>
+                        <li><strong>Amount:</strong> ₹21,000</li>
+                        <li><strong>Transaction ID:</strong> ${transactionId || 'N/A'}</li>
+                        <li style="color: ${isSuccess ? '#16a34a' : '#e63946'}; font-weight: bold; margin-top: 10px;">
+                            <strong>Payment Status:</strong> ${isSuccess ? 'Completed' : 'Failed'}
+                        </li>
+                    </ul>
+                    <br />
+                    <p>Best Regards,</p>
+                    <p><strong>Haryana Deen Dayal Jan Awaas Yojna Registration System</strong></p>
+                </div>
+            `
         });
 
+        // User email — only on successful payment
+        if (isSuccess && userEmail) {
+            await transporter.sendMail({
+                from: process.env.SMTP_USER,
+                to: userEmail,
+                subject: `Registration Confirmed — Haryana Deen Dayal Jan Awaas Yojna`,
+                html: `
+                    <div style="font-family: Arial, sans-serif; color: #333;">
+                        <h3>Registration Successful ✅</h3>
+                        <p>Dear <strong>${userName}</strong>,</p>
+                        <p>Your payment of <strong>₹21,000</strong> has been received and your registration is confirmed under Haryana Deen Dayal Jan Awaas Yojna.</p>
+                        <ul style="list-style-type: none; padding-left: 0; background: #f9f9f9; padding: 15px; border-radius: 8px;">
+                            <li><strong>Applicant Name:</strong> ${userName}</li>
+                            <li><strong>Father's Name:</strong> ${fatherName || 'N/A'}</li>
+                            <li><strong>Phone Number:</strong> ${phone || 'N/A'}</li>
+                            <li><strong>Quota:</strong> ${quota || 'N/A'}</li>
+                            <li><strong>Plot Size:</strong> ${plotSize || 'N/A'}</li>
+                            <li><strong>Amount Paid:</strong> ₹21,000</li>
+                            <li><strong>Transaction ID:</strong> ${transactionId || 'N/A'}</li>
+                            <li style="color: #16a34a; font-weight: bold; margin-top: 10px;"><strong>Payment Status:</strong> Completed</li>
+                        </ul>
+                        <p style="margin-top: 15px;">Results will be declared on <strong>30 March 2026</strong>. Please visit the Check Status page to see your allotment result.</p>
+                        <br />
+                        <p>Best Regards,</p>
+                        <p><strong>Haryana Deen Dayal Jan Awaas Yojna Registration System</strong></p>
+                    </div>
+                `
+            });
+        }
+
+        console.log(`Payment status emails sent for ${userName} — Status: ${paymentStatus}`);
+    } catch (error) {
+        console.error('Error sending payment status email:', error);
+    }
+};
+
+// ─── 3. General Enquiry Email ─────────────────────────────────────────────────
+const sendGeneralEnquiryEmail = async (name, phone, message) => {
+    try {
+        const transporter = createTransporter();
+
         const mailOptions = {
-            from: process.env.SMTP_USER || '"Haryana Deen Dayal Jan Awaas Yojna Admin" <no-reply@haryanaawaas.com>',
-            to: process.env.ADMIN_EMAIL || 'vlogwithdialogue@gmail.com',
+            from: process.env.SMTP_USER,
+            to: process.env.ADMIN_EMAIL,
             subject: `New Enquire Now Request from ${name}`,
             html: `
                 <div style="font-family: Arial, sans-serif; color: #333;">
@@ -85,4 +158,4 @@ const sendGeneralEnquiryEmail = async (name, phone, message) => {
     }
 };
 
-module.exports = { sendConfirmationEmail, sendGeneralEnquiryEmail };
+module.exports = { sendConfirmationEmail, sendPaymentStatusEmail, sendGeneralEnquiryEmail };

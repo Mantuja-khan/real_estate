@@ -1,137 +1,134 @@
 const express = require('express');
-const Razorpay = require('razorpay');
 const crypto = require('crypto');
 const Inquiry = require('../models/Inquiry');
-const { sendConfirmationEmail } = require('../utils/mailer');
+const { sendPaymentStatusEmail } = require('../utils/mailer');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const router = express.Router();
 
-const razorpay = new Razorpay({
-    key_id: process.env.RAZORPAY_KEY_ID || 'rzp_test_fallback',
-    key_secret: process.env.RAZORPAY_KEY_SECRET || 'secret_fallback',
-});
+const EASEBUZZ_KEY = process.env.EASEBUZZ_KEY || 'DHXA8WLRV3';
+const EASEBUZZ_SALT = process.env.EASEBUZZ_SALT || 'O5GTSZOD9O';
+// This key is a LIVE key, so it must ALWAYS use the LIVE environment. Testpay will reject it.
+const EASEBUZZ_ENV = process.env.EASEBUZZ_ENV || 'live';
 
-// @route   POST /api/payments/create-order
-// @desc    Create Razorpay Order
+// Helper: SHA-512 hash (done on backend so key/salt never exposed to frontend)
+const sha512 = (data) => crypto.createHash('sha512').update(data).digest('hex');
+
+// @route   POST /api/payments/initiate
+// @desc    Generate payment hash and return form fields to submit to Easebuzz
 // @access  Public
-router.post('/create-order', async (req, res) => {
+router.post('/initiate', async (req, res) => {
     try {
-        const { amount, inquiryId, name, email } = req.body;
-        
-        const options = {
-            amount: amount * 100, // amount in smallest currency unit
-            currency: 'INR',
-            receipt: `receipt_order_${inquiryId}`,
-        };
-        
-        const order = await razorpay.orders.create(options);
-        
-        if (!order) return res.status(500).send('Some error occurred');
-        
-        res.json({
-            orderId: order.id,
-            amount: order.amount,
-            currency: order.currency,
-            keyId: process.env.RAZORPAY_KEY_ID || 'rzp_test_fallback',
+        const { inquiryId } = req.body;
+
+        const inquiry = await Inquiry.findById(inquiryId);
+        if (!inquiry) return res.status(404).json({ message: 'Inquiry not found' });
+
+        const txnid = inquiry._id.toString();
+        const amount = '21000.00';
+        const productinfo = 'Registration';
+        const firstname = inquiry.name;
+        const email = inquiry.email;
+        const phone = inquiry.phone;
+        const backendBase = process.env.BACKEND_URL || 'http://localhost:7002';
+        const surl = `${backendBase}/api/payments/easebuzz-response`;
+        const furl = `${backendBase}/api/payments/easebuzz-response`;
+
+        // Hash sequence per Easebuzz docs:
+        // key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||salt
+        const hashStr = `${EASEBUZZ_KEY}|${txnid}|${amount}|${productinfo}|${firstname}|${email}|||||||||||${EASEBUZZ_SALT}`;
+        const hash = sha512(hashStr);
+
+        const isTest = EASEBUZZ_ENV === 'test';
+        // Correct Action URL for Easebuzz standard HTML form integration
+        const paymentUrl = isTest
+            ? 'https://testpay.easebuzz.in/payment/initiateLink'
+            : 'https://pay.easebuzz.in/payment/initiateLink';
+
+        return res.json({
+            success: true,
+            fallback: true,
+            key: EASEBUZZ_KEY,
+            txnid,
+            amount,
+            productinfo,
+            firstname,
+            email,
+            phone,
+            surl,
+            furl,
+            hash,
+            paymentUrl
         });
+
     } catch (error) {
-        res.status(500).json({ message: 'Failed to create order', error: error.message });
+        console.error('Payment initiate error:', error);
+        res.status(500).json({ message: 'Failed to initiate payment', error: error.message });
     }
 });
 
-// @route   POST /api/payments/verify
-// @desc    Verify Razorpay Payment
-// @access  Public
-router.post('/verify', async (req, res) => {
+// @route   POST /api/payments/easebuzz-response
+// @desc    Handle Easebuzz payment success/failure response (surl / furl)
+// @access  Public (called by Easebuzz redirect)
+router.post('/easebuzz-response', async (req, res) => {
     try {
         const {
-            razorpay_order_id,
-            razorpay_payment_id,
-            razorpay_signature,
-            inquiryId,
-            email,
-            name,
-            amount
+            status, txnid, amount, productinfo, firstname, email, hash,
+            udf1, udf2, udf3, udf4, udf5, udf6, udf7, udf8, udf9, udf10,
+            easepayid
         } = req.body;
-        
-        const sign = razorpay_order_id + '|' + razorpay_payment_id;
-        const expectedSign = crypto
-            .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET || 'secret_fallback')
-            .update(sign)
-            .digest('hex');
-            
-        if (razorpay_signature === expectedSign) {
-            // Update inquiry payment status
-            const inquiry = await Inquiry.findByIdAndUpdate(inquiryId, { payment_status: 'completed' }, { new: true });
-            
-            if (inquiry) {
-                // Send confirmation email to Admin
-                await sendConfirmationEmail(
-                    inquiry.email, 
-                    inquiry.name, 
-                    inquiry.fatherName, 
-                    inquiry.address, 
-                    inquiry.phone, 
-                    inquiry.aadhaar, 
-                    inquiry.city, 
-                    inquiry.state, 
-                    inquiry.pinCode, 
-                    inquiry.quota, 
-                    inquiry.plotSize
-                );
-            }
-            
-            return res.json({ message: 'Payment verified successfully' });
-        } else {
-            return res.status(400).json({ message: 'Invalid signature sent!' });
+
+        // Verify reverse hash
+        const reverseHashStr = `${EASEBUZZ_SALT}|${udf10 || ''}|${udf9 || ''}|${udf8 || ''}|${udf7 || ''}|${udf6 || ''}|${udf5 || ''}|${udf4 || ''}|${udf3 || ''}|${udf2 || ''}|${udf1 || ''}|${email}|${firstname}|${productinfo}|${amount}|${txnid}|${EASEBUZZ_KEY}`;
+        const expectedHash = sha512(reverseHashStr);
+        const hashValid = (hash === expectedHash);
+
+        if (!hashValid) {
+            console.warn('Hash mismatch for txnid:', txnid);
         }
+
+        const paymentStatus = (status === 'success' && hashValid) ? 'completed' : 'failed';
+
+        const inquiry = await Inquiry.findByIdAndUpdate(
+            txnid,
+            { payment_status: paymentStatus, easepayid: easepayid || '' },
+            { new: true }
+        );
+
+        if (inquiry) {
+            await sendPaymentStatusEmail(
+                inquiry.email, inquiry.name, inquiry.fatherName, inquiry.address,
+                inquiry.phone, inquiry.aadhaar, inquiry.city, inquiry.state,
+                inquiry.pinCode, inquiry.quota, inquiry.plotSize,
+                paymentStatus, easepayid || txnid
+            );
+        }
+
+        const frontendBase = process.env.FRONTEND_URL || 'http://localhost:8080';
+        return paymentStatus === 'completed'
+            ? res.redirect(`${frontendBase}/check-status?payment=success`)
+            : res.redirect(`${frontendBase}/?payment=failed`);
+
     } catch (error) {
-        res.status(500).json({ message: 'Failed to verify payment', error: error.message });
+        console.error('Easebuzz response error:', error);
+        res.status(500).json({ message: 'Failed to process payment response', error: error.message });
     }
 });
 
-// @route   POST /api/payments/manual-confirm
-// @desc    Confirm Payment manually (UPI/Bank)
+// @route   POST /api/payments/update-status
+// @desc    Manually update payment status (admin use)
 // @access  Public
-router.post('/manual-confirm', async (req, res) => {
+router.post('/update-status', async (req, res) => {
     try {
-        const { inquiryId, paymentMethod, upiId, bankDetails, amount } = req.body;
-        
-        const updateData = {
-            payment_status: 'pending_verification',
-            payment_method: paymentMethod,
-        };
-
-        if (paymentMethod === 'upi') {
-            updateData.upi_id = upiId;
-        } else if (paymentMethod === 'bank') {
-            updateData.bank_details = bankDetails;
-        }
-
-        const inquiry = await Inquiry.findByIdAndUpdate(inquiryId, updateData, { new: true });
-        
-        if (inquiry) {
-            // Send notification email to Admin about manual payment
-            // You might want a different email template for this
-            await sendConfirmationEmail(
-                inquiry.email, 
-                inquiry.name, 
-                inquiry.fatherName, 
-                inquiry.address, 
-                inquiry.phone, 
-                inquiry.aadhaar, 
-                inquiry.city, 
-                inquiry.state, 
-                inquiry.pinCode, 
-                inquiry.quota, 
-                inquiry.plotSize,
-                `Manual Payment (${paymentMethod}) - Amount: ₹${amount}`
-            );
-        }
-        
-        res.json({ message: 'Payment confirmation received. Waiting for admin verification.', inquiry });
+        const { inquiryId, status } = req.body;
+        const inquiry = await Inquiry.findByIdAndUpdate(
+            inquiryId, { payment_status: status }, { new: true }
+        );
+        if (!inquiry) return res.status(404).json({ message: 'Inquiry not found' });
+        res.json({ message: 'Payment status updated', inquiry });
     } catch (error) {
-        res.status(500).json({ message: 'Failed to confirm payment', error: error.message });
+        res.status(500).json({ message: 'Failed to update payment status', error: error.message });
     }
 });
 

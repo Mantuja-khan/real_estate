@@ -9,9 +9,7 @@ const Footer = () => (
         <h2 className="text-center text-xl md:text-2xl font-bold text-[#2c6e3b] mb-10 tracking-wide">
           CONTACT US
         </h2>
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left text-gray-800">
-
           {/* Email */}
           <div className="flex flex-col items-center md:items-start gap-2">
             <div className="flex items-center gap-3 mb-1">

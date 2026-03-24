@@ -9,7 +9,6 @@ async function testEmail() {
     console.log('Raw Pass length:', rawPass.length);
     console.log('Trimmed Pass length:', trimmedPass.length);
     console.log('Hex pass (trimmed):', Buffer.from(trimmedPass).toString('hex'));
-
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         logger: true,
@@ -19,7 +18,6 @@ async function testEmail() {
             pass: (process.env.SMTP_PASS || '').trim()
         }
     });
-
     try {
         await transporter.verify();
         console.log('SMTP connection verified successfully!');

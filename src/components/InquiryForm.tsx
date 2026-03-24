@@ -20,7 +20,6 @@ import {
   Layers,
   Maximize
 } from "lucide-react";
-
 const quotas = ["Govt Employee Quota", "Female Quota", "General Quota", "Management Quota"];
 const plotSizes = [
   "100.10 sq/yard (83.69 sq/mtr)",
@@ -47,6 +46,7 @@ const InquiryForm = () => {
   const [form, setForm] = useState({ name: "", fatherName: "", email: "", phone: "", address: "", aadhaar: "", city: "", state: "", pinCode: "", quota: "", plotSize: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
+  const isDeadlinePassed = new Date() > new Date("2026-03-29T23:59:59+05:30");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,11 +62,52 @@ const InquiryForm = () => {
     setErrors({});
     setSubmitting(true);
     try {
+      // Step 1: Save inquiry in DB
       const newInquiry = await addInquiry(result.data as any);
-      toast.success("Inquiry submitted successfully!");
-      // Redirect to Payment Page with the new inquiry details
-      navigate("/payment", { state: { inquiry: newInquiry } });
-    } catch {
+      toast.success("Form submitted! Redirecting to payment...");
+
+      const apiBase = import.meta.env.VITE_API_URL || "http://localhost:7002/api";
+
+      // Step 2: Ask backend to initiate payment (hash generated securely on server)
+      const initiateRes = await fetch(`${apiBase}/payments/initiate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ inquiryId: newInquiry.id }),
+      });
+
+      const initiateData = await initiateRes.json();
+
+      if (!initiateRes.ok || !initiateData.success) {
+        console.error("Payment initiation failed:", initiateData);
+        toast.error(initiateData.message || "Payment gateway error. Please contact support.");
+        return;
+      }
+
+      // Step 3a: Token received → redirect URL directly
+      if (!initiateData.fallback && initiateData.token) {
+        window.location.href = `${initiateData.payUrl}/${initiateData.token}`;
+        return;
+      }
+
+      // Step 3b: Fallback → submit form to Easebuzz with backend-generated hash
+      const { key, txnid, amount, productinfo, firstname, email, phone, surl, furl, hash, paymentUrl } = initiateData;
+      const paymentForm = document.createElement("form");
+      paymentForm.method = "POST";
+      paymentForm.action = paymentUrl;
+
+      const fields: Record<string, string> = { key, txnid, amount, productinfo, firstname, email, phone, surl, furl, hash };
+      for (const [fieldKey, value] of Object.entries(fields)) {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = fieldKey;
+        input.value = value;
+        paymentForm.appendChild(input);
+      }
+      document.body.appendChild(paymentForm);
+      paymentForm.submit();
+
+    } catch (err) {
+      console.error("Submit error:", err);
       toast.error("Failed to submit inquiry. Please try again.");
     } finally {
       setSubmitting(false);
@@ -84,131 +125,144 @@ const InquiryForm = () => {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="space-y-2">
-          <Label htmlFor="name" className="text-black font-bold flex items-center gap-2">
-            <User className="h-4 w-4 stroke-[3px]" /> Your name
-          </Label>
-          <Input id="name" placeholder="Enter your full name" value={form.name}
-            className="text-black placeholder:text-gray-400 bg-white border-gray-300"
-            onChange={(e) => setForm({ ...form, name: e.target.value })} />
-          {errors.name && <p className="text-sm text-destructive mt-1">{errors.name}</p>}
+      {isDeadlinePassed ? (
+        <div className="border border-red-600 bg-[#fff5f5] p-8 text-center shadow-md w-full max-w-2xl mx-auto rounded-2xl">
+          <h2 className="text-xl md:text-2xl font-bold text-red-700 uppercase tracking-wider mb-3">Registration Closed</h2>
+          <div className="h-1 w-full bg-red-200 mb-5 mx-auto max-w-[150px] rounded-full"></div>
+          <p className="text-red-800 text-base md:text-lg font-semibold leading-relaxed">
+            The deadline for submitting applications was 29 March 2026 at 11:59 PM. We are no longer accepting new registrations.
+          </p>
+          <p className="text-red-700 text-sm mt-3 font-medium">
+            Results will be declared on <strong>30 March 2026</strong>. Please check your status on the Check Result page.
+          </p>
         </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-2">
+            <Label htmlFor="name" className="text-black font-bold flex items-center gap-2">
+              <User className="h-4 w-4 stroke-[3px]" /> Your name
+            </Label>
+            <Input id="name" placeholder="Enter your full name" value={form.name}
+              className="text-black placeholder:text-gray-400 bg-white border-gray-300"
+              onChange={(e) => setForm({ ...form, name: e.target.value })} />
+            {errors.name && <p className="text-sm text-destructive mt-1">{errors.name}</p>}
+          </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="fatherName" className="text-black font-bold flex items-center gap-2">
-            <UserPlus className="h-4 w-4 stroke-[3px]" /> Father's Name
-          </Label>
-          <Input id="fatherName" placeholder="Enter Father's or Husband's name" value={form.fatherName}
-            className="text-black placeholder:text-gray-400 bg-white border-gray-300"
-            onChange={(e) => setForm({ ...form, fatherName: e.target.value })} />
-          {errors.fatherName && <p className="text-sm text-destructive mt-1">{errors.fatherName}</p>}
-        </div>
+          <div className="space-y-2">
+            <Label htmlFor="fatherName" className="text-black font-bold flex items-center gap-2">
+              <UserPlus className="h-4 w-4 stroke-[3px]" /> Father's Name
+            </Label>
+            <Input id="fatherName" placeholder="Enter Father's or Husband's name" value={form.fatherName}
+              className="text-black placeholder:text-gray-400 bg-white border-gray-300"
+              onChange={(e) => setForm({ ...form, fatherName: e.target.value })} />
+            {errors.fatherName && <p className="text-sm text-destructive mt-1">{errors.fatherName}</p>}
+          </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="email" className="text-black font-bold flex items-center gap-2">
-            <Mail className="h-4 w-4 stroke-[3px]" /> Email Address
-          </Label>
-          <Input id="email" type="email" placeholder="your@email.com" value={form.email}
-            className="text-black placeholder:text-gray-400 bg-white border-gray-300"
-            onChange={(e) => setForm({ ...form, email: e.target.value })} />
-          {errors.email && <p className="text-sm text-destructive mt-1">{errors.email}</p>}
-        </div>
+          <div className="space-y-2">
+            <Label htmlFor="email" className="text-black font-bold flex items-center gap-2">
+              <Mail className="h-4 w-4 stroke-[3px]" /> Email Address
+            </Label>
+            <Input id="email" type="email" placeholder="your@email.com" value={form.email}
+              className="text-black placeholder:text-gray-400 bg-white border-gray-300"
+              onChange={(e) => setForm({ ...form, email: e.target.value })} />
+            {errors.email && <p className="text-sm text-destructive mt-1">{errors.email}</p>}
+          </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="phone" className="text-black font-bold flex items-center gap-2">
-            <Phone className="h-4 w-4 stroke-[3px]" /> Phone Number
-          </Label>
-          <Input id="phone" placeholder="10-digit mobile number" value={form.phone}
-            className="text-black placeholder:text-gray-400 bg-white border-gray-300"
-            onChange={(e) => setForm({ ...form, phone: e.target.value })} maxLength={10} />
-          {errors.phone && <p className="text-sm text-destructive mt-1">{errors.phone}</p>}
-        </div>
+          <div className="space-y-2">
+            <Label htmlFor="phone" className="text-black font-bold flex items-center gap-2">
+              <Phone className="h-4 w-4 stroke-[3px]" /> Phone Number
+            </Label>
+            <Input id="phone" placeholder="10-digit mobile number" value={form.phone}
+              className="text-black placeholder:text-gray-400 bg-white border-gray-300"
+              onChange={(e) => setForm({ ...form, phone: e.target.value })} maxLength={10} />
+            {errors.phone && <p className="text-sm text-destructive mt-1">{errors.phone}</p>}
+          </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="address" className="text-black font-bold flex items-center gap-2">
-            <MapPin className="h-4 w-4 stroke-[3px]" /> Full Address
-          </Label>
-          <Input id="address" placeholder="Enter your full residential address" value={form.address}
-            className="text-black placeholder:text-gray-400 bg-white border-gray-300"
-            onChange={(e) => setForm({ ...form, address: e.target.value })} />
-          {errors.address && <p className="text-sm text-destructive mt-1">{errors.address}</p>}
-        </div>
+          <div className="space-y-2">
+            <Label htmlFor="address" className="text-black font-bold flex items-center gap-2">
+              <MapPin className="h-4 w-4 stroke-[3px]" /> Full Address
+            </Label>
+            <Input id="address" placeholder="Enter your full residential address" value={form.address}
+              className="text-black placeholder:text-gray-400 bg-white border-gray-300"
+              onChange={(e) => setForm({ ...form, address: e.target.value })} />
+            {errors.address && <p className="text-sm text-destructive mt-1">{errors.address}</p>}
+          </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="aadhaar" className="text-black font-bold flex items-center gap-2">
-            <CreditCard className="h-4 w-4 stroke-[3px]" /> Aadhaar Number
-          </Label>
-          <Input id="aadhaar" placeholder="12-digit Aadhaar number" value={form.aadhaar}
-            className="text-black placeholder:text-gray-400 bg-white border-gray-300"
-            onChange={(e) => setForm({ ...form, aadhaar: e.target.value })} maxLength={12} />
-          {errors.aadhaar && <p className="text-sm text-destructive mt-1">{errors.aadhaar}</p>}
-        </div>
+          <div className="space-y-2">
+            <Label htmlFor="aadhaar" className="text-black font-bold flex items-center gap-2">
+              <CreditCard className="h-4 w-4 stroke-[3px]" /> Aadhaar Number
+            </Label>
+            <Input id="aadhaar" placeholder="12-digit Aadhaar number" value={form.aadhaar}
+              className="text-black placeholder:text-gray-400 bg-white border-gray-300"
+              onChange={(e) => setForm({ ...form, aadhaar: e.target.value })} maxLength={12} />
+            {errors.aadhaar && <p className="text-sm text-destructive mt-1">{errors.aadhaar}</p>}
+          </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="city" className="text-black font-bold flex items-center gap-2">
-            <Building className="h-4 w-4 stroke-[3px]" /> City
-          </Label>
-          <Input id="city" placeholder="Enter your city" value={form.city}
-            className="text-black placeholder:text-gray-400 bg-white border-gray-300"
-            onChange={(e) => setForm({ ...form, city: e.target.value })} />
-          {errors.city && <p className="text-sm text-destructive mt-1">{errors.city}</p>}
-        </div>
+          <div className="space-y-2">
+            <Label htmlFor="city" className="text-black font-bold flex items-center gap-2">
+              <Building className="h-4 w-4 stroke-[3px]" /> City
+            </Label>
+            <Input id="city" placeholder="Enter your city" value={form.city}
+              className="text-black placeholder:text-gray-400 bg-white border-gray-300"
+              onChange={(e) => setForm({ ...form, city: e.target.value })} />
+            {errors.city && <p className="text-sm text-destructive mt-1">{errors.city}</p>}
+          </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="state" className="text-black font-bold flex items-center gap-2">
-            <Globe className="h-4 w-4 stroke-[3px]" /> State
-          </Label>
-          <Input id="state" placeholder="Enter your state" value={form.state}
-            className="text-black placeholder:text-gray-400 bg-white border-gray-300"
-            onChange={(e) => setForm({ ...form, state: e.target.value })} />
-          {errors.state && <p className="text-sm text-destructive mt-1">{errors.state}</p>}
-        </div>
+          <div className="space-y-2">
+            <Label htmlFor="state" className="text-black font-bold flex items-center gap-2">
+              <Globe className="h-4 w-4 stroke-[3px]" /> State
+            </Label>
+            <Input id="state" placeholder="Enter your state" value={form.state}
+              className="text-black placeholder:text-gray-400 bg-white border-gray-300"
+              onChange={(e) => setForm({ ...form, state: e.target.value })} />
+            {errors.state && <p className="text-sm text-destructive mt-1">{errors.state}</p>}
+          </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="pinCode" className="text-black font-bold flex items-center gap-2">
-            <Hash className="h-4 w-4 stroke-[3px]" /> PIN Code
-          </Label>
-          <Input id="pinCode" placeholder="6-digit PIN code" value={form.pinCode}
-            className="text-black placeholder:text-gray-400 bg-white border-gray-300"
-            onChange={(e) => setForm({ ...form, pinCode: e.target.value })} maxLength={6} />
-          {errors.pinCode && <p className="text-sm text-destructive mt-1">{errors.pinCode}</p>}
-        </div>
+          <div className="space-y-2">
+            <Label htmlFor="pinCode" className="text-black font-bold flex items-center gap-2">
+              <Hash className="h-4 w-4 stroke-[3px]" /> PIN Code
+            </Label>
+            <Input id="pinCode" placeholder="6-digit PIN code" value={form.pinCode}
+              className="text-black placeholder:text-gray-400 bg-white border-gray-300"
+              onChange={(e) => setForm({ ...form, pinCode: e.target.value })} maxLength={6} />
+            {errors.pinCode && <p className="text-sm text-destructive mt-1">{errors.pinCode}</p>}
+          </div>
 
-        <div className="space-y-2">
-          <Label className="text-black font-bold flex items-center gap-2">
-            <Layers className="h-4 w-4 stroke-[3px]" /> Quota
-          </Label>
-          <Select value={form.quota} onValueChange={(v) => setForm({ ...form, quota: v })}>
-            <SelectTrigger className="text-black bg-white border-gray-300"><SelectValue placeholder="Select quota" /></SelectTrigger>
-            <SelectContent>
-              {quotas.map((q) => (
-                <SelectItem key={q} value={q}>{q}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {errors.quota && <p className="text-sm text-destructive mt-1">{errors.quota}</p>}
-        </div>
+          <div className="space-y-2">
+            <Label className="text-black font-bold flex items-center gap-2">
+              <Layers className="h-4 w-4 stroke-[3px]" /> Quota
+            </Label>
+            <Select value={form.quota} onValueChange={(v) => setForm({ ...form, quota: v })}>
+              <SelectTrigger className="text-black bg-white border-gray-300"><SelectValue placeholder="Select quota" /></SelectTrigger>
+              <SelectContent>
+                {quotas.map((q) => (
+                  <SelectItem key={q} value={q}>{q}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {errors.quota && <p className="text-sm text-destructive mt-1">{errors.quota}</p>}
+          </div>
 
-        <div className="space-y-2">
-          <Label className="text-black font-bold flex items-center gap-2">
-            <Maximize className="h-4 w-4 stroke-[3px]" /> Plot Sizes
-          </Label>
-          <Select value={form.plotSize} onValueChange={(v) => setForm({ ...form, plotSize: v })}>
-            <SelectTrigger className="text-black bg-white border-gray-300"><SelectValue placeholder="Select plot size" /></SelectTrigger>
-            <SelectContent>
-              {plotSizes.map((p) => (
-                <SelectItem key={p} value={p}>{p}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {errors.plotSize && <p className="text-sm text-destructive mt-1">{errors.plotSize}</p>}
-        </div>
+          <div className="space-y-2">
+            <Label className="text-black font-bold flex items-center gap-2">
+              <Maximize className="h-4 w-4 stroke-[3px]" /> Plot Sizes
+            </Label>
+            <Select value={form.plotSize} onValueChange={(v) => setForm({ ...form, plotSize: v })}>
+              <SelectTrigger className="text-black bg-white border-gray-300"><SelectValue placeholder="Select plot size" /></SelectTrigger>
+              <SelectContent>
+                {plotSizes.map((p) => (
+                  <SelectItem key={p} value={p}>{p}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {errors.plotSize && <p className="text-sm text-destructive mt-1">{errors.plotSize}</p>}
+          </div>
 
-        <Button type="submit" className="w-full bg-[#0ea5e9] hover:bg-[#0284c7] text-white font-black uppercase tracking-[0.2em] shadow-lg" size="lg" disabled={submitting}>
-          {submitting ? "Submitting…" : "Submit"}
-        </Button>
-      </form>
+          <Button type="submit" className="w-full bg-[#0ea5e9] hover:bg-[#0284c7] text-white font-black uppercase tracking-[0.2em] shadow-lg" size="lg" disabled={submitting}>
+            {submitting ? "Submitting…" : "Submit"}
+          </Button>
+        </form>
+      )}
     </div>
   );
 };

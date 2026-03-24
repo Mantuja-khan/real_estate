@@ -49,7 +49,7 @@ const ContactUsPage = () => {
             <div className="flex items-center gap-4">
               <PhoneCall className="h-5 w-5 text-[#d9a05b] shrink-0 fill-current" />
               <div>
-                <p className="text-gray-800 font-medium text-xs sm:text-sm">98185-13700</p>
+                <p className="text-gray-800 font-medium text-xs sm:text-sm">9818513700</p>
               </div>
             </div>
 

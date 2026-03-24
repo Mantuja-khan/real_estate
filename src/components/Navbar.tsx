@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { Phone, Mail, Menu, X, Home } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { apiFetch } from "@/lib/api";
 import logo from "@/assets/logo.jpeg";
 import govnLogo from "@/assets/govn.png";
 import CountdownTimer from "./CountdownTimer";
@@ -10,9 +11,27 @@ const Navbar = () => {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
-  const targetDate = "2026-03-29T23:59:59";
-  const now = new Date();
-  const isExpired = now > new Date(targetDate);
+  const targetDate = "2026-03-29T23:59:59+05:30";
+  const [resultsDeclared, setResultsDeclared] = useState(false);
+  const [isTimeUp, setIsTimeUp] = useState(new Date() > new Date(targetDate));
+  
+  const showResults = resultsDeclared || isTimeUp;
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const data = await apiFetch("/settings?keys=results_declared");
+        if (data && Array.isArray(data)) {
+          for (const row of data) {
+            if (row.key === "results_declared") setResultsDeclared(row.value === "true");
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch settings", err);
+      }
+    };
+    fetchSettings();
+  }, []);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -36,7 +55,7 @@ const Navbar = () => {
       {/* Announcement Marquee - NOT STICKY */}
       <div className="bg-white text-black border-b border-gray-300 overflow-hidden py-1.5 md:py-2 flex whitespace-nowrap">
         <div className="animate-marquee font-bold text-xs md:text-sm tracking-wide text-gray-800">
-          हरियाणा दीन दयाल जन आवास योजना में अपना प्लॉट बुक करे *** 33% कोटा महिलाओं एवं सरकारी कर्मचारियों के लिए आरक्षित है *** REGISTRATION LAST DATE 29 MARCH 2026 ***
+          हरियाणा दीन दयाल जन आवास योजना में अपना प्लॉट बुक करे *** 33% कोटा महिलाओं एवं सरकारी कर्मचारियों के लिए आरक्षित है *** REGISTRATION LAST DATE 29 MARCH 2026 *** RESULT DATE 30 MARCH 2026 ***
         </div>
       </div>
 
@@ -69,7 +88,7 @@ const Navbar = () => {
                 <Mail className="h-3 w-3" /> support@haryanadeendayalplot.org.in
               </a>
               <span className="text-[9px] mb-1 opacity-60">RERA-PKL-1587-2024</span>
-              {isExpired ? (
+              {showResults ? (
                 <Link
                   to="/check-status"
                   className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white px-5 py-1.5 rounded-sm font-black tracking-widest text-[10px] uppercase shadow-sm"
@@ -116,26 +135,17 @@ const Navbar = () => {
         </div>
 
         {/* Blinking Apply Now Bar underneath - FIXED AT TOP */}
-        {isExpired ? (
-          <Link
-            to="/check-status"
-            className="bg-[#2c6e3b] hover:bg-[#2c6e3b] text-white w-full py-2 flex flex-col items-center justify-center text-sm font-black border-b border-white transition-all uppercase tracking-[0.2em] relative overflow-hidden"
-          >
-            <span>Check Result Here</span>
-          </Link>
-        ) : (
-          <>
-            <Link
-              to="/inquiry"
-              className="bg-[#2c6e3b] hover:bg-[#2c6e3b] text-white w-full py-2 flex flex-col items-center justify-center text-sm font-black border-b border-white animate-premium-pulse transition-all uppercase tracking-[0.2em] relative overflow-hidden"
-            >
-              <span className="animate-text-blink">Click Here To Apply Now</span>
-            </Link>
-            <div className="bg-[#2c6e3b] text-white w-full py-1.5 flex items-center justify-center text-sm font-bold border-b border-white">
-              <CountdownTimer targetDate={targetDate} className="text-white" />
-            </div>
-          </>
-        )}
+        <Link
+          to={showResults ? "/check-status" : "/inquiry"}
+          className="bg-[#2c6e3b] hover:bg-[#2c6e3b] text-white w-full py-2 flex flex-col items-center justify-center text-sm font-black border-b border-white animate-premium-pulse transition-all uppercase tracking-[0.2em] relative overflow-hidden"
+        >
+          <span className="animate-text-blink">
+            {showResults ? "Click Here To Show Result" : "Click Here To Apply Now"}
+          </span>
+        </Link>
+        <div className="bg-[#2c6e3b] text-white w-full py-1.5 flex items-center justify-center text-sm font-bold border-b border-white">
+          <CountdownTimer targetDate={targetDate} className="text-white" isClosed={showResults} onExpire={() => setIsTimeUp(true)} />
+        </div>
       </header>
     </>
   );
