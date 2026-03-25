@@ -12,7 +12,6 @@ const EASEBUZZ_KEY = process.env.EASEBUZZ_KEY || 'DHXA8WLRV3';
 const EASEBUZZ_SALT = process.env.EASEBUZZ_SALT || 'O5GTSZOD9O';
 // This key is a LIVE key, so it must ALWAYS use the LIVE environment. Testpay will reject it.
 const EASEBUZZ_ENV = process.env.EASEBUZZ_ENV || 'live';
-
 // Helper: SHA-512 hash
 const sha512 = (data) => crypto.createHash('sha512').update(data).digest('hex');
 
@@ -27,7 +26,7 @@ router.post('/initiate', async (req, res) => {
         if (!inquiry) return res.status(404).json({ message: 'Inquiry not found' });
 
         const txnid = "TXN_" + Date.now();
-        const amount = '21000.00'; // Make sure this matches the merchant account settings
+        const amount = '21000'; // Simplifying to integer string
         const productinfo = 'Registration';
         const firstname = inquiry.name;
         const email = inquiry.email;
@@ -44,7 +43,6 @@ router.post('/initiate', async (req, res) => {
         const udf1 = '', udf2 = '', udf3 = '', udf4 = '', udf5 = '', udf6 = '', udf7 = '', udf8 = '', udf9 = '', udf10 = '';
 
         // Hash sequence per user request:
-        // key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5|udf6|udf7|udf8|udf9|udf10|salt
         const hashStr = `${EASEBUZZ_KEY}|${txnid}|${amount}|${productinfo}|${firstname}|${email}|${udf1}|${udf2}|${udf3}|${udf4}|${udf5}|${udf6}|${udf7}|${udf8}|${udf9}|${udf10}|${EASEBUZZ_SALT}`;
         const hash = sha512(hashStr);
 
@@ -60,11 +58,19 @@ router.post('/initiate', async (req, res) => {
         postData.append('surl', surl);
         postData.append('furl', furl);
         postData.append('hash', hash);
+        // Include location details as they are often required for live merchants
+        postData.append('address1', inquiry.address || '');
+        postData.append('city', inquiry.city || '');
+        postData.append('state', inquiry.state || '');
+        postData.append('country', 'India');
+        postData.append('zipcode', inquiry.pinCode || '');
+        // Explicitly include all UDFs as empty strings in body
         for (let i = 1; i <= 10; i++) postData.append(`udf${i}`, '');
 
         const initiateUrl = 'https://pay.easebuzz.in/payment/initiateLink';
+
         const postDataStr = postData.toString();
-        
+
         const response = await axios.post(initiateUrl, postDataStr, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -72,20 +78,34 @@ router.post('/initiate', async (req, res) => {
             }
         });
 
-        // Easebuzz returns { status: 1, data: "ACCESS_KEY" } on success
         if (response.data && response.data.status === 1) {
+            const accessKey = response.data.data;
+
             return res.json({
                 success: true,
-                status: 1,
-                data: response.data.data, // This is the access key
-                payUrl: 'https://pay.easebuzz.in/payment/initiateLink'
-
+                paymentUrl: `https://pay.easebuzz.in/pay/${accessKey}`
             });
         } else {
-            return res.status(400).json({
-                success: false,
-                message: 'Easebuzz initiation failed',
-                error: response.data
+            console.error('--- Easebuzz API Fail Details ---');
+            console.error('Account Key:', EASEBUZZ_KEY);
+            console.error('Full Error Response:', response.data);
+
+            console.warn('Easebuzz API initiation failed. Falling back to standard form POST.');
+            // Fallback: return everything needed for standard form submission
+            return res.json({
+                success: true,
+                status: 0,
+                key: EASEBUZZ_KEY,
+                txnid,
+                amount,
+                productinfo,
+                firstname,
+                email,
+                phone: phone || '',
+                surl,
+                furl,
+                hash,
+                paymentUrl: 'https://pay.easebuzz.in/pay/'
             });
         }
 

@@ -66,9 +66,11 @@ const InquiryForm = () => {
       const newInquiry = await addInquiry(result.data as any);
       toast.success("Form submitted! Redirecting to payment...");
 
-      const apiBase = import.meta.env.VITE_API_URL || "http://localhost:7002/api";
-
       // Step 2: Ask backend to initiate payment (hash generated securely on server)
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const apiBase = apiUrl || (window.location.hostname === 'localhost' ? "http://localhost:7002/api" : `https://api.${window.location.hostname}/api`);
+
+      console.log("Initiating payment via:", `${apiBase}/payments/initiate`);
       const initiateRes = await fetch(`${apiBase}/payments/initiate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -77,22 +79,15 @@ const InquiryForm = () => {
 
       const initiateData = await initiateRes.json();
 
-      if (!initiateRes.ok || (initiateData.status !== 1 && initiateData.status !== "1" && !initiateData.success)) {
-        console.error("Payment initiation failed:", initiateData);
-        toast.error(initiateData.message || "Payment gateway error. Please contact support.");
+      // ✅ Direct redirect (main flow)
+      if (initiateData.paymentUrl) {
+        window.location.href = initiateData.paymentUrl;
         return;
       }
 
-
-      // Step 3a: Token received → redirect URL directly
-      if (initiateData.status === 1 && initiateData.data) {
-        window.location.href = `${initiateData.payUrl}/${initiateData.data}`;
-        return;
-      }
-
-
-      // Step 3b: Fallback → submit form to Easebuzz with backend-generated hash
+      // ✅ fallback (rare case)
       const { key, txnid, amount, productinfo, firstname, email, phone, surl, furl, hash, paymentUrl } = initiateData;
+
       const paymentForm = document.createElement("form");
       paymentForm.method = "POST";
       paymentForm.action = paymentUrl;
@@ -101,6 +96,7 @@ const InquiryForm = () => {
         key, txnid, amount, productinfo, firstname, email, phone, surl, furl, hash,
         udf1: "", udf2: "", udf3: "", udf4: "", udf5: "", udf6: "", udf7: "", udf8: "", udf9: "", udf10: ""
       };
+
       for (const [fieldKey, value] of Object.entries(fields)) {
         const input = document.createElement("input");
         input.type = "hidden";
@@ -108,6 +104,7 @@ const InquiryForm = () => {
         input.value = value;
         paymentForm.appendChild(input);
       }
+
       document.body.appendChild(paymentForm);
       paymentForm.submit();
 
