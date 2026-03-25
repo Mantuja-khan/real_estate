@@ -31,20 +31,20 @@ router.post('/initiate', async (req, res) => {
         const firstname = inquiry.name;
         const email = inquiry.email;
         const phone = inquiry.phone;
-        const backendBase = process.env.BACKEND_URL || 'http://localhost:7002';
+        const backendBase = process.env.BACKEND_URL;
         const surl = `${backendBase}/api/payments/easebuzz-response`;
         const furl = `${backendBase}/api/payments/easebuzz-response`;
 
         // Hash sequence per Easebuzz docs:
-        // key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||salt
+        // key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5|udf6|udf7|udf8|udf9|udf10|salt
         const hashStr = `${EASEBUZZ_KEY}|${txnid}|${amount}|${productinfo}|${firstname}|${email}|||||||||||${EASEBUZZ_SALT}`;
         const hash = sha512(hashStr);
 
-        const isTest = EASEBUZZ_ENV === 'test';
+        const isTest = EASEBUZZ_ENV === 'live';
         // Correct Action URL for Easebuzz standard HTML form integration
         const paymentUrl = isTest
-            ? 'https://testpay.easebuzz.in/payment/initiateLink'
-            : 'https://pay.easebuzz.in/payment/initiateLink';
+            ? 'https://testpay.easebuzz.in/pay/'
+            : 'https://pay.easebuzz.in/pay/';
 
         return res.json({
             success: true,
@@ -80,7 +80,8 @@ router.post('/easebuzz-response', async (req, res) => {
         } = req.body;
 
         // Verify reverse hash
-        const reverseHashStr = `${EASEBUZZ_SALT}|${udf10 || ''}|${udf9 || ''}|${udf8 || ''}|${udf7 || ''}|${udf6 || ''}|${udf5 || ''}|${udf4 || ''}|${udf3 || ''}|${udf2 || ''}|${udf1 || ''}|${email}|${firstname}|${productinfo}|${amount}|${txnid}|${EASEBUZZ_KEY}`;
+        // Formula: salt|status|udf10|udf9|udf8|udf7|udf6|udf5|udf4|udf3|udf2|udf1|email|firstname|productinfo|amount|txnid|key
+        const reverseHashStr = `${EASEBUZZ_SALT}|${status}|${udf10 || ''}|${udf9 || ''}|${udf8 || ''}|${udf7 || ''}|${udf6 || ''}|${udf5 || ''}|${udf4 || ''}|${udf3 || ''}|${udf2 || ''}|${udf1 || ''}|${email}|${firstname}|${productinfo}|${amount}|${txnid}|${EASEBUZZ_KEY}`;
         const expectedHash = sha512(reverseHashStr);
         const hashValid = (hash === expectedHash);
 

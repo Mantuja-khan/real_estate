@@ -95,7 +95,10 @@ const InquiryForm = () => {
       paymentForm.method = "POST";
       paymentForm.action = paymentUrl;
 
-      const fields: Record<string, string> = { key, txnid, amount, productinfo, firstname, email, phone, surl, furl, hash };
+      const fields: Record<string, string> = {
+        key, txnid, amount, productinfo, firstname, email, phone, surl, furl, hash,
+        udf1: "", udf2: "", udf3: "", udf4: "", udf5: "", udf6: "", udf7: "", udf8: "", udf9: "", udf10: ""
+      };
       for (const [fieldKey, value] of Object.entries(fields)) {
         const input = document.createElement("input");
         input.type = "hidden";
@@ -124,14 +127,12 @@ const InquiryForm = () => {
           Registration fees fully refundable for Non-Allottee
         </p>
       </div>
-
       {isDeadlinePassed ? (
         <div className="border border-red-600 bg-[#fff5f5] p-8 text-center shadow-md w-full max-w-2xl mx-auto rounded-2xl">
           <h2 className="text-xl md:text-2xl font-bold text-red-700 uppercase tracking-wider mb-3">Registration Closed</h2>
           <div className="h-1 w-full bg-red-200 mb-5 mx-auto max-w-[150px] rounded-full"></div>
           <p className="text-red-800 text-base md:text-lg font-semibold leading-relaxed">
-            The deadline for submitting applications was 29 March 2026 at 11:59 PM. We are no longer accepting new registrations.
-          </p>
+            The deadline for submitting applications was 29 March 2026 at 11:59 PM. We are no longer accepting new registrations.</p>
           <p className="text-red-700 text-sm mt-3 font-medium">
             Results will be declared on <strong>30 March 2026</strong>. Please check your status on the Check Result page.
           </p>

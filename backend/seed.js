@@ -16,7 +16,6 @@ const seedAdmin = async () => {
             console.log('Admin user already exists!');
             process.exit(0);
         }
-
         const admin = await Admin.create({
             email,
             password,
