@@ -42,9 +42,7 @@ router.post('/initiate', async (req, res) => {
 
         const isTest = EASEBUZZ_ENV === 'live';
         // Correct Action URL for Easebuzz standard HTML form integration
-        const paymentUrl = isTest
-            ? 'https://testpay.easebuzz.in/pay/'
-            : 'https://pay.easebuzz.in/pay/';
+        const paymentUrl = 'https://pay.easebuzz.in/pay/';
 
         return res.json({
             success: true,
