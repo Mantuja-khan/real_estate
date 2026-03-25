@@ -1,5 +1,6 @@
 const express = require('express');
 const crypto = require('crypto');
+const axios = require('axios');
 const Inquiry = require('../models/Inquiry');
 const { sendPaymentStatusEmail } = require('../utils/mailer');
 const dotenv = require('dotenv');
@@ -12,11 +13,11 @@ const EASEBUZZ_SALT = process.env.EASEBUZZ_SALT || 'O5GTSZOD9O';
 // This key is a LIVE key, so it must ALWAYS use the LIVE environment. Testpay will reject it.
 const EASEBUZZ_ENV = process.env.EASEBUZZ_ENV || 'live';
 
-// Helper: SHA-512 hash (done on backend so key/salt never exposed to frontend)
+// Helper: SHA-512 hash
 const sha512 = (data) => crypto.createHash('sha512').update(data).digest('hex');
 
 // @route   POST /api/payments/initiate
-// @desc    Generate payment hash and return form fields to submit to Easebuzz
+// @desc    Generate payment hash and initiate payment link with Easebuzz
 // @access  Public
 router.post('/initiate', async (req, res) => {
     try {
@@ -25,8 +26,8 @@ router.post('/initiate', async (req, res) => {
         const inquiry = await Inquiry.findById(inquiryId);
         if (!inquiry) return res.status(404).json({ message: 'Inquiry not found' });
 
-        const txnid = inquiry._id.toString();
-        const amount = '21000.00';
+        const txnid = "TXN_" + Date.now();
+        const amount = '21000.00'; // Make sure this matches the merchant account settings
         const productinfo = 'Registration';
         const firstname = inquiry.name;
         const email = inquiry.email;
@@ -35,36 +36,66 @@ router.post('/initiate', async (req, res) => {
         const surl = `${backendBase}/api/payments/easebuzz-response`;
         const furl = `${backendBase}/api/payments/easebuzz-response`;
 
-        // Hash sequence per Easebuzz docs:
+        // Save txnid to Inquiry document for later lookup
+        inquiry.txnid = txnid;
+        await inquiry.save();
+
+        // Explicit empty UDFs for hash
+        const udf1 = '', udf2 = '', udf3 = '', udf4 = '', udf5 = '', udf6 = '', udf7 = '', udf8 = '', udf9 = '', udf10 = '';
+
+        // Hash sequence per user request:
         // key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5|udf6|udf7|udf8|udf9|udf10|salt
-        const hashStr = `${EASEBUZZ_KEY}|${txnid}|${amount}|${productinfo}|${firstname}|${email}|||||||||||${EASEBUZZ_SALT}`;
+        const hashStr = `${EASEBUZZ_KEY}|${txnid}|${amount}|${productinfo}|${firstname}|${email}|${udf1}|${udf2}|${udf3}|${udf4}|${udf5}|${udf6}|${udf7}|${udf8}|${udf9}|${udf10}|${EASEBUZZ_SALT}`;
         const hash = sha512(hashStr);
 
-        const isTest = EASEBUZZ_ENV === 'live';
-        // Correct Action URL for Easebuzz standard HTML form integration
-        const paymentUrl = 'https://pay.easebuzz.in/pay/';
+        // Form data for Easebuzz API initiation
+        const postData = new URLSearchParams();
+        postData.append('key', EASEBUZZ_KEY);
+        postData.append('txnid', txnid);
+        postData.append('amount', amount);
+        postData.append('productinfo', productinfo);
+        postData.append('firstname', firstname);
+        postData.append('email', email);
+        postData.append('phone', phone);
+        postData.append('surl', surl);
+        postData.append('furl', furl);
+        postData.append('hash', hash);
+        for (let i = 1; i <= 10; i++) postData.append(`udf${i}`, '');
 
-        return res.json({
-            success: true,
-            fallback: true,
-            key: EASEBUZZ_KEY,
-            txnid,
-            amount,
-            productinfo,
-            firstname,
-            email,
-            phone,
-            surl,
-            furl,
-            hash,
-            paymentUrl
+        const initiateUrl = 'https://pay.easebuzz.in/payment/initiateLink';
+        const postDataStr = postData.toString();
+        
+        const response = await axios.post(initiateUrl, postDataStr, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json'
+            }
         });
 
+        // Easebuzz returns { status: 1, data: "ACCESS_KEY" } on success
+        if (response.data && response.data.status === 1) {
+            return res.json({
+                success: true,
+                status: 1,
+                data: response.data.data, // This is the access key
+                payUrl: 'https://pay.easebuzz.in/payment/initiateLink'
+
+            });
+        } else {
+            return res.status(400).json({
+                success: false,
+                message: 'Easebuzz initiation failed',
+                error: response.data
+            });
+        }
+
+
     } catch (error) {
-        console.error('Payment initiate error:', error);
+        console.error('Payment initiate error:', error.response ? error.response.data : error.message);
         res.status(500).json({ message: 'Failed to initiate payment', error: error.message });
     }
 });
+
 
 // @route   POST /api/payments/easebuzz-response
 // @desc    Handle Easebuzz payment success/failure response (surl / furl)
@@ -89,11 +120,12 @@ router.post('/easebuzz-response', async (req, res) => {
 
         const paymentStatus = (status === 'success' && hashValid) ? 'completed' : 'failed';
 
-        const inquiry = await Inquiry.findByIdAndUpdate(
-            txnid,
+        const inquiry = await Inquiry.findOneAndUpdate(
+            { txnid: txnid },
             { payment_status: paymentStatus, easepayid: easepayid || '' },
             { new: true }
         );
+
 
         if (inquiry) {
             await sendPaymentStatusEmail(

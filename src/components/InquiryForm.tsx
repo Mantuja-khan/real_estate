@@ -77,17 +77,19 @@ const InquiryForm = () => {
 
       const initiateData = await initiateRes.json();
 
-      if (!initiateRes.ok || !initiateData.success) {
+      if (!initiateRes.ok || (initiateData.status !== 1 && initiateData.status !== "1" && !initiateData.success)) {
         console.error("Payment initiation failed:", initiateData);
         toast.error(initiateData.message || "Payment gateway error. Please contact support.");
         return;
       }
 
+
       // Step 3a: Token received → redirect URL directly
-      if (!initiateData.fallback && initiateData.token) {
-        window.location.href = `${initiateData.payUrl}/${initiateData.token}`;
+      if (initiateData.status === 1 && initiateData.data) {
+        window.location.href = `${initiateData.payUrl}/${initiateData.data}`;
         return;
       }
+
 
       // Step 3b: Fallback → submit form to Easebuzz with backend-generated hash
       const { key, txnid, amount, productinfo, firstname, email, phone, surl, furl, hash, paymentUrl } = initiateData;

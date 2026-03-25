@@ -14,8 +14,10 @@ const inquirySchema = new mongoose.Schema({
     plotSize: { type: String, required: true },
     payment_status: { type: String, default: 'pending' },  // pending | completed | failed
     slot_status: { type: String, default: 'pending' },
-    easepayid: { type: String, default: '' },  // Easebuzz transaction reference
+    txnid: { type: String, default: '' }, // Payment transaction ID
+    easepayid: { type: String, default: '' },  // Easebuzz payment reference
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
+
 
 // Create text indexes/regular indexes if needed for search
 inquirySchema.index({ aadhaar: 1 });
