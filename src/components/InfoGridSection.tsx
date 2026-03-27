@@ -6,6 +6,7 @@ import priceListPdf from "@/assets/pricelist.pdf";
 import brochurePdf from "@/assets/brochure.pdf";
 import sitePlanImg from "@/assets/3d_image.png";
 import licenceCertificatePdf from "@/assets/licence_certificate.pdf";
+import reracertificate from "../assets/rera_certificate.pdf"
 
 const InfoGridSection = () => {
   const [showSitePlan, setShowSitePlan] = useState(false);
@@ -22,7 +23,7 @@ const InfoGridSection = () => {
             </div>
             <div className="sm:border border-gray-300 p-4 sm:rounded-xl rounded-none text-sm space-y-2 text-gray-700 font-medium border-0">
               <ul className="list-disc pl-4 space-y-1">
-                <li>RERA-PKL-1587-2024</li>
+                <li>HRERA-PKL-PWL-659-2025</li>
                 <li>Colonizer: NKV Emerald Avenue</li>
                 <li>Location : Sector-9, Palwal</li>
                 <li>Last Date of Apply: 29/03/2026</li>
@@ -63,7 +64,7 @@ const InfoGridSection = () => {
             <div className="space-y-3 bg-[#2c6e3b] text-white p-4 sm:rounded-t-lg sm:rounded-b-sm sm:shadow-sm rounded-none shadow-none">
               <div className="flex items-start gap-2 text-base sm:text-lg font-bold ">
                 <FileText className="h-5 w-5 mt-0.5" />
-                <p>Scheme Rera : RERA-PKL-1587-2024</p>
+                <p>Scheme Rera : HRERA-PKL-PWL-659-2025</p>
               </div>
               <div className="flex items-start gap-2 text-base sm:text-lg font-bold ">
                 <Building2 className="h-5 w-5 mt-0.5 shrink-0" />
@@ -153,7 +154,7 @@ const InfoGridSection = () => {
                 License Certificate
               </a>
               <a
-                href="https://haryanarera.gov.in/view_project/viewOrderPdf/NTczOQ=="
+                href={reracertificate}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm w-full transition-colors block"

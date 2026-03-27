@@ -14,7 +14,7 @@ const Navbar = () => {
   const targetDate = "2026-03-29T23:59:59+05:30";
   const [resultsDeclared, setResultsDeclared] = useState(false);
   const [isTimeUp, setIsTimeUp] = useState(new Date() > new Date(targetDate));
-  
+
   const showResults = resultsDeclared || isTimeUp;
 
   useEffect(() => {
@@ -87,7 +87,7 @@ const Navbar = () => {
               <a href="mailto:support@haryanadeendayalplot.org.in" className="flex items-center gap-2 hover:text-[#2c6e3b] transition-colors">
                 <Mail className="h-3 w-3" /> support@haryanadeendayalplot.org.in
               </a>
-              <span className="text-[9px] mb-1 opacity-60">RERA-PKL-1587-2024</span>
+              <span className="text-[9px] mb-1 opacity-60">HRERA-PKL-PWL-659-2025</span>
               {showResults ? (
                 <Link
                   to="/check-status"

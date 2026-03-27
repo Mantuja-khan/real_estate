@@ -5,8 +5,8 @@ const sha512 = (data) => crypto.createHash('sha512').update(data).digest('hex');
 
 const EASEBUZZ_KEY = 'DHXA8WLRV3';
 const EASEBUZZ_SALT = 'O5GTSZOD9O';
-const txnid = '69b23af3d1c1d45d5b4e1545';
-const amount = '21000';
+const txnid = 'TXN_' + Date.now();
+const amount = '21000.00';
 
 const productinfo = 'Registration';
 const firstname = 'Bhanu Thakur';
@@ -27,34 +27,30 @@ console.log('KEY:', EASEBUZZ_KEY);
 console.log('TXNID:', txnid);
 console.log('HASH STRING:', hashStr);
 console.log('HASH:', hash);
-
-const postData = new URLSearchParams();
-postData.append('key', EASEBUZZ_KEY);
-postData.append('merchant_key', EASEBUZZ_KEY);
-postData.append('txnid', txnid);
-
-postData.append('amount', amount);
-postData.append('productinfo', productinfo);
-postData.append('firstname', firstname);
-postData.append('email', email);
-postData.append('phone', phone);
-postData.append('surl', surl);
-postData.append('furl', furl);
-postData.append('hash', hash);
-postData.append('address1', 'Sector 45');
-postData.append('address2', '');
-postData.append('city', 'Gurgaon');
-postData.append('state', 'Haryana');
-postData.append('country', 'India');
-postData.append('zipcode', '120001');
-for (let i = 1; i <= 10; i++) postData.append(`udf${i}`, '');
-
-
 (async () => {
     try {
         const initiateUrl = 'https://pay.easebuzz.in/payment/initiateLink';
 
-        const response = await axios.post(initiateUrl, postData.toString(), {
+        const params = new URLSearchParams();
+        params.append('key', EASEBUZZ_KEY);
+        params.append('txnid', txnid);
+        params.append('amount', amount);
+        params.append('productinfo', productinfo);
+        params.append('firstname', firstname);
+        params.append('email', email);
+        params.append('phone', phone);
+        params.append('surl', surl);
+        params.append('furl', furl);
+        params.append('hash', hash);
+        params.append('address1', 'Sector 45');
+        params.append('city', 'Gurgaon');
+        params.append('state', 'Haryana');
+        params.append('country', 'India');
+        params.append('zipcode', '120001');
+
+        for (let i = 1; i <= 10; i++) params.append(`udf${i}`, '');
+
+        const response = await axios.post(initiateUrl, params.toString(), {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Accept': 'application/json'
@@ -62,8 +58,10 @@ for (let i = 1; i <= 10; i++) postData.append(`udf${i}`, '');
         });
         console.log('--- API Response ---');
         console.log(JSON.stringify(response.data, null, 2));
+
     } catch (error) {
         console.error('--- API Error ---');
         console.error(error.response ? error.response.data : error.message);
     }
 })();
+

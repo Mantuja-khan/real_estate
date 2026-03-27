@@ -40,7 +40,6 @@ const schema = z.object({
   quota: z.string().min(1, "Quota is required"),
   plotSize: z.string().min(1, "Plot size is required"),
 });
-
 const InquiryForm = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({ name: "", fatherName: "", email: "", phone: "", address: "", aadhaar: "", city: "", state: "", pinCode: "", quota: "", plotSize: "" });
@@ -66,54 +65,15 @@ const InquiryForm = () => {
       const newInquiry = await addInquiry(result.data as any);
       toast.success("Form submitted! Redirecting to payment...");
 
-      // Step 2: Ask backend to initiate payment (hash generated securely on server)
-      const apiUrl = import.meta.env.VITE_API_URL;
-      const apiBase = apiUrl || (window.location.hostname === 'localhost' ? "http://localhost:7002/api" : `https://api.${window.location.hostname}/api`);
-
-      console.log("Initiating payment via:", `${apiBase}/payments/initiate`);
-      const initiateRes = await fetch(`${apiBase}/payments/initiate`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ inquiryId: newInquiry.id }),
-      });
-
-      const initiateData = await initiateRes.json();
-
-      // ✅ Direct redirect (main flow)
-      if (initiateData.paymentUrl) {
-        window.location.href = initiateData.paymentUrl;
-        return;
-      }
-
-      // ✅ fallback (rare case)
-      const { key, txnid, amount, productinfo, firstname, email, phone, surl, furl, hash, paymentUrl } = initiateData;
-
-      const paymentForm = document.createElement("form");
-      paymentForm.method = "POST";
-      paymentForm.action = paymentUrl;
-
-      const fields: Record<string, string> = {
-        key, txnid, amount, productinfo, firstname, email, phone, surl, furl, hash,
-        udf1: "", udf2: "", udf3: "", udf4: "", udf5: "", udf6: "", udf7: "", udf8: "", udf9: "", udf10: ""
-      };
-
-      for (const [fieldKey, value] of Object.entries(fields)) {
-        const input = document.createElement("input");
-        input.type = "hidden";
-        input.name = fieldKey;
-        input.value = value;
-        paymentForm.appendChild(input);
-      }
-
-      document.body.appendChild(paymentForm);
-      paymentForm.submit();
-
-    } catch (err) {
+      // Step 2: Redirect to payment page (QR and Bank Details)
+      navigate("/payment");
+    } catch (err: any) {
       console.error("Submit error:", err);
-      toast.error("Failed to submit inquiry. Please try again.");
+      toast.error(err.message || "Failed to submit form. Please try again.");
     } finally {
       setSubmitting(false);
     }
+
   };
 
   return (
