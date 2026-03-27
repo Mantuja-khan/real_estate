@@ -65,8 +65,8 @@ const InquiryForm = () => {
       const newInquiry = await addInquiry(result.data as any);
       toast.success("Form submitted! Redirecting to payment...");
 
-      // Step 2: Redirect to payment page (QR and Bank Details)
-      navigate("/payment");
+      // Step 2: Redirect to payment page (Confirmation and Pay Now Button)
+      navigate(`/payment?id=${newInquiry.id}`);
     } catch (err: any) {
       console.error("Submit error:", err);
       toast.error(err.message || "Failed to submit form. Please try again.");

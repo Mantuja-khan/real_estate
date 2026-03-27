@@ -146,7 +146,7 @@ const InfoGridSection = () => {
                 Scheme Brochure
               </a>
               <a
-                href={licenceCertificatePdf}
+                href="https://drive.google.com/file/d/1Zua6d3vEpyrLWJIW9AmwmUzB6-XuVTED/view?usp=drivesdk"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm w-full transition-colors block"
