@@ -54,7 +54,7 @@ const TermsPage = () => (
         </section>
         <section>
           <h2 className="text-lg font-semibold text-foreground">10. Dispute Resolution:</h2>
-          <p>In the event of a dispute, we encourage you to first contact our customer service team to resolve the issue. If a resolution cannot be reached, any legal action or proceeding related to these Terms shall be brought exclusively in the courtship located in Jurisdiction of Gurugram. The arbitration shall take place at Gurgaon according to the rules and proceedings of the "Court of Arbitration" of Gurgaon.</p>
+          <p>In the event of a dispute, we encourage you to first contact our customer service team to resolve the issue. If a resolution cannot be reached, any legal action or proceeding related to these Terms shall be brought exclusively in the courtship located in Jurisdiction of gurugram. The arbitration shall take place at Gurgaon according to the rules and proceedings of the "Court of Arbitration" of Gurgaon.</p>
         </section>
       </div>
     </main>
