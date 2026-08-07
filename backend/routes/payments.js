@@ -76,7 +76,6 @@ router.post('/initiate', async (req, res) => {
 
         console.log("Easebuzz API Response:", response.data);
         res.json(response.data);
-
     } catch (error) {
         console.error('Payment initiate error:', error.response ? error.response.data : error.message);
         res.status(500).json({

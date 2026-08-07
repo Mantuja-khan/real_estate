@@ -15,8 +15,8 @@ router.post('/enquire', async (req, res) => {
         
         const enquiry = await GeneralInquiry.create({ name, phone, message });
         
-        // Send email to admin
-        await sendGeneralEnquiryEmail(name, phone, message);
+        // Send email to admin (Don't await to avoid blocking response)
+        sendGeneralEnquiryEmail(name, phone, message).catch(err => console.error("General inquiry email failed:", err));
         
         res.status(201).json(enquiry);
     } catch (error) {
@@ -37,18 +37,23 @@ router.post('/', async (req, res) => {
     }
 
     try {
+        console.log("Creating inquiry with data:", req.body);
         const { name, fatherName, address, phone, email, area, aadhaar, city, state, pinCode, quota, plotSize } = req.body;
         
         const inquiry = await Inquiry.create({
             name, fatherName, address, phone, email, area, aadhaar, city, state, pinCode, quota, plotSize,
             payment_status: 'pending'
         });
+        console.log("Inquiry created in DB:", inquiry._id);
         
-        // Send email to admin
-        await sendConfirmationEmail(email, name, fatherName, address, phone, aadhaar, city, state, pinCode, quota, plotSize);
+        // Send email to admin (Don't await to avoid blocking response)
+        console.log("Initiating confirmation email (in background)...");
+        sendConfirmationEmail(email, name, fatherName, address, phone, aadhaar, city, state, pinCode, quota, plotSize)
+            .catch(err => console.error("Confirmation email failed:", err));
         
         res.status(201).json(inquiry);
     } catch (error) {
+        console.error("Route error:", error);
         res.status(500).json({ message: 'Failed to create inquiry', error: error.message });
     }
 });

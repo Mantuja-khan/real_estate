@@ -137,10 +137,12 @@ const PaymentPage = () => {
             </div>
 
             <div className="bg-[#2c6e3b] p-6 text-center">
+              
               <div className="flex items-center justify-center gap-4 text-white">
                 <Info className="h-5 w-5 shrink-0 opacity-70" />
                 <p className="text-xs font-bold uppercase tracking-[0.05em] leading-relaxed">
-                  Important: If using manual transfer, please email your transaction screenshot to <span className="underline">support@snkv.in</span>
+
+                  Important: If using manual transfer, please email your transaction screenshot to <span className="underline">support@haryanadeendayalplot.org.in</span>
                 </p>
               </div>
             </div>

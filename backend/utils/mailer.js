@@ -1,17 +1,27 @@
 const nodemailer = require('nodemailer');
 
-const createTransporter = () => nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS
+const createTransporter = () => {
+    if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+        console.warn('WARNING: SMTP_USER or SMTP_PASS is missing in .env');
     }
-});
+
+    return nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+            user: process.env.SMTP_USER,
+            pass: (process.env.SMTP_PASS || '').replace(/\s+/g, '') // Remove spaces from App Password
+        }
+    });
+};
 
 // ─── 1. Initial Form Submission Email (sent to admin when form is submitted) ──
 const sendConfirmationEmail = async (userEmail, userName, fatherName, address, phone, aadhaar, city, state, pinCode, quota, plotSize) => {
     try {
         const transporter = createTransporter();
+        const recipient = process.env.ADMIN_EMAIL || 'kunaldoos15@gmail.com';
+        console.log("Sending admin notification email to:", recipient);
 
         const mailOptions = {
             from: process.env.SMTP_USER,
@@ -56,10 +66,11 @@ const sendPaymentStatusEmail = async (userEmail, userName, fatherName, address, 
         const isSuccess = paymentStatus === 'completed';
         const statusLabel = isSuccess ? 'Payment Successful ✅' : 'Payment Failed ❌';
 
+        const recipient = process.env.ADMIN_EMAIL || 'kunaldoos15@gmail.com';
         // Admin email
         await transporter.sendMail({
             from: process.env.SMTP_USER,
-            to: process.env.ADMIN_EMAIL,
+            to: recipient,
             subject: `Payment ${isSuccess ? 'Received' : 'Failed'} — ${userName} - Haryana Deen Dayal Jan Awaas Yojna`,
             html: `
                 <div style="font-family: Arial, sans-serif; color: #333;">
@@ -133,7 +144,7 @@ const sendGeneralEnquiryEmail = async (name, phone, message) => {
 
         const mailOptions = {
             from: process.env.SMTP_USER,
-            to: process.env.ADMIN_EMAIL,
+            to: process.env.ADMIN_EMAIL || 'kunaldoos15@gmail.com',
             subject: `New Enquire Now Request from ${name}`,
             html: `
                 <div style="font-family: Arial, sans-serif; color: #333;">

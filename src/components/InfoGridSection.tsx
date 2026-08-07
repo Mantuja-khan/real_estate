@@ -35,7 +35,7 @@ const InfoGridSection = () => {
               Important Details
             </div>
             <div className="sm:border border-gray-300 p-4 sm:rounded-xl rounded-none text-sm space-y-4 text-gray-700 font-medium border-0">
-              <div className="flex items-center justify-between gap-2 border-b border-gray-100 pb-2">
+              <div className="flex items-center justify-between gap-2">
                 <span>Payment Plan</span>
                 <span className="text-[#2c6e3b] font-bold text-sm">40 : 60</span>
               </div>
@@ -44,7 +44,6 @@ const InfoGridSection = () => {
                 <span className="text-[#2c6e3b] font-bold text-sm">Available</span>
               </div>
             </div>
-
             <div className="sm:border border-gray-300 p-4 sm:rounded-xl rounded-none text-sm space-y-2 text-gray-700 font-medium pb-8 mt-4 border-0">
               <ul className="list-disc pl-4 space-y-1">
                 <li>Gated Township</li>
@@ -146,7 +145,7 @@ const InfoGridSection = () => {
                 Scheme Brochure
               </a>
               <a
-                href="https://drive.google.com/file/d/1Zua6d3vEpyrLWJIW9AmwmUzB6-XuVTED/view?usp=drivesdk"
+                href={licenceCertificatePdf}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm w-full transition-colors block"
@@ -154,7 +153,7 @@ const InfoGridSection = () => {
                 License Certificate
               </a>
               <a
-                href={reracertificate}
+                href="https://drive.google.com/file/d/1Zua6d3vEpyrLWJIW9AmwmUzB6-XuVTED/view?usp=drivesdk"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#2c6e3b] hover:bg-[#1e4d29] text-white p-2 text-center font-bold text-sm tracking-wider rounded-sm w-full transition-colors block"
