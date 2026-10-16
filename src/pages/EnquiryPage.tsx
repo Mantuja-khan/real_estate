@@ -93,7 +93,7 @@ const EnquiryPage = () => {
             </div>
 
             <Button type="submit" 
-              className="w-full bg-[#0ea5e9] hover:bg-[#0284c7] text-white font-black uppercase tracking-[0.2em] shadow-lg h-12 text-sm md:text-base transition-all active:scale-[0.98]" 
+              className="w-full bg-[#2c6e3b] hover:bg-[#1e4d29] text-white font-black uppercase tracking-[0.2em] shadow-lg h-12 text-sm md:text-base transition-all active:scale-[0.98]" 
               disabled={submitting}
             >
               {submitting ? "Submitting…" : "Submit enquiry"}

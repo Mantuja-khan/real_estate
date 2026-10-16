@@ -14,7 +14,7 @@ const ContactUsPage = () => {
         </Link>
         <div className="flex flex-col items-center mb-10">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">CONTACT US</h1>
-          <div className="w-16 h-1 bg-red-600"></div>
+          <div className="w-16 h-1 bg-[#2c6e3b]"></div>
         </div>
 
         {/* Full-width Map */}
@@ -49,14 +49,14 @@ const ContactUsPage = () => {
             <div className="flex items-center gap-4">
               <PhoneCall className="h-5 w-5 text-[#d9a05b] shrink-0 fill-current" />
               <div>
-                <p className="text-gray-800 font-medium text-xs sm:text-sm">9818513700</p>
+                <a href="tel:8199072758" className="text-gray-800 font-medium text-xs sm:text-sm hover:text-[#2c6e3b]">81990 72758</a>
               </div>
             </div>
 
             <div className="flex items-center gap-4">
               <Mail className="h-5 w-5 text-[#d9a05b] shrink-0 fill-current" />
               <div>
-                <p className="text-gray-800 font-medium text-xs sm:text-sm">support@haryanadeendayalplot.org.in</p>
+                <a href="mailto:Sandeepchoudharydm@gmail.com" className="text-gray-800 font-medium text-xs sm:text-sm hover:text-[#2c6e3b]">Sandeepchoudharydm@gmail.com</a>
               </div>
             </div>
           </div>

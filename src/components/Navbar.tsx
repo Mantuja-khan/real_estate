@@ -39,11 +39,11 @@ const Navbar = () => {
     <>
       {/* Mobile-only Contact Top Bar - NOT STICKY */}
       <div className="md:hidden bg-gray-50 border-b border-gray-100 py-1 px-2 pb-1.5 flex justify-between items-center text-[9px] font-bold text-gray-600 sm:text-[10px]">
-        <a href="tel:9818513700" className="flex items-center gap-1 hover:text-[#2c6e3b]">
-          <Phone className="h-2.5 w-2.5 text-[#2c6e3b] stroke-[3px]" /> 98185-13700
+        <a href="tel:8199072758" className="flex items-center gap-1 hover:text-[#2c6e3b]">
+          <Phone className="h-2.5 w-2.5 text-[#2c6e3b] stroke-[3px]" /> 81990 72758
         </a>
-        <a href="mailto:support@haryanadeendayalplot.org.in" className="flex items-center gap-1 hover:text-[#2c6e3b]">
-          <Mail className="h-2.5 w-2.5 text-[#2c6e3b] stroke-[3px]" /> support@haryanadeendayalplot.org.in
+        <a href="mailto:Sandeepchoudharydm@gmail.com" className="flex items-center gap-1 hover:text-[#2c6e3b]">
+          <Mail className="h-2.5 w-2.5 text-[#2c6e3b] stroke-[3px]" /> Sandeepchoudharydm@gmail.com
         </a>
       </div>
 
@@ -81,11 +81,11 @@ const Navbar = () => {
 
             {/* Desktop Right: Contact & Button */}
             <div className="hidden md:flex flex-col items-end gap-1 text-[10px] md:text-xs font-bold text-gray-700">
-              <a href="tel:9818513700" className="flex items-center gap-2 hover:text-[#2c6e3b] transition-colors">
-                <Phone className="h-3 w-3" />  9818513700
+              <a href="tel:8199072758" className="flex items-center gap-2 hover:text-[#2c6e3b] transition-colors">
+                <Phone className="h-3 w-3" />  81990 72758
               </a>
-              <a href="mailto:support@haryanadeendayalplot.org.in" className="flex items-center gap-2 hover:text-[#2c6e3b] transition-colors">
-                <Mail className="h-3 w-3" /> support@haryanadeendayalplot.org.in
+              <a href="mailto:Sandeepchoudharydm@gmail.com" className="flex items-center gap-2 hover:text-[#2c6e3b] transition-colors">
+                <Mail className="h-3 w-3" /> Sandeepchoudharydm@gmail.com
               </a>
               <span className="text-[9px] mb-1 opacity-60">HRERA-PKL-PWL-659-2025</span>
               {showResults ? (

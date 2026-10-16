@@ -216,7 +216,7 @@ const InquiryForm = () => {
             {errors.plotSize && <p className="text-sm text-destructive mt-1">{errors.plotSize}</p>}
           </div>
 
-          <Button type="submit" className="w-full bg-[#0ea5e9] hover:bg-[#0284c7] text-white font-black uppercase tracking-[0.2em] shadow-lg" size="lg" disabled={submitting}>
+          <Button type="submit" className="w-full bg-[#2c6e3b] hover:bg-[#1e4d29] text-white font-black uppercase tracking-[0.2em] shadow-lg" size="lg" disabled={submitting}>
             {submitting ? "Submitting…" : "Submit"}
           </Button>
         </form>

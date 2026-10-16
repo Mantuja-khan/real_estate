@@ -97,7 +97,7 @@ const EnquireNowDialog = ({ children }: EnquireNowDialogProps) => {
           </div>
           <Button
             type="submit"
-            className="w-full bg-[#0ea5e9] hover:bg-[#0284c7] text-white font-black uppercase tracking-widest shadow-lg py-6"
+            className="w-full bg-[#2c6e3b] hover:bg-[#1e4d29] text-white font-black uppercase tracking-widest shadow-lg py-6"
             disabled={loading}
           >
             {loading ? "Sending..." : "Submit Enquiry"}

@@ -20,7 +20,7 @@ const createTransporter = () => {
 const sendConfirmationEmail = async (userEmail, userName, fatherName, address, phone, aadhaar, city, state, pinCode, quota, plotSize) => {
     try {
         const transporter = createTransporter();
-        const recipient = process.env.ADMIN_EMAIL || 'kunaldoos15@gmail.com';
+        const recipient = process.env.ADMIN_EMAIL || 'Sandeepchoudharydm@gmail.com';
         console.log("Sending admin notification email to:", recipient);
 
         const mailOptions = {
@@ -66,7 +66,7 @@ const sendPaymentStatusEmail = async (userEmail, userName, fatherName, address, 
         const isSuccess = paymentStatus === 'completed';
         const statusLabel = isSuccess ? 'Payment Successful ✅' : 'Payment Failed ❌';
 
-        const recipient = process.env.ADMIN_EMAIL || 'kunaldoos15@gmail.com';
+        const recipient = process.env.ADMIN_EMAIL || 'Sandeepchoudharydm@gmail.com';
         // Admin email
         await transporter.sendMail({
             from: process.env.SMTP_USER,
@@ -144,7 +144,7 @@ const sendGeneralEnquiryEmail = async (name, phone, message) => {
 
         const mailOptions = {
             from: process.env.SMTP_USER,
-            to: process.env.ADMIN_EMAIL || 'kunaldoos15@gmail.com',
+            to: process.env.ADMIN_EMAIL || 'Sandeepchoudharydm@gmail.com',
             subject: `New Enquire Now Request from ${name}`,
             html: `
                 <div style="font-family: Arial, sans-serif; color: #333;">

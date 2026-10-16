@@ -3,7 +3,7 @@ import whatsappIcon from "@/assets/whatsapp.png";
 import { Link } from "react-router-dom";
 
 const StickyActions = () => {
-  const phoneNumber = "9818513700";
+  const phoneNumber = "8199072758";
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-[60] bg-[#2c6e3b] px-4 py-3 flex items-center justify-around shadow-[0_-4px_10px_rgba(0,0,0,0.2)] border-t border-white/10 md:justify-center md:gap-12 lg:gap-24">
@@ -18,7 +18,7 @@ const StickyActions = () => {
         </div>
         <div className="hidden md:flex flex-col h-10 justify-center">
             <span className="text-[10px] uppercase font-bold text-white/70 leading-none">Call Now</span>
-            <span className="text-sm font-black tracking-tight leading-normal">9818513700</span>
+            <span className="text-sm font-black tracking-tight leading-normal">81990 72758</span>
         </div>
       </a>
 

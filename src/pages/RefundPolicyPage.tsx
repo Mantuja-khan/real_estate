@@ -53,7 +53,7 @@ const RefundPolicyPage = () => {
             <h2 className="text-lg font-semibold text-foreground mb-3">For Cancellation and More Information</h2>
             <p>Please contact us at:</p>
             <p className="mt-2">
-              <a href="mailto:support@haryanadeendayalplot.org.in" className="text-primary underline">support@haryanadeendayalplot.org.in
+              <a href="mailto:Sandeepchoudharydm@gmail.com" className="text-primary underline">Sandeepchoudharydm@gmail.com
               </a>
             </p>
           </section>

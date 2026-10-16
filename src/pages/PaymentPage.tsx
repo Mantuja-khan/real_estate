@@ -98,8 +98,8 @@ const PaymentPage = () => {
                 Official Bank Information
               </h2>
               <div className="flex items-center gap-2">
-                <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-                <span className="text-[9px] font-black text-green-600 uppercase tracking-widest">Active</span>
+                <div className="h-2 w-2 rounded-full bg-[#2c6e3b] animate-pulse" />
+                <span className="text-[9px] font-black text-[#2c6e3b] uppercase tracking-widest">Active</span>
               </div>
             </div>
 
@@ -142,7 +142,7 @@ const PaymentPage = () => {
                 <Info className="h-5 w-5 shrink-0 opacity-70" />
                 <p className="text-xs font-bold uppercase tracking-[0.05em] leading-relaxed">
 
-                  Important: If using manual transfer, please email your transaction screenshot to <span className="underline">support@haryanadeendayalplot.org.in</span>
+                  Important: If using manual transfer, please email your transaction screenshot to <a href="mailto:Sandeepchoudharydm@gmail.com" className="underline">Sandeepchoudharydm@gmail.com</a>
                 </p>
               </div>
             </div>

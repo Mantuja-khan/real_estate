@@ -16,8 +16,8 @@ const Footer = () => (
               <Mail className="h-5 w-5 text-gray-700" />
               <h3 className="text-xs sm:text-sm text-gray-700  font-bold">EMAIL</h3>
             </div>
-            <a href="mailto:support@haryanadeendayalplot.org.in" className="text-xs sm:text-sm font-medium text-gray-600 pl-1 hover:text-[#2c6e3b]">
-              support@haryanadeendayalplot.org.in
+            <a href="mailto:Sandeepchoudharydm@gmail.com" className="text-xs sm:text-sm font-medium text-gray-600 pl-1 hover:text-[#2c6e3b]">
+              Sandeepchoudharydm@gmail.com
             </a>
           </div>
 
@@ -27,8 +27,8 @@ const Footer = () => (
               <Phone className="h-5 w-5 text-gray-700" />
               <h3 className="text-xs sm:text-sm text-gray-700  font-bold">TOLL FREE HELPLINE</h3>
             </div>
-            <a href="tel:9818513700" className="text-xs sm:text-sm font-medium text-gray-800 hover:text-[#2c6e3b] pl-1">
-              9818513700
+            <a href="tel:8199072758" className="text-xs sm:text-sm font-medium text-gray-800 hover:text-[#2c6e3b] pl-1">
+              81990 72758
             </a>
           </div>
 

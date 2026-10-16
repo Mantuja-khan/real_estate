@@ -80,7 +80,7 @@ const InfoGridSection = () => {
                 <div className="space-y-4 text-gray-700 font-medium text-xs sm:text-sm">
                   <div className="flex items-center gap-3">
                     <p>
-                      <span className="text-green-600 font-bold ">
+                      <span className="text-[#2c6e3b] font-bold ">
                         Application Live Now
                       </span>
                     </p>
@@ -172,8 +172,8 @@ const InfoGridSection = () => {
           {/* RIGHT COLUMN */}
           <div className="md:col-span-3 space-y-6">
 
-            <a href="tel:9818513700" className="bg-[#2c6e3b] text-white p-2 text-center font-bold text-sm rounded-sm hover:bg-[#1e4d29] transition-colors block">
-              9818513700
+            <a href="tel:8199072758" className="bg-[#2c6e3b] text-white p-2 text-center font-bold text-sm rounded-sm hover:bg-[#1e4d29] transition-colors block">
+              81990 72758
             </a>
 
             <div className="bg-[#2c6e3b] text-white p-2 text-center font-bold text-xs tracking-wider rounded-sm mt-6">
